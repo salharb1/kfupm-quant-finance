@@ -167,64 +167,111 @@
   .user-chip img{width:26px;height:26px;border-radius:50%;object-fit:cover}
   .sync{font-size:.8rem;margin:6px 0 0;color:var(--mut)}
   @media(max-width:560px){.hero h1{font-size:1.9rem}.sec-head h2{font-size:1.35rem}}
+  /* ===== language switch & chooser ===== */
+  .lang-toggle{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;font-size:.8rem;font-weight:800;margin-left:6px}
+  .lang-toggle button{background:transparent;border:0;color:var(--mut);padding:6px 10px;cursor:pointer;font-family:inherit}
+  .lang-toggle button.on{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#04222b}
+  .lang-overlay{position:fixed;inset:0;z-index:200;background:rgba(6,10,14,.93);backdrop-filter:blur(7px);
+    display:flex;align-items:center;justify-content:center;padding:20px}
+  .lang-overlay.hide{display:none}
+  .lang-card{background:var(--bg2);border:1px solid var(--line);border-radius:18px;padding:34px 30px;
+    max-width:430px;width:100%;text-align:center;box-shadow:var(--shadow)}
+  .lang-card .mark{width:56px;height:56px;border-radius:14px;display:inline-grid;place-items:center;
+    background:linear-gradient(135deg,var(--acc),var(--acc2));color:#04222b;font-weight:800;font-size:1.4rem;margin-bottom:16px}
+  .lang-card h2{margin:0 0 2px;font-size:1.3rem}
+  .lang-card .h-ar{font-size:1.15rem;color:var(--mut);margin:0 0 22px;font-weight:600}
+  .lang-choices{display:grid;gap:12px}
+  .lang-choices button{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--card);
+    border:1px solid var(--line);color:var(--txt);padding:15px;border-radius:12px;cursor:pointer;
+    font-size:1.05rem;font-weight:700;font-family:inherit;transition:.15s}
+  .lang-choices button:hover{border-color:var(--acc);background:var(--card2);transform:translateY(-1px)}
+  .lang-choices .flag{font-size:1.3rem}
+  /* ===== RTL adjustments ===== */
+  body.rtl{direction:rtl}
+  body.rtl nav.top-nav{margin-left:0;margin-right:auto}
+  body.rtl .note,body.rtl .topic-modal .t-ex,body.rtl .topic-modal .t-depth{border-left:0;border-right:3px solid var(--gold)}
+  body.rtl .q .expl{border-left:0;border-right:3px solid var(--acc)}
+  body.rtl .modal-head .x{margin-left:0;margin-right:auto}
+  body.rtl .topic-detail{border-left:0;border-right:2px solid var(--acc)}
+  body.rtl .res a::before{content:"";margin-left:5px}
+  /* keep formulas, codes and numbers left-to-right inside Arabic text */
+  body.rtl code,body.rtl .course-code,body.rtl .ring i,body.rtl .cr{direction:ltr;unicode-bidi:isolate}
+  body.rtl .topic-modal .t-ex code{display:inline-block}
 </style>
 </head>
 <body>
 
+<!-- LANGUAGE CHOOSER (first visit) -->
+<div class="lang-overlay hide" id="langOverlay">
+  <div class="lang-card">
+    <span class="mark">QF</span>
+    <h2>Choose your language</h2>
+    <p class="h-ar">اختر لغتك</p>
+    <div class="lang-choices">
+      <button onclick="setLang('en',true)"><span class="flag">🇬🇧</span> English</button>
+      <button onclick="setLang('ar',true)"><span class="flag">🇸🇦</span> العربية</button>
+    </div>
+  </div>
+</div>
+
 <header class="top">
   <div class="logo"><span class="mark">QF</span><span>KFUPM&nbsp;Quant&nbsp;Finance</span></div>
   <nav class="top-nav">
-    <a href="#prep">Prep</a>
-    <a href="#semesters">Semesters</a>
-    <a href="#practice">Practice</a>
-    <a href="#exams">Exams</a>
-    <a href="#resources">Resources</a>
+    <a href="#prep" data-i18n="navPrep">Prep</a>
+    <a href="#semesters" data-i18n="navSem">Semesters</a>
+    <a href="#practice" data-i18n="navPractice">Practice</a>
+    <a href="#exams" data-i18n="navExams">Exams</a>
+    <a href="#resources" data-i18n="navRes">Resources</a>
   </nav>
+  <div class="lang-toggle" id="langToggle">
+    <button data-lang="en" onclick="setLang('en',true)">EN</button>
+    <button data-lang="ar" onclick="setLang('ar',true)">ع</button>
+  </div>
 </header>
 
 <div class="wrap">
 
   <!-- HERO -->
   <div class="hero">
-    <div class="pill">🎓 Master of Quantitative Finance · KFUPM Business School · 30 credit hours</div>
-    <h1>Your 2-year roadmap to <span>master quant finance</span></h1>
-    <p class="lead">A self-study companion built around the real KFUPM MQF curriculum — semester by semester,
+    <div class="pill" data-i18n="heroPill">🎓 Master of Quantitative Finance · KFUPM Business School · 30 credit hours</div>
+    <h1 data-i18n-html="heroTitle">Your 2-year roadmap to <span>master quant finance</span></h1>
+    <p class="lead" data-i18n="heroLead">A self-study companion built around the real KFUPM MQF curriculum — semester by semester,
       with curated videos, topic checklists, interactive practice quizzes, and mock exams. Track your progress as you prep.</p>
     <div class="pills">
-      <div class="pill"><b>4</b> semesters</div>
-      <div class="pill"><b>8</b> courses + capstone</div>
-      <div class="pill">Evening format · <b>Sun–Wed</b></div>
-      <div class="pill">Prereqs: <b>calculus · stats · coding</b></div>
+      <div class="pill" data-i18n-html="pill1"><b>4</b> semesters</div>
+      <div class="pill" data-i18n-html="pill2"><b>8</b> courses + capstone</div>
+      <div class="pill" data-i18n-html="pill3">Evening format · <b>Sun–Wed</b></div>
+      <div class="pill" data-i18n-html="pill4">Prereqs: <b>calculus · stats · coding</b></div>
     </div>
 
     <div class="progress-box">
       <div class="ring" id="ring"><i id="ringPct">0%</i></div>
       <div class="meta">
-        <h3>Study progress</h3>
+        <h3 data-i18n="progTitle">Study progress</h3>
         <p id="progText">Check off topics as you learn them — your progress is saved automatically in this browser.</p>
         <p id="syncStatus" class="sync">Not signed in — progress saves on this device only.</p>
       </div>
       <div class="pb-actions">
-        <button id="loginBtn" class="btn ghost gbtn"><svg width="16" height="16" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5h-1.9V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.3-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16 19 13 24 13c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.5 0 10.4-2.1 14.1-5.5l-6.5-5.5c-2 1.5-4.7 2.5-7.6 2.5-5.2 0-9.6-3.3-11.2-8l-6.6 5.1C9.6 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H24v8h11.3c-.8 2.2-2.2 4.1-4.1 5.5l6.5 5.5C41.4 36.5 44 30.8 44 24c0-1.3-.1-2.3-.4-3.5z"/></svg>Sign in with Google</button>
+        <button id="loginBtn" class="btn ghost gbtn"><svg width="16" height="16" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5h-1.9V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.3-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16 19 13 24 13c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.5 0 10.4-2.1 14.1-5.5l-6.5-5.5c-2 1.5-4.7 2.5-7.6 2.5-5.2 0-9.6-3.3-11.2-8l-6.6 5.1C9.6 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H24v8h11.3c-.8 2.2-2.2 4.1-4.1 5.5l6.5 5.5C41.4 36.5 44 30.8 44 24c0-1.3-.1-2.3-.4-3.5z"/></svg><span data-i18n="signIn">Sign in with Google</span></button>
         <div id="userChip" class="user-chip" style="display:none">
           <img id="userPic" alt="" referrerpolicy="no-referrer">
           <span id="userName"></span>
-          <button id="logoutBtn" class="reset">Sign out</button>
+          <button id="logoutBtn" class="reset" data-i18n="signOut">Sign out</button>
         </div>
-        <a class="btn" href="#prep">Start preparing →</a>
-        <button class="reset" onclick="resetAll()">Reset progress</button>
+        <a class="btn" href="#prep" data-i18n="startPrep">Start preparing →</a>
+        <button class="reset" onclick="resetAll()" data-i18n="resetProg">Reset progress</button>
       </div>
     </div>
   </div>
 
   <!-- PREP -->
   <section id="prep">
-    <div class="sec-head"><span class="tag">Before you start</span></div>
-    <h2 style="margin:0 0 8px">Get your foundations solid</h2>
-    <p class="sec-sub">The MQF program assumes comfort with college calculus, statistics, and basic programming.
+    <div class="sec-head"><span class="tag" data-i18n="prepTag">Before you start</span></div>
+    <h2 style="margin:0 0 8px" data-i18n="prepTitle">Get your foundations solid</h2>
+    <p class="sec-sub" data-i18n-html="prepSub">The MQF program assumes comfort with college calculus, statistics, and basic programming.
       Spend your pre-enrollment weeks refreshing these — they appear in <em>every</em> course.</p>
     <div class="grid cols-3">
-      <div class="mini">
+      <div class="mini" data-i18n-html="prepCardMath">
         <h4><span class="ico">∫</span> Math refresher</h4>
         <ul>
           <li>Calculus: derivatives, integrals, Taylor series</li>
@@ -238,7 +285,7 @@
            href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab">
           <span class="play">▶</span><span class="v-meta"><b>Essence of Linear Algebra</b><small>3Blue1Brown</small></span></a>
       </div>
-      <div class="mini">
+      <div class="mini" data-i18n-html="prepCardStat">
         <h4><span class="ico">📊</span> Probability &amp; statistics</h4>
         <ul>
           <li>Distributions, expectation, variance</li>
@@ -252,7 +299,7 @@
            href="https://www.khanacademy.org/math/statistics-probability">
           <span class="play">▶</span><span class="v-meta"><b>Khan Academy — Stats &amp; Probability</b><small>Practice as you go</small></span></a>
       </div>
-      <div class="mini">
+      <div class="mini" data-i18n-html="prepCardPy">
         <h4><span class="ico">🐍</span> Programming (Python)</h4>
         <ul>
           <li>Python basics, NumPy, pandas</li>
@@ -267,16 +314,16 @@
           <span class="play">▶</span><span class="v-meta"><b>pandas for data analysis</b><small>Hands-on</small></span></a>
       </div>
     </div>
-    <div class="note">💡 <b>Tip:</b> KFUPM admission requires one prior course each in statistics, calculus, and a
+    <div class="note" data-i18n-html="prepNote">💡 <b>Tip:</b> KFUPM admission requires one prior course each in statistics, calculus, and a
       computer-related subject. If any feels rusty, prioritise it now — the first semester (Stochastic Processes,
       Econometrics) moves fast.</div>
   </section>
 
   <!-- SEMESTERS -->
   <section id="semesters">
-    <div class="sec-head"><span class="tag">Core curriculum</span></div>
-    <h2 style="margin:0 0 8px">Study by semester</h2>
-    <p class="sec-sub">The two-year (part-time) plan spreads the eight core courses and the capstone project
+    <div class="sec-head"><span class="tag" data-i18n="semTag">Core curriculum</span></div>
+    <h2 style="margin:0 0 8px" data-i18n="semTitle">Study by semester</h2>
+    <p class="sec-sub" data-i18n="semSub">The two-year (part-time) plan spreads the eight core courses and the capstone project
       across four evening semesters. Click any course to open its study pack: topics, videos, resources and a quiz.</p>
     <div class="sem-tabs" id="semTabs"></div>
     <p class="sem-note" id="semNote"></p>
@@ -285,19 +332,19 @@
 
   <!-- PRACTICE -->
   <section id="practice">
-    <div class="sec-head"><span class="tag">Practice</span></div>
-    <h2 style="margin:0 0 8px">Test yourself</h2>
-    <p class="sec-sub">Quick-fire quizzes pulled from across the curriculum. Each course also has its own quiz inside its card.</p>
+    <div class="sec-head"><span class="tag" data-i18n="pracTag">Practice</span></div>
+    <h2 style="margin:0 0 8px" data-i18n="pracTitle">Test yourself</h2>
+    <p class="sec-sub" data-i18n="pracSub">Quick-fire quizzes pulled from across the curriculum. Each course also has its own quiz inside its card.</p>
     <div class="grid cols-3" id="practiceGrid"></div>
   </section>
 
   <!-- EXAMS -->
   <section id="exams">
-    <div class="sec-head"><span class="tag">Assessment</span></div>
-    <h2 style="margin:0 0 8px">Mock exams &amp; past papers</h2>
-    <p class="sec-sub">Timed, exam-style sets that mix concepts and calculations the way KFUPM finance courses do.</p>
+    <div class="sec-head"><span class="tag" data-i18n="examTag">Assessment</span></div>
+    <h2 style="margin:0 0 8px" data-i18n="examTitle">Mock exams &amp; past papers</h2>
+    <p class="sec-sub" data-i18n="examSub">Timed, exam-style sets that mix concepts and calculations the way KFUPM finance courses do.</p>
     <div class="grid cols-2" id="examGrid"></div>
-    <div class="note">📂 <b>On past exams:</b> KFUPM does not publish a public bank of MQF exam papers, so I can't
+    <div class="note" data-i18n-html="examNote">📂 <b>On past exams:</b> KFUPM does not publish a public bank of MQF exam papers, so I can't
       embed official old papers here honestly. Your best real sources: (1) ask seniors and the
       <a href="mailto:kbs-gp@kfupm.edu.sa">KBS Graduate Programs office</a> for sample/previous papers, (2) the
       KFUPM course reserves &amp; Blackboard once enrolled, and (3) professional exam banks below that mirror the same
@@ -307,11 +354,11 @@
 
   <!-- RESOURCES -->
   <section id="resources">
-    <div class="sec-head"><span class="tag">Toolkit</span></div>
-    <h2 style="margin:0 0 8px">Standout resources</h2>
-    <p class="sec-sub">Books, courses and channels worth bookmarking for the whole program.</p>
+    <div class="sec-head"><span class="tag" data-i18n="resTag">Toolkit</span></div>
+    <h2 style="margin:0 0 8px" data-i18n="resTitle">Standout resources</h2>
+    <p class="sec-sub" data-i18n="resSub">Books, courses and channels worth bookmarking for the whole program.</p>
     <div class="grid cols-2">
-      <div class="mini">
+      <div class="mini" data-i18n-html="resCardBooks">
         <h4>📚 Core textbooks</h4>
         <ul>
           <li>Hull — <em>Options, Futures &amp; Other Derivatives</em> (derivatives, fixed income)</li>
@@ -321,7 +368,7 @@
           <li>Berk &amp; DeMarzo — <em>Corporate Finance</em></li>
         </ul>
       </div>
-      <div class="mini">
+      <div class="mini" data-i18n-html="resCardChannels">
         <h4>🎥 Channels &amp; full courses</h4>
         <ul>
           <li><a href="https://www.youtube.com/playlist?list=PLUl4u3cNGP63ctJIEC1UnZ0btsphnnoHR" target="_blank" rel="noopener">MIT 18.S096 — Mathematics in Finance</a></li>
@@ -330,7 +377,7 @@
           <li><a href="https://www.youtube.com/@ben_lambert" target="_blank" rel="noopener">Ben Lambert</a> — econometrics</li>
         </ul>
       </div>
-      <div class="mini">
+      <div class="mini" data-i18n-html="resCardTools">
         <h4>🧮 Tools to learn</h4>
         <ul>
           <li>Python (NumPy, pandas, statsmodels, scikit-learn)</li>
@@ -339,7 +386,7 @@
           <li>Bloomberg / Refinitiv terminals (on campus)</li>
         </ul>
       </div>
-      <div class="mini">
+      <div class="mini" data-i18n-html="resCardLinks">
         <h4>🏫 KFUPM links</h4>
         <ul>
           <li><a href="https://kbs.kfupm.edu.sa/master-of-quantitative-finance/" target="_blank" rel="noopener">MQF program page</a></li>
@@ -350,7 +397,7 @@
     </div>
   </section>
 
-  <footer>
+  <footer data-i18n-html="footer">
     Built as a personal study companion for the KFUPM Master of Quantitative Finance · curriculum sourced from the
     <a href="https://kbs.kfupm.edu.sa/master-of-quantitative-finance/" target="_blank" rel="noopener">official KBS program page</a>.<br>
     Course schedule may change — always confirm with KFUPM. Good luck. 💚
@@ -1302,6 +1349,141 @@ Object.assign(DEEP,{
 });
 
 /* ============================================================
+   I18N — language engine (English default, Arabic optional)
+   ============================================================ */
+let L = "en";
+
+// Static UI strings for [data-i18n] / [data-i18n-html]. English = original DOM (cached).
+const I18N_AR = {
+ navPrep:"التحضير", navSem:"الفصول", navPractice:"تمارين", navExams:"اختبارات", navRes:"مصادر",
+ heroPill:"🎓 ماجستير التمويل الكمّي · كلية إدارة الأعمال بجامعة الملك فهد · 30 ساعة معتمدة",
+ heroTitle:`خارطة طريقك لعامين <span>لإتقان التمويل الكمّي</span>`,
+ heroLead:"رفيق دراسة ذاتي مبني على منهج ماجستير التمويل الكمّي الفعلي بجامعة الملك فهد — فصلًا بفصل، مع فيديوهات منتقاة وقوائم مواضيع واختبارات تفاعلية ونماذج امتحانات. تابع تقدّمك أثناء التحضير.",
+ pill1:`<b>4</b> فصول`, pill2:`<b>8</b> مقررات + مشروع`, pill3:`دوام مسائي · <b>الأحد–الأربعاء</b>`, pill4:`المتطلبات: <b>تفاضل · إحصاء · برمجة</b>`,
+ progTitle:"تقدّم الدراسة", signIn:"تسجيل الدخول عبر Google", signOut:"تسجيل الخروج",
+ startPrep:"ابدأ التحضير ←", resetProg:"إعادة التعيين",
+ prepTag:"قبل أن تبدأ", prepTitle:"ثبّت أساسياتك",
+ prepSub:`يفترض البرنامج إلمامك بالتفاضل والتكامل الجامعي والإحصاء وأساسيات البرمجة. خصّص الأسابيع التي تسبق الالتحاق لمراجعتها — فهي تظهر في <em>كل</em> مقرر.`,
+ prepCardMath:`<h4><span class="ico">∫</span> مراجعة الرياضيات</h4><ul><li>التفاضل والتكامل: المشتقات، التكاملات، متسلسلة تايلور</li><li>الجبر الخطي: المصفوفات، القيم الذاتية</li><li>التحسين ومضاعِفات لاغرانج</li></ul><a class="vid" style="margin-top:12px" target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab"><span class="play">▶</span><span class="v-meta"><b>3Blue1Brown — جوهر التفاضل والتكامل</b><small>حدس بصري</small></span></a><a class="vid" target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab"><span class="play">▶</span><span class="v-meta"><b>جوهر الجبر الخطي</b><small>3Blue1Brown</small></span></a>`,
+ prepCardStat:`<h4><span class="ico">📊</span> الاحتمالات والإحصاء</h4><ul><li>التوزيعات، التوقّع، التباين</li><li>اختبار الفرضيات والانحدار</li><li>الاحتمال الشرطي، نظرية بايز</li></ul><a class="vid" style="margin-top:12px" target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PLU5aQXLWR3_yYS0ZYRA-5g5YSSYLNZ6Mc"><span class="play">▶</span><span class="v-meta"><b>Statistics 110 — جامعة هارفارد (Blitzstein)</b><small>دورة كاملة</small></span></a><a class="vid" target="_blank" rel="noopener" href="https://www.khanacademy.org/math/statistics-probability"><span class="play">▶</span><span class="v-meta"><b>Khan Academy — الإحصاء والاحتمالات</b><small>تدرّب أثناء التعلّم</small></span></a>`,
+ prepCardPy:`<h4><span class="ico">🐍</span> البرمجة (بايثون)</h4><ul><li>أساسيات بايثون، NumPy، pandas</li><li>الرسم باستخدام matplotlib</li><li>مقدمة في تعلّم الآلة (scikit-learn)</li></ul><a class="vid" style="margin-top:12px" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=rfscVS0vtbw"><span class="play">▶</span><span class="v-meta"><b>دورة بايثون الكاملة — freeCodeCamp</b><small>للمبتدئين</small></span></a><a class="vid" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=vmEHCJofslg"><span class="play">▶</span><span class="v-meta"><b>pandas لتحليل البيانات</b><small>تطبيقي</small></span></a>`,
+ prepNote:`💡 <b>نصيحة:</b> يتطلّب القبول في جامعة الملك فهد اجتياز مقرر سابق في كلٍّ من الإحصاء والتفاضل ومادة متعلّقة بالحاسب. إن شعرت بضعف في أيٍّ منها فابدأ بها الآن — فالفصل الأول (العمليات العشوائية، الاقتصاد القياسي) يسير بوتيرة سريعة.`,
+ semTag:"المنهج الأساسي", semTitle:"الدراسة حسب الفصل",
+ semSub:"توزّع خطة العامين (الدوام الجزئي) المقررات الثمانية الأساسية ومشروع التخرّج على أربعة فصول مسائية. اضغط على أي مقرر لفتح حزمته الدراسية: المواضيع والفيديوهات والمصادر واختبار.",
+ pracTag:"تمارين", pracTitle:"اختبر نفسك",
+ pracSub:"اختبارات سريعة من مختلف أنحاء المنهج. لكل مقرر أيضًا اختباره الخاص داخل بطاقته.",
+ examTag:"التقييم", examTitle:"نماذج امتحانات وأوراق سابقة",
+ examSub:"مجموعات بأسلوب الامتحان تمزج المفاهيم والحسابات كما في مقررات التمويل بالجامعة.",
+ examNote:`📂 <b>عن الامتحانات السابقة:</b> لا تنشر جامعة الملك فهد بنكًا عامًا لأوراق امتحانات الماجستير، لذا لا يمكنني إدراج أوراق رسمية قديمة هنا بصدق. أفضل مصادرك الحقيقية: (1) اسأل الطلاب الأقدم و<a href="mailto:kbs-gp@kfupm.edu.sa">مكتب الدراسات العليا بالكلية</a> عن نماذج/أوراق سابقة، (2) محجوزات المقررات ونظام Blackboard بعد التسجيل، (3) بنوك الأسئلة المهنية أدناه التي تغطّي نفس المادة — <a href="https://www.cfainstitute.org/programs/cfa-program/practice" target="_blank" rel="noopener">أسئلة تدريب CFA</a> و<a href="https://www.bionicturtle.com/" target="_blank" rel="noopener">Bionic Turtle (FRM)</a>. نماذج الامتحانات أعلاه مصمّمة لتطابق مزيج المواضيع.`,
+ resTag:"العُدّة", resTitle:"مصادر مميّزة",
+ resSub:"كتب ودورات وقنوات تستحق الحفظ طوال البرنامج.",
+ resCardBooks:`<h4>📚 الكتب الأساسية</h4><ul><li>Hull — <em>الخيارات والعقود الآجلة والمشتقات</em> (المشتقات، الدخل الثابت)</li><li>Shreve — <em>التفاضل العشوائي للتمويل I و II</em></li><li>Tsay — <em>تحليل السلاسل الزمنية المالية</em> (الاقتصاد القياسي)</li><li>Bodie, Kane &amp; Marcus — <em>الاستثمارات</em></li><li>Berk &amp; DeMarzo — <em>تمويل الشركات</em></li></ul>`,
+ resCardChannels:`<h4>🎥 القنوات والدورات الكاملة</h4><ul><li><a href="https://www.youtube.com/playlist?list=PLUl4u3cNGP63ctJIEC1UnZ0btsphnnoHR" target="_blank" rel="noopener">MIT 18.S096 — الرياضيات في التمويل</a></li><li><a href="https://www.youtube.com/@QuantPy" target="_blank" rel="noopener">QuantPy</a> — بايثون للتمويل الكمّي</li><li><a href="https://www.youtube.com/@patrickboyle" target="_blank" rel="noopener">Patrick Boyle</a> — الأسواق والمشتقات</li><li><a href="https://www.youtube.com/@ben_lambert" target="_blank" rel="noopener">Ben Lambert</a> — الاقتصاد القياسي</li></ul>`,
+ resCardTools:`<h4>🧮 أدوات للتعلّم</h4><ul><li>Python ‏(NumPy, pandas, statsmodels, scikit-learn)</li><li>Excel / VBA للنمذجة السريعة</li><li>R للاقتصاد القياسي</li><li>منصّتا Bloomberg / Refinitiv (في الحرم الجامعي)</li></ul>`,
+ resCardLinks:`<h4>🏫 روابط جامعة الملك فهد</h4><ul><li><a href="https://kbs.kfupm.edu.sa/master-of-quantitative-finance/" target="_blank" rel="noopener">صفحة برنامج الماجستير</a></li><li><a href="https://bulletin.kfupm.edu.sa/" target="_blank" rel="noopener">الدليل الأكاديمي للجامعة</a></li><li><a href="mailto:kbs-gp@kfupm.edu.sa">مكتب الدراسات العليا</a></li></ul>`,
+ footer:`بُني كرفيق دراسة شخصي لماجستير التمويل الكمّي بجامعة الملك فهد · المنهج مأخوذ من <a href="https://kbs.kfupm.edu.sa/master-of-quantitative-finance/" target="_blank" rel="noopener">صفحة البرنامج الرسمية</a>.<br>قد يتغيّر جدول المقررات — تحقّق دائمًا من الجامعة. بالتوفيق. 💚`
+};
+
+// Strings used by JS-rendered parts.
+const T = {
+ en:{ blockTopics:"📋 Topics to master", topicHint:"· click a topic for an in-depth lesson + quiz",
+  blockWatch:"🎥 Watch & learn", blockRes:"📚 Key resources", learn:"Learn ›",
+  quizTake:"📝 Take the {code} quiz", inDepth:"📘 In depth", workedEx:"📐 Worked example",
+  workedExs:"📐 Worked examples", checkU:"📝 Check your understanding",
+  topicFallback:"Try the full {code} quiz from the course card for questions on this topic.",
+  score:"Score: {c} / {n}", perfect:"🎉 Perfect!", solid:"✅ Solid!", review:"📖 Review the topics above.",
+  nailed:"🎉 Nailed it!", reread:"📖 Re-read the explanation above.",
+  practiceTitle:"{t} — practice", startPractice:"Start practice set →", examBegin:"Begin · {n} questions",
+  progText0:"Check off topics as you learn them — your progress is saved automatically in this browser.",
+  progTextN:"{done} of {total} topics complete across all courses. Keep going! 💪",
+  syncOut:"Not signed in — progress saves on this device only.", syncing:"Syncing…",
+  synced:"✓ Synced to your Google account — continue on any device.",
+  syncFail:"Signed in, but sync failed (check Firestore setup)." },
+ ar:{ blockTopics:"📋 مواضيع يجب إتقانها", topicHint:"· اضغط على موضوع لدرس مفصّل + اختبار",
+  blockWatch:"🎥 شاهد وتعلّم", blockRes:"📚 مصادر أساسية", learn:"ادرس ‹",
+  quizTake:"📝 ابدأ اختبار {code}", inDepth:"📘 بالتفصيل", workedEx:"📐 مثال محلول",
+  workedExs:"📐 أمثلة محلولة", checkU:"📝 تحقّق من فهمك",
+  topicFallback:"جرّب اختبار {code} الكامل من بطاقة المقرر لأسئلة حول هذا الموضوع.",
+  score:"النتيجة: {c} / {n}", perfect:"🎉 ممتاز!", solid:"✅ جيد!", review:"📖 راجع المواضيع أعلاه.",
+  nailed:"🎉 أحسنت!", reread:"📖 أعد قراءة الشرح أعلاه.",
+  practiceTitle:"{t} — تمارين", startPractice:"ابدأ مجموعة التمارين ←", examBegin:"ابدأ · {n} سؤالًا",
+  progText0:"علّم المواضيع التي تتعلّمها — يُحفظ تقدّمك تلقائيًا في هذا المتصفّح.",
+  progTextN:"أكملت {done} من {total} موضوعًا في جميع المقررات. واصل! 💪",
+  syncOut:"غير مسجَّل الدخول — يُحفظ التقدّم على هذا الجهاز فقط.", syncing:"جارٍ المزامنة…",
+  synced:"✓ تمت المزامنة مع حساب Google — تابع من أي جهاز.",
+  syncFail:"تم تسجيل الدخول، لكن فشلت المزامنة (تحقّق من إعداد Firestore)." }
+};
+
+function t(key, vars){
+  let s = (T[L] && T[L][key]) || T.en[key] || key;
+  if(vars) for(const k in vars) s = s.split("{"+k+"}").join(vars[k]);
+  return s;
+}
+window.t = t;
+
+/* Arabic curriculum data — empty for now; falls back to English until translated. */
+const COURSES_AR = {};
+const DEEP_AR = {};
+const SEM_AR = [
+ {name:"الفصل الأول", note:"الأساسيات (6 ساعات): نظرية كيف تخلق الشركات القيمة وكيف يُسعّر العائد والمخاطرة."},
+ {name:"الفصل الثاني", note:"الأسواق والتحليلات (6 ساعات): كيف تعمل الأسواق والمحافظ، وتطبيق الذكاء الاصطناعي وتعلّم الآلة على مشكلات الأعمال."},
+ {name:"الفصل الثالث", note:"النواة الكمّية (6 ساعات): الأدوات العشوائية والاقتصاد القياسي — مع بدء مشروع التخرّج (قيد التنفيذ)."},
+ {name:"الفصل الرابع", note:"الأدوات والمشروع (12 ساعة): المشتقات والدخل الثابت وإكمال مشروعك بمقدار 6 ساعات."}
+];
+const PRAC_AR = [
+ {t:"مزيج النواة الكمّية", d:"العمليات العشوائية، الاقتصاد القياسي، والاقتصاد المالي."},
+ {t:"الأسواق والأدوات", d:"المشتقات، الدخل الثابت، ونظرية الاستثمار."},
+ {t:"تطبيقي وشركات", d:"تمويل الشركات، الذكاء الاصطناعي للأعمال، ومهارات المشروع."}
+];
+const EX_AR = [
+ {t:"نموذج امتحان الفصل الأول", d:"10 أسئلة في تمويل الشركات والعمليات العشوائية — مزيج مشابه لما ستواجهه في منتصف البرنامج."},
+ {t:"نموذج امتحان الفصل الثاني", d:"10 أسئلة في الاقتصاد المالي والاقتصاد القياسي، توازن بين النظرية واستدلال البيانات."},
+ {t:"نموذج امتحان الفصل الثالث", d:"10 أسئلة في المشتقات ونظرية الاستثمار — التسعير والتحوّط والمحافظ."},
+ {t:"الامتحان الشامل النهائي", d:"14 سؤالًا متنوّعًا يغطّي كامل نواة البرنامج. اعتبره اختبارًا مؤقّتًا بكتاب مغلق."}
+];
+
+function getCourse(cid){ return (L==="ar" && COURSES_AR[cid]) ? COURSES_AR[cid] : COURSES[cid]; }
+function getDeep(key){ return (L==="ar" && DEEP_AR[key]) ? DEEP_AR[key] : (DEEP[key]||{}); }
+function getSemesters(){ return L==="ar" ? SEMESTERS.map((s,i)=>({id:s.id,courses:s.courses,name:SEM_AR[i].name,note:SEM_AR[i].note})) : SEMESTERS; }
+function getPractice(){ return L==="ar" ? PRACTICE.map((p,i)=>({t:PRAC_AR[i].t,d:PRAC_AR[i].d,ids:p.ids})) : PRACTICE; }
+function getExams(){ return L==="ar" ? EXAMS.map((x,i)=>({t:EX_AR[i].t,d:EX_AR[i].d,ids:x.ids,n:x.n})) : EXAMS; }
+
+function applyI18n(){
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const k=el.getAttribute("data-i18n");
+    if(el.dataset.orig===undefined) el.dataset.orig=el.textContent;
+    el.textContent = (L==="ar" && I18N_AR[k]!==undefined) ? I18N_AR[k] : el.dataset.orig;
+  });
+  document.querySelectorAll("[data-i18n-html]").forEach(el=>{
+    const k=el.getAttribute("data-i18n-html");
+    if(el.dataset.orig===undefined) el.dataset.orig=el.innerHTML;
+    el.innerHTML = (L==="ar" && I18N_AR[k]!==undefined) ? I18N_AR[k] : el.dataset.orig;
+  });
+}
+
+function applyLang(lang){
+  L = (lang==="ar") ? "ar" : "en";
+  document.documentElement.lang = L;
+  document.documentElement.dir = (L==="ar") ? "rtl" : "ltr";
+  document.body.classList.toggle("rtl", L==="ar");
+  document.querySelectorAll("#langToggle button").forEach(b=>b.classList.toggle("on", b.dataset.lang===L));
+  applyI18n();
+  if(typeof renderTabs==="function") renderTabs();
+  if(typeof renderCourses==="function") renderCourses();
+  if(typeof renderPractice==="function") renderPractice();
+  if(typeof renderExams==="function") renderExams();
+  if(typeof updateRing==="function") updateRing();
+  if(window.refreshSync) window.refreshSync();
+}
+function setLang(lang){ localStorage.setItem("qf_lang", lang==="ar"?"ar":"en"); applyLang(lang); var o=document.getElementById("langOverlay"); if(o) o.classList.add("hide"); }
+window.setLang = setLang;
+function initLang(){
+  const saved = localStorage.getItem("qf_lang");
+  if(saved){ applyLang(saved); }
+  else { applyLang("en"); var o=document.getElementById("langOverlay"); if(o) o.classList.remove("hide"); }
+}
+
+/* ============================================================
    PROGRESS (localStorage)
    ============================================================ */
 const LS_KEY="kfupm_qf_progress_v1";
@@ -1315,8 +1497,7 @@ function updateRing(){
   document.getElementById("ring").style.setProperty("--p",pct);
   document.getElementById("ringPct").textContent=pct+"%";
   document.getElementById("progText").textContent =
-    done===0 ? "Check off topics as you learn them — your progress is saved automatically in this browser."
-    : `${done} of ${total} topics complete across all courses. Keep going! 💪`;
+    done===0 ? t('progText0') : t('progTextN',{done,total});
 }
 function resetAll(){
   if(confirm("Reset all study progress?")){progress={};save();
@@ -1332,25 +1513,28 @@ const note=document.getElementById("semNote");
 const list=document.getElementById("courseList");
 let activeSem=1;
 
-SEMESTERS.forEach(s=>{
-  const b=document.createElement("button");
-  b.textContent=s.name; b.dataset.sem=s.id;
-  if(s.id===1)b.classList.add("active");
-  b.onclick=()=>{activeSem=s.id;
-    document.querySelectorAll(".sem-tabs button").forEach(x=>x.classList.toggle("active",+x.dataset.sem===s.id));
-    renderCourses();};
-  tabs.appendChild(b);
-});
+function renderTabs(){
+  tabs.innerHTML="";
+  getSemesters().forEach(s=>{
+    const b=document.createElement("button");
+    b.textContent=s.name; b.dataset.sem=s.id;
+    if(s.id===activeSem)b.classList.add("active");
+    b.onclick=()=>{activeSem=s.id;
+      document.querySelectorAll(".sem-tabs button").forEach(x=>x.classList.toggle("active",+x.dataset.sem===s.id));
+      renderCourses();};
+    tabs.appendChild(b);
+  });
+}
 
 function renderCourses(){
-  const sem=SEMESTERS.find(s=>s.id===activeSem);
+  const sem=getSemesters().find(s=>s.id===activeSem);
   note.textContent=sem.note;
   list.innerHTML="";
   sem.courses.forEach(cid=>list.appendChild(courseCard(cid)));
 }
 
 function courseCard(cid){
-  const c=COURSES[cid];
+  const c=getCourse(cid);
   const el=document.createElement("div");
   el.className="course";
   el.innerHTML=`
@@ -1364,24 +1548,24 @@ function courseCard(cid){
       <p class="desc">${c.desc}</p>
       <div class="blocks">
         <div class="block">
-          <h5>📋 Topics to master <span style="color:var(--mut);font-weight:400;text-transform:none;letter-spacing:0">· click a topic for an in-depth lesson + quiz</span></h5>
-          ${c.topics.map((t,i)=>{const key=cid+"_"+i;const done=progress[key]?"done":"";
+          <h5>${t('blockTopics')} <span style="color:var(--mut);font-weight:400;text-transform:none;letter-spacing:0">${t('topicHint')}</span></h5>
+          ${c.topics.map((tp,i)=>{const key=cid+"_"+i;const done=progress[key]?"done":"";
             return `<div class="topic-item">
               <div class="topic-row ${done}" data-cid="${cid}" data-idx="${i}">
                 <input type="checkbox" data-key="${key}" ${progress[key]?"checked":""}>
-                <span class="ttitle">${t.t}</span>
-                <span class="topen">Learn ›</span>
+                <span class="ttitle">${tp.t}</span>
+                <span class="topen">${t('learn')}</span>
               </div>
             </div>`;}).join("")}
         </div>
         <div class="block">
-          <h5>🎥 Watch &amp; learn</h5>
+          <h5>${t('blockWatch')}</h5>
           ${c.videos.map(v=>`<a class="vid" target="_blank" rel="noopener" href="${v.u}">
             <span class="play">▶</span><span class="v-meta"><b>${v.t}</b><small>${v.c}</small></span></a>`).join("")}
-          <button class="btn quiz-btn" onclick="openQuiz('${cid}')">📝 Take the ${c.code} quiz</button>
+          <button class="btn quiz-btn" onclick="openQuiz('${cid}')">${t('quizTake',{code:c.code})}</button>
         </div>
         <div class="block">
-          <h5>📚 Key resources</h5>
+          <h5>${t('blockRes')}</h5>
           <div class="res">${c.res.map(r=>`<a target="_blank" rel="noopener" href="${r.u}">${r.t}</a>`).join("")}</div>
         </div>
       </div>
@@ -1435,40 +1619,41 @@ function buildQuiz(title, questions){
   body.innerHTML="";
   renderQuestions(body, questions, state=>{
     const s=document.createElement("div");s.className="quiz-score";
-    s.textContent=`Score: ${state.correct} / ${state.total}  ${state.correct===state.total?"🎉 Perfect!":state.correct>=state.total*0.7?"✅ Solid!":"📖 Review the topics above."}`;
+    s.textContent=t('score',{c:state.correct,n:state.total})+"  "+(state.correct===state.total?t('perfect'):state.correct>=state.total*0.7?t('solid'):t('review'));
     body.appendChild(s);s.scrollIntoView({behavior:"smooth",block:"nearest"});
   });
   modal.classList.add("show");
 }
-function openQuiz(cid){const c=COURSES[cid];buildQuiz(c.code+" — "+c.title, c.quiz);}
+function openQuiz(cid){const c=getCourse(cid);buildQuiz(c.code+" — "+c.title, c.quiz);}
 
 // Open a single topic as a lesson: summary + in-depth explanation + worked example(s) + mini quiz.
 function openTopic(cid,i){
-  const t=COURSES[cid].topics[i];
-  const extra=DEEP[cid+"_"+i]||{};
-  document.getElementById("modalTitle").textContent=COURSES[cid].code+" · "+t.t;
+  const cc=getCourse(cid);
+  const tp=cc.topics[i];
+  const extra=getDeep(cid+"_"+i);
+  document.getElementById("modalTitle").textContent=cc.code+" · "+tp.t;
   const body=document.getElementById("modalBody");
   body.innerHTML="";
-  const examples = extra.examples && extra.examples.length ? extra.examples : [t.ex];
+  const examples = extra.examples && extra.examples.length ? extra.examples : [tp.ex];
   const wrap=document.createElement("div");wrap.className="topic-modal";
   wrap.innerHTML=`
-    <p class="t-summary">${t.x}</p>
-    <h4>📘 In depth</h4>
-    <div class="t-depth">${extra.d || ("<p>"+t.x+"</p>")}</div>
-    <h4>📐 Worked example${examples.length>1?"s":""}</h4>
+    <p class="t-summary">${tp.x}</p>
+    <h4>${t('inDepth')}</h4>
+    <div class="t-depth">${extra.d || ("<p>"+tp.x+"</p>")}</div>
+    <h4>${examples.length>1?t('workedExs'):t('workedEx')}</h4>
     ${examples.map(e=>`<div class="t-ex">${e}</div>`).join("")}
-    <h4>📝 Check your understanding</h4>
+    <h4>${t('checkU')}</h4>
     <div class="t-quiz"></div>`;
   body.appendChild(wrap);
   const qc=wrap.querySelector(".t-quiz");
   if(extra.quiz && extra.quiz.length){
     renderQuestions(qc, extra.quiz, state=>{
       const s=document.createElement("div");s.className="quiz-score";
-      s.textContent=`Score: ${state.correct} / ${state.total}  ${state.correct===state.total?"🎉 Nailed it!":"📖 Re-read the explanation above."}`;
+      s.textContent=t('score',{c:state.correct,n:state.total})+"  "+(state.correct===state.total?t('nailed'):t('reread'));
       qc.appendChild(s);
     });
   } else {
-    qc.innerHTML=`<p style="color:var(--mut);font-size:.9rem">Try the full ${COURSES[cid].code} quiz from the course card for questions on this topic.</p>`;
+    qc.innerHTML=`<p style="color:var(--mut);font-size:.9rem">${t('topicFallback',{code:cc.code})}</p>`;
   }
   modal.classList.add("show");
   body.parentElement.scrollTop=0;
@@ -1481,7 +1666,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape")closeQuiz();});
    PRACTICE & EXAM CARDS
    ============================================================ */
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
-function pool(ids){let p=[];ids.forEach(id=>COURSES[id].quiz.forEach(q=>p.push(q)));return p;}
+function pool(ids){let p=[];ids.forEach(id=>getCourse(id).quiz.forEach(q=>p.push(q)));return p;}
 
 const PRACTICE=[
   {t:"Quant core mix",d:"Stochastic processes, econometrics & financial economics.",ids:["STAT516","FIN545","ECON513"]},
@@ -1489,13 +1674,16 @@ const PRACTICE=[
   {t:"Applied & corporate",d:"Corporate finance, AI for business & project skills.",ids:["FIN511","MIS517","FIN619"]},
 ];
 const pg=document.getElementById("practiceGrid");
-PRACTICE.forEach(p=>{
-  const el=document.createElement("div");el.className="mini";
-  el.innerHTML=`<h4>🎯 ${p.t}</h4><p style="color:var(--mut);font-size:.9rem;margin:0 0 12px">${p.d}</p>`;
-  const b=document.createElement("button");b.className="btn";b.textContent="Start practice set →";
-  b.onclick=()=>buildQuiz(p.t+" — practice", shuffle(pool(p.ids)).slice(0,6));
-  el.appendChild(b);pg.appendChild(el);
-});
+function renderPractice(){
+  pg.innerHTML="";
+  getPractice().forEach(p=>{
+    const el=document.createElement("div");el.className="mini";
+    el.innerHTML=`<h4>🎯 ${p.t}</h4><p style="color:var(--mut);font-size:.9rem;margin:0 0 12px">${p.d}</p>`;
+    const b=document.createElement("button");b.className="btn";b.textContent=t('startPractice');
+    b.onclick=()=>buildQuiz(t('practiceTitle',{t:p.t}), shuffle(pool(p.ids)).slice(0,6));
+    el.appendChild(b);pg.appendChild(el);
+  });
+}
 
 const EXAMS=[
   {t:"Semester 1 mock exam",d:"10 questions across Corporate Finance & Stochastic Processes — the kind of mix you'll face mid-program.",ids:["FIN511","STAT516"],n:10},
@@ -1504,16 +1692,22 @@ const EXAMS=[
   {t:"Comprehensive final",d:"14 mixed questions spanning the entire MQF core. Treat it as a timed, closed-book run.",ids:["FIN511","STAT516","ECON513","FIN545","FIN524","FIN540","FIN527","MIS517"],n:14},
 ];
 const eg=document.getElementById("examGrid");
-EXAMS.forEach(x=>{
-  const el=document.createElement("div");el.className="exam-card";
-  el.innerHTML=`<h4>📄 ${x.t}</h4><p>${x.d}</p>`;
-  const b=document.createElement("button");b.className="btn";b.textContent=`Begin · ${x.n} questions`;
-  b.onclick=()=>buildQuiz(x.t, shuffle(pool(x.ids)).slice(0,x.n));
-  el.appendChild(b);eg.appendChild(el);
-});
+function renderExams(){
+  eg.innerHTML="";
+  getExams().forEach(x=>{
+    const el=document.createElement("div");el.className="exam-card";
+    el.innerHTML=`<h4>📄 ${x.t}</h4><p>${x.d}</p>`;
+    const b=document.createElement("button");b.className="btn";b.textContent=t('examBegin',{n:x.n});
+    b.onclick=()=>buildQuiz(x.t, shuffle(pool(x.ids)).slice(0,x.n));
+    el.appendChild(b);eg.appendChild(el);
+  });
+}
 
 /* init */
-renderCourses();
+renderTabs();
+renderPractice();
+renderExams();
+initLang();
 updateRing();
 
 /* ---- bridge for the optional Google-login / cloud-sync module ---- */
@@ -1567,6 +1761,14 @@ if (!CONFIGURED) {
     const provider = new GoogleAuthProvider();
     let uid = null, t = null;
 
+    // Localised sync-status line (re-paints when language changes).
+    let syncState = "out";
+    const paintSync = () => {
+      const key = syncState==="out" ? "syncOut" : syncState==="syncing" ? "syncing" : syncState==="synced" ? "synced" : "syncFail";
+      syncStatus.textContent = window.t ? window.t(key) : syncStatus.textContent;
+    };
+    window.refreshSync = paintSync;
+
     getRedirectResult(auth).catch(() => {});
 
     // Called by the app's save() whenever progress changes.
@@ -1598,7 +1800,7 @@ if (!CONFIGURED) {
         userChip.style.display = "flex";
         userName.textContent = user.displayName || user.email || "Account";
         if (user.photoURL) userPic.src = user.photoURL; else userPic.style.display = "none";
-        syncStatus.textContent = "Syncing…";
+        syncState = "syncing"; paintSync();
         try {
           const snap = await getDoc(doc(db, "users", uid));
           const remote = (snap.exists() && snap.data().progress) || {};
@@ -1608,16 +1810,16 @@ if (!CONFIGURED) {
           for (const k in local) { if (local[k]) merged[k] = true; }
           if (window.applyProgress) window.applyProgress(merged);
           await setDoc(doc(db, "users", uid), { progress: merged, updated: Date.now() }, { merge: true });
-          syncStatus.textContent = "✓ Synced to your Google account — continue on any device.";
+          syncState = "synced"; paintSync();
         } catch (e) {
           console.warn(e);
-          syncStatus.textContent = "Signed in, but sync failed (check Firestore setup).";
+          syncState = "fail"; paintSync();
         }
       } else {
         uid = null;
         loginBtn.style.display = "";
         userChip.style.display = "none";
-        syncStatus.textContent = "Not signed in — progress saves on this device only.";
+        syncState = "out"; paintSync();
       }
     });
   } catch (e) {
