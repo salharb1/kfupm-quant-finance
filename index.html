@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KFUPM Quant Finance — Study & Prep Hub</title>
+<style>
+  :root{
+    --bg:#0c1118; --bg2:#121a24; --card:#16202c; --card2:#1c2836;
+    --line:#26323f; --txt:#e6edf3; --mut:#92a3b5; --acc:#1fb486; --acc2:#37c9f0;
+    --gold:#f0b34a; --bad:#ef5f6b; --good:#34d399; --rad:14px;
+    --shadow:0 6px 24px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:'Segoe UI',system-ui,-apple-system,Roboto,Arial,sans-serif;
+    background:radial-gradient(1200px 600px at 80% -10%,#15303b 0%,transparent 55%),var(--bg);
+    color:var(--txt);line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:var(--acc2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  /* ===== top bar ===== */
+  header.top{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:14px;
+    padding:12px 22px;background:rgba(12,17,24,.82);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line)}
+  .logo{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:.3px}
+  .logo .mark{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;
+    background:linear-gradient(135deg,var(--acc),var(--acc2));color:#04222b;font-weight:800}
+  nav.top-nav{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+  nav.top-nav a{color:var(--mut);padding:7px 12px;border-radius:9px;font-size:.9rem;font-weight:600}
+  nav.top-nav a:hover{background:var(--card);color:var(--txt);text-decoration:none}
+  /* ===== layout ===== */
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+  /* ===== hero ===== */
+  .hero{padding:54px 0 30px}
+  .hero h1{font-size:2.5rem;margin:.2em 0 .25em;line-height:1.1}
+  .hero h1 span{background:linear-gradient(120deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p.lead{font-size:1.12rem;color:var(--mut);max-width:680px}
+  .pills{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+  .pill{background:var(--card);border:1px solid var(--line);padding:7px 13px;border-radius:30px;
+    font-size:.84rem;color:var(--mut);font-weight:600}
+  .pill b{color:var(--txt)}
+  /* progress */
+  .progress-box{margin-top:26px;background:var(--card);border:1px solid var(--line);
+    border-radius:var(--rad);padding:18px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .ring{--p:0;width:74px;height:74px;border-radius:50%;flex:0 0 auto;
+    background:conic-gradient(var(--acc) calc(var(--p)*1%),#243240 0);display:grid;place-items:center}
+  .ring i{width:56px;height:56px;border-radius:50%;background:var(--card);display:grid;place-items:center;
+    font-weight:800;font-style:normal;font-size:1.05rem}
+  .progress-box .meta{flex:1;min-width:200px}
+  .progress-box .meta h3{margin:0 0 3px}
+  .progress-box .meta p{margin:0;color:var(--mut);font-size:.9rem}
+  .btn{display:inline-block;background:linear-gradient(135deg,var(--acc),#159c74);color:#04222b;
+    font-weight:700;padding:9px 16px;border-radius:10px;border:0;cursor:pointer;font-size:.9rem}
+  .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--txt)}
+  .btn:hover{filter:brightness(1.07);text-decoration:none}
+  /* ===== sections ===== */
+  section{padding:40px 0;border-top:1px solid var(--line)}
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
+  .sec-head h2{font-size:1.6rem;margin:0}
+  .sec-head .tag{font-size:.75rem;font-weight:700;color:var(--acc);text-transform:uppercase;letter-spacing:1px}
+  .sec-sub{color:var(--mut);margin:0 0 24px;max-width:720px}
+  /* prep grid */
+  .grid{display:grid;gap:16px}
+  .grid.cols-2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  .grid.cols-3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+  .mini{background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:18px}
+  .mini h4{margin:0 0 8px;display:flex;align-items:center;gap:8px}
+  .mini .ico{font-size:1.2rem}
+  .mini ul{margin:8px 0 0;padding-left:18px;color:var(--mut);font-size:.9rem}
+  .mini ul li{margin:3px 0}
+  /* semester */
+  .sem-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+  .sem-tabs button{background:var(--card);border:1px solid var(--line);color:var(--mut);
+    padding:9px 16px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.9rem}
+  .sem-tabs button.active{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#04222b;border-color:transparent}
+  .sem-note{color:var(--mut);font-size:.9rem;margin:-8px 0 18px}
+  /* course card */
+  .course{background:var(--card);border:1px solid var(--line);border-radius:var(--rad);margin-bottom:14px;overflow:hidden}
+  .course-head{display:flex;align-items:center;gap:14px;padding:16px 18px;cursor:pointer;user-select:none}
+  .course-head:hover{background:var(--card2)}
+  .course-code{font-size:.72rem;font-weight:800;letter-spacing:.5px;color:#04222b;
+    background:var(--gold);padding:4px 8px;border-radius:6px;white-space:nowrap}
+  .course-head h3{margin:0;font-size:1.08rem;flex:1}
+  .course-head .cr{color:var(--mut);font-size:.82rem;font-weight:600}
+  .course-head .chev{transition:transform .25s;color:var(--mut)}
+  .course.open .chev{transform:rotate(90deg)}
+  .course-body{display:none;padding:4px 18px 20px;border-top:1px solid var(--line)}
+  .course.open .course-body{display:block}
+  .course-body p.desc{color:var(--mut);margin:14px 0 18px}
+  .blocks{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .block h5{margin:0 0 10px;font-size:.78rem;text-transform:uppercase;letter-spacing:1px;color:var(--acc)}
+  /* topic checklist */
+  .topic-item{border-bottom:1px solid var(--line)}
+  .topic-item:last-child{border-bottom:0}
+  .topic-row{display:flex;align-items:center;gap:9px;padding:9px 0;cursor:pointer;font-size:.92rem;color:var(--txt)}
+  .topic-row:hover .ttitle{color:var(--acc2)}
+  .topic-row input{width:16px;height:16px;accent-color:var(--acc);cursor:pointer;flex:0 0 auto}
+  .topic-row .ttitle{flex:1}
+  .topic-row.done .ttitle{color:var(--mut);text-decoration:line-through}
+  .topic-row .topen{color:var(--acc);font-size:.8rem;font-weight:700;flex:0 0 auto;opacity:.55;transition:.15s}
+  .topic-row:hover .topen{opacity:1;transform:translateX(2px)}
+  /* topic lesson modal */
+  .topic-modal h4{margin:20px 0 8px;font-size:.95rem;color:var(--acc2)}
+  .topic-modal .t-summary{font-size:1.02rem;color:var(--txt);font-weight:600;margin:0;
+    padding:0 0 4px;border-bottom:1px solid var(--line)}
+  .topic-modal .t-depth{color:var(--txt);font-size:.93rem}
+  .topic-modal .t-depth p{margin:9px 0}
+  .topic-modal .t-depth ul{margin:9px 0;padding-left:20px}
+  .topic-modal .t-depth li{margin:4px 0}
+  .topic-modal .t-depth code{background:var(--card);padding:1px 6px;border-radius:5px;font-size:.86rem;color:var(--gold)}
+  .topic-modal .t-ex{background:var(--card);border-left:3px solid var(--gold);border-radius:8px;
+    padding:11px 14px;margin:8px 0;font-size:.9rem;color:var(--mut)}
+  .topic-modal .t-ex b{color:var(--txt)}
+  .topic-modal .t-ex ol{margin:8px 0 6px;padding-left:22px;counter-reset:step}
+  .topic-modal .t-ex li{margin:5px 0;padding-left:3px}
+  .topic-modal .t-ex li::marker{color:var(--acc);font-weight:700}
+  .topic-modal .t-ex code{background:#0c141d;padding:1px 6px;border-radius:5px;font-size:.86rem;
+    color:var(--acc2);white-space:nowrap}
+  @keyframes fade{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+  /* video links */
+  .vid{display:flex;align-items:center;gap:10px;padding:9px 11px;background:var(--card2);
+    border:1px solid var(--line);border-radius:10px;margin-bottom:8px;font-size:.88rem}
+  .vid:hover{border-color:var(--acc)}
+  .vid .play{width:30px;height:30px;flex:0 0 auto;border-radius:7px;background:#ff000022;color:#ff5a5a;
+    display:grid;place-items:center;font-size:.9rem}
+  .vid .v-meta{flex:1;min-width:0}
+  .vid .v-meta b{display:block;font-weight:600;color:var(--txt);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .vid .v-meta small{color:var(--mut)}
+  .res a{display:block;padding:6px 0;font-size:.9rem}
+  .res a::before{content:"🔗 ";opacity:.7}
+  /* quiz */
+  .quiz-btn{margin-top:6px}
+  .modal{position:fixed;inset:0;background:rgba(4,8,12,.7);backdrop-filter:blur(4px);
+    z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+  .modal.show{display:flex}
+  .modal-card{background:var(--bg2);border:1px solid var(--line);border-radius:16px;
+    max-width:620px;width:100%;max-height:88vh;overflow:auto;box-shadow:var(--shadow)}
+  .modal-head{display:flex;align-items:center;gap:12px;padding:18px 22px;border-bottom:1px solid var(--line);
+    position:sticky;top:0;background:var(--bg2)}
+  .modal-head h3{margin:0;flex:1;font-size:1.1rem}
+  .modal-head .x{background:none;border:0;color:var(--mut);font-size:1.5rem;cursor:pointer;line-height:1}
+  .modal-body{padding:20px 22px}
+  .q{margin-bottom:22px}
+  .q .qtext{font-weight:600;margin-bottom:10px}
+  .q .opt{display:block;padding:10px 13px;border:1px solid var(--line);border-radius:9px;margin:6px 0;
+    cursor:pointer;font-size:.92rem;transition:.15s}
+  .q .opt:hover{border-color:var(--acc)}
+  .q .opt.correct{border-color:var(--good);background:#0f3a2c}
+  .q .opt.wrong{border-color:var(--bad);background:#3a1418}
+  .q .expl{display:none;margin-top:9px;padding:10px 12px;background:var(--card);border-left:3px solid var(--acc);
+    border-radius:6px;font-size:.88rem;color:var(--mut)}
+  .q .expl.show{display:block}
+  .quiz-score{font-weight:700;text-align:center;padding:12px;background:var(--card);border-radius:10px}
+  /* exams */
+  .exam-card{background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:20px;display:flex;flex-direction:column}
+  .exam-card h4{margin:0 0 6px}
+  .exam-card p{color:var(--mut);font-size:.9rem;flex:1;margin:0 0 14px}
+  .note{background:#1a2330;border:1px solid var(--line);border-left:3px solid var(--gold);
+    border-radius:10px;padding:14px 16px;color:var(--mut);font-size:.9rem;margin-top:16px}
+  footer{padding:34px 0 50px;border-top:1px solid var(--line);color:var(--mut);font-size:.85rem;text-align:center}
+  .reset{background:none;border:1px solid var(--line);color:var(--mut);padding:6px 12px;border-radius:8px;cursor:pointer;font-size:.8rem}
+  @media(max-width:560px){.hero h1{font-size:1.9rem}.sec-head h2{font-size:1.35rem}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="logo"><span class="mark">QF</span><span>KFUPM&nbsp;Quant&nbsp;Finance</span></div>
+  <nav class="top-nav">
+    <a href="#prep">Prep</a>
+    <a href="#semesters">Semesters</a>
+    <a href="#practice">Practice</a>
+    <a href="#exams">Exams</a>
+    <a href="#resources">Resources</a>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="pill">🎓 Master of Quantitative Finance · KFUPM Business School · 30 credit hours</div>
+    <h1>Your 2-year roadmap to <span>master quant finance</span></h1>
+    <p class="lead">A self-study companion built around the real KFUPM MQF curriculum — semester by semester,
+      with curated videos, topic checklists, interactive practice quizzes, and mock exams. Track your progress as you prep.</p>
+    <div class="pills">
+      <div class="pill"><b>4</b> semesters</div>
+      <div class="pill"><b>8</b> courses + capstone</div>
+      <div class="pill">Evening format · <b>Sun–Wed</b></div>
+      <div class="pill">Prereqs: <b>calculus · stats · coding</b></div>
+    </div>
+
+    <div class="progress-box">
+      <div class="ring" id="ring"><i id="ringPct">0%</i></div>
+      <div class="meta">
+        <h3>Study progress</h3>
+        <p id="progText">Check off topics as you learn them — your progress is saved automatically in this browser.</p>
+      </div>
+      <a class="btn" href="#prep">Start preparing →</a>
+      <button class="reset" onclick="resetAll()">Reset progress</button>
+    </div>
+  </div>
+
+  <!-- PREP -->
+  <section id="prep">
+    <div class="sec-head"><span class="tag">Before you start</span></div>
+    <h2 style="margin:0 0 8px">Get your foundations solid</h2>
+    <p class="sec-sub">The MQF program assumes comfort with college calculus, statistics, and basic programming.
+      Spend your pre-enrollment weeks refreshing these — they appear in <em>every</em> course.</p>
+    <div class="grid cols-3">
+      <div class="mini">
+        <h4><span class="ico">∫</span> Math refresher</h4>
+        <ul>
+          <li>Calculus: derivatives, integrals, Taylor series</li>
+          <li>Linear algebra: matrices, eigenvalues</li>
+          <li>Optimization &amp; Lagrange multipliers</li>
+        </ul>
+        <a class="vid" style="margin-top:12px" target="_blank" rel="noopener"
+           href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab">
+          <span class="play">▶</span><span class="v-meta"><b>3Blue1Brown — Essence of Calculus</b><small>Visual intuition</small></span></a>
+        <a class="vid" target="_blank" rel="noopener"
+           href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab">
+          <span class="play">▶</span><span class="v-meta"><b>Essence of Linear Algebra</b><small>3Blue1Brown</small></span></a>
+      </div>
+      <div class="mini">
+        <h4><span class="ico">📊</span> Probability &amp; statistics</h4>
+        <ul>
+          <li>Distributions, expectation, variance</li>
+          <li>Hypothesis testing &amp; regression</li>
+          <li>Conditional probability, Bayes</li>
+        </ul>
+        <a class="vid" style="margin-top:12px" target="_blank" rel="noopener"
+           href="https://www.youtube.com/playlist?list=PLU5aQXLWR3_yYS0ZYRA-5g5YSSYLNZ6Mc">
+          <span class="play">▶</span><span class="v-meta"><b>Statistics 110 — Harvard (Blitzstein)</b><small>Full course</small></span></a>
+        <a class="vid" target="_blank" rel="noopener"
+           href="https://www.khanacademy.org/math/statistics-probability">
+          <span class="play">▶</span><span class="v-meta"><b>Khan Academy — Stats &amp; Probability</b><small>Practice as you go</small></span></a>
+      </div>
+      <div class="mini">
+        <h4><span class="ico">🐍</span> Programming (Python)</h4>
+        <ul>
+          <li>Python basics, NumPy, pandas</li>
+          <li>Plotting with matplotlib</li>
+          <li>Intro to ML (scikit-learn)</li>
+        </ul>
+        <a class="vid" style="margin-top:12px" target="_blank" rel="noopener"
+           href="https://www.youtube.com/watch?v=rfscVS0vtbw">
+          <span class="play">▶</span><span class="v-meta"><b>Python Full Course — freeCodeCamp</b><small>Beginner friendly</small></span></a>
+        <a class="vid" target="_blank" rel="noopener"
+           href="https://www.youtube.com/watch?v=vmEHCJofslg">
+          <span class="play">▶</span><span class="v-meta"><b>pandas for data analysis</b><small>Hands-on</small></span></a>
+      </div>
+    </div>
+    <div class="note">💡 <b>Tip:</b> KFUPM admission requires one prior course each in statistics, calculus, and a
+      computer-related subject. If any feels rusty, prioritise it now — the first semester (Stochastic Processes,
+      Econometrics) moves fast.</div>
+  </section>
+
+  <!-- SEMESTERS -->
+  <section id="semesters">
+    <div class="sec-head"><span class="tag">Core curriculum</span></div>
+    <h2 style="margin:0 0 8px">Study by semester</h2>
+    <p class="sec-sub">The two-year (part-time) plan spreads the eight core courses and the capstone project
+      across four evening semesters. Click any course to open its study pack: topics, videos, resources and a quiz.</p>
+    <div class="sem-tabs" id="semTabs"></div>
+    <p class="sem-note" id="semNote"></p>
+    <div id="courseList"></div>
+  </section>
+
+  <!-- PRACTICE -->
+  <section id="practice">
+    <div class="sec-head"><span class="tag">Practice</span></div>
+    <h2 style="margin:0 0 8px">Test yourself</h2>
+    <p class="sec-sub">Quick-fire quizzes pulled from across the curriculum. Each course also has its own quiz inside its card.</p>
+    <div class="grid cols-3" id="practiceGrid"></div>
+  </section>
+
+  <!-- EXAMS -->
+  <section id="exams">
+    <div class="sec-head"><span class="tag">Assessment</span></div>
+    <h2 style="margin:0 0 8px">Mock exams &amp; past papers</h2>
+    <p class="sec-sub">Timed, exam-style sets that mix concepts and calculations the way KFUPM finance courses do.</p>
+    <div class="grid cols-2" id="examGrid"></div>
+    <div class="note">📂 <b>On past exams:</b> KFUPM does not publish a public bank of MQF exam papers, so I can't
+      embed official old papers here honestly. Your best real sources: (1) ask seniors and the
+      <a href="mailto:kbs-gp@kfupm.edu.sa">KBS Graduate Programs office</a> for sample/previous papers, (2) the
+      KFUPM course reserves &amp; Blackboard once enrolled, and (3) professional exam banks below that mirror the same
+      material — <a href="https://www.cfainstitute.org/programs/cfa-program/practice" target="_blank" rel="noopener">CFA practice questions</a>
+      and <a href="https://www.bionicturtle.com/" target="_blank" rel="noopener">Bionic Turtle (FRM)</a>. The mock exams above are built to match the topic mix.</div>
+  </section>
+
+  <!-- RESOURCES -->
+  <section id="resources">
+    <div class="sec-head"><span class="tag">Toolkit</span></div>
+    <h2 style="margin:0 0 8px">Standout resources</h2>
+    <p class="sec-sub">Books, courses and channels worth bookmarking for the whole program.</p>
+    <div class="grid cols-2">
+      <div class="mini">
+        <h4>📚 Core textbooks</h4>
+        <ul>
+          <li>Hull — <em>Options, Futures &amp; Other Derivatives</em> (derivatives, fixed income)</li>
+          <li>Shreve — <em>Stochastic Calculus for Finance I &amp; II</em></li>
+          <li>Tsay — <em>Analysis of Financial Time Series</em> (econometrics)</li>
+          <li>Bodie, Kane &amp; Marcus — <em>Investments</em></li>
+          <li>Berk &amp; DeMarzo — <em>Corporate Finance</em></li>
+        </ul>
+      </div>
+      <div class="mini">
+        <h4>🎥 Channels &amp; full courses</h4>
+        <ul>
+          <li><a href="https://www.youtube.com/playlist?list=PLUl4u3cNGP63ctJIEC1UnZ0btsphnnoHR" target="_blank" rel="noopener">MIT 18.S096 — Mathematics in Finance</a></li>
+          <li><a href="https://www.youtube.com/@QuantPy" target="_blank" rel="noopener">QuantPy</a> — Python for quant finance</li>
+          <li><a href="https://www.youtube.com/@patrickboyle" target="_blank" rel="noopener">Patrick Boyle</a> — markets &amp; derivatives</li>
+          <li><a href="https://www.youtube.com/@ben_lambert" target="_blank" rel="noopener">Ben Lambert</a> — econometrics</li>
+        </ul>
+      </div>
+      <div class="mini">
+        <h4>🧮 Tools to learn</h4>
+        <ul>
+          <li>Python (NumPy, pandas, statsmodels, scikit-learn)</li>
+          <li>Excel / VBA for quick modelling</li>
+          <li>R for econometrics</li>
+          <li>Bloomberg / Refinitiv terminals (on campus)</li>
+        </ul>
+      </div>
+      <div class="mini">
+        <h4>🏫 KFUPM links</h4>
+        <ul>
+          <li><a href="https://kbs.kfupm.edu.sa/master-of-quantitative-finance/" target="_blank" rel="noopener">MQF program page</a></li>
+          <li><a href="https://bulletin.kfupm.edu.sa/" target="_blank" rel="noopener">KFUPM academic bulletin</a></li>
+          <li><a href="mailto:kbs-gp@kfupm.edu.sa">Graduate Programs office</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Built as a personal study companion for the KFUPM Master of Quantitative Finance · curriculum sourced from the
+    <a href="https://kbs.kfupm.edu.sa/master-of-quantitative-finance/" target="_blank" rel="noopener">official KBS program page</a>.<br>
+    Course schedule may change — always confirm with KFUPM. Good luck. 💚
+  </footer>
+</div>
+
+<!-- QUIZ MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3 id="modalTitle">Quiz</h3>
+      <button class="x" onclick="closeQuiz()">×</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   CURRICULUM DATA — KFUPM Master of Quantitative Finance
+   ============================================================ */
+const SEMESTERS = [
+  {id:1, name:"Semester 1", note:"Foundations (6 cr): the theory of how firms create value and how risk and return are priced.",
+   courses:["FIN511","ECON513"]},
+  {id:2, name:"Semester 2", note:"Markets & analytics (6 cr): how markets and portfolios work, and applying AI/ML to business problems.",
+   courses:["MIS517","FIN540"]},
+  {id:3, name:"Semester 3", note:"Quantitative core (6 cr): the stochastic and econometric machinery — plus you start the capstone project (in progress).",
+   courses:["STAT516","FIN545","FIN619"]},
+  {id:4, name:"Semester 4", note:"Instruments & capstone (12 cr): derivatives, fixed income, and completing your project for 6 credits.",
+   courses:["FIN524","FIN527","FIN619"]},
+];
+
+const COURSES = {
+  FIN511:{code:"FIN 511",title:"Corporate Finance: Theory & Practice",cr:3,
+    desc:"Valuation, capital structure, cost of capital, payout policy and the core decisions firms make to create value.",
+    topics:[
+      {t:"Time value of money & DCF valuation",x:"A dollar today is worth more than a dollar tomorrow because it can be invested. Discounting converts future cash flows to present value at the required rate.",ex:"$1,000 received in 3 years at 8% is worth 1000 / 1.08³ = $794 today."},
+      {t:"Capital budgeting (NPV, IRR, payback)",x:"Rules to decide which projects to accept. NPV sums discounted cash flows; IRR is the rate that makes NPV zero; payback counts years to recoup the cost.",ex:"A project costing $1,000 that pays $1,300 in two years at 10%: NPV = 1,300/1.1² − 1,000 ≈ +$74 → accept."},
+      {t:"Cost of capital & WACC",x:"The blended required return on a firm's financing: WACC = (E/V)·Re + (D/V)·Rd·(1−Tax). It's the hurdle rate for new projects.",ex:"60% equity at 12% and 40% debt at 6% with 25% tax: WACC = 0.6×12% + 0.4×6%×0.75 = 9.0%."},
+      {t:"Capital structure & Modigliani–Miller",x:"The debt-vs-equity mix. MM Proposition I: with no taxes, firm value is independent of the mix; with taxes, debt adds value via the interest tax shield.",ex:"Adding $1m of permanent debt at a 25% tax rate creates a tax shield worth 0.25 × $1m = $250k of firm value."},
+      {t:"Dividend & payout policy",x:"How firms return cash — dividends vs share buybacks. In perfect markets payout is irrelevant; taxes and signalling make it matter in practice.",ex:"A firm with $10m spare cash can pay a $2 dividend on 5m shares, or buy back ~5% of shares to lift EPS."},
+      {t:"Working capital management",x:"Managing short-term assets and liabilities — cash, inventory, receivables, payables — to keep the firm liquid without tying up too much cash.",ex:"Cash conversion cycle = days inventory + days receivable − days payable; cutting it from 60 to 40 days frees up cash."},
+      {t:"Mergers & acquisitions",x:"Combining firms for synergies, scale or market power. Value created = combined value − standalone values − premium paid.",ex:"Firm A ($100m) buys Firm B ($40m) expecting $20m synergies; paying a $10m premium still nets +$10m of value."},
+      {t:"Real options",x:"Managerial flexibility valued like financial options — the option to expand, delay, or abandon a project — which static DCF ignores.",ex:"A mine that can be mothballed when prices fall has an 'abandonment option' that raises its true NPV above a plain DCF."},
+      {t:"Agency theory & corporate governance",x:"Conflicts between managers (agents) and shareholders (principals), and the mechanisms — boards, incentives, debt — that align them.",ex:"Granting a CEO stock options ties their payoff to the share price, curbing the temptation to chase empire-building."},
+    ],
+    videos:[
+      {t:"Corporate Finance — full course",c:"NYU Stern / Damodaran",u:"https://www.youtube.com/playlist?list=PLUkh9m2Borqkw5dM3CD-3IjPa8Q5h_uoq"},
+      {t:"WACC & cost of capital explained",c:"Search · YouTube",u:"https://www.youtube.com/results?search_query=WACC+cost+of+capital+explained"},
+      {t:"Modigliani–Miller theorem",c:"Search · YouTube",u:"https://www.youtube.com/results?search_query=modigliani+miller+capital+structure"},
+    ],
+    res:[{t:"Damodaran Online — valuation tools & data",u:"https://pages.stern.nyu.edu/~adamodar/"},
+         {t:"Berk & DeMarzo — Corporate Finance (text)",u:"https://www.google.com/search?q=Berk+DeMarzo+Corporate+Finance"}],
+    quiz:[
+      {q:"A project costs $100 today and pays $121 in two years. At a 10% discount rate, its NPV is:",
+       o:["Exactly $0","About +$21","Negative","Exactly +$21"],a:0,
+       e:"PV = 121 / 1.10² = 121 / 1.21 = $100. NPV = 100 − 100 = $0, so the project earns exactly the required return."},
+      {q:"Under Modigliani–Miller (no taxes), firm value is:",
+       o:["Maximised with 100% debt","Independent of capital structure","Maximised with 100% equity","Maximised at a 50/50 mix"],a:1,
+       e:"MM Proposition I (no taxes/frictions) says capital structure is irrelevant — value comes from the assets, not the financing mix."},
+      {q:"WACC will generally fall when a firm adds a moderate amount of debt because:",
+       o:["Debt is riskier than equity","Interest is tax-deductible, lowering after-tax debt cost","Equity holders demand more","Dividends become tax-free"],a:1,
+       e:"The tax shield makes the after-tax cost of debt cheaper than equity, pulling WACC down — up to the point financial-distress costs dominate."},
+      {q:"Which decision rule can give misleading rankings for mutually exclusive projects of different scale?",
+       o:["NPV","IRR","Profitability index on equal-life projects","Discounted payback only when NPV agrees"],a:1,
+       e:"IRR ignores scale and can conflict with NPV for mutually exclusive projects; NPV is the theoretically preferred rule."},
+    ]},
+
+  STAT516:{code:"STAT 516",title:"Stochastic Processes in Finance",cr:3,
+    desc:"The probabilistic machinery behind asset pricing: random walks, Markov chains, Brownian motion, Itô calculus and SDEs.",
+    topics:[
+      {t:"Random variables, expectation & MGFs",x:"A random variable assigns numbers to outcomes; expectation is its probability-weighted average; the moment-generating function encodes all its moments.",ex:"For a fair die, E[X] = (1+…+6)/6 = 3.5 and Var(X) = E[X²] − 3.5² ≈ 2.92."},
+      {t:"Conditional probability & expectation",x:"The probability or expectation of something given that other information is known. E[X|Y] is the best forecast of X using Y.",ex:"P(default | recession) > P(default). The tower rule: E[X] = E[ E[X|Y] ]."},
+      {t:"Markov chains & transition matrices",x:"A process where the next state depends only on the current state, not the full history ('memorylessness'), encoded in a transition matrix.",ex:"Credit ratings: a BBB bond has fixed probabilities of moving to A, BB or default next year, regardless of its past path."},
+      {t:"Random walks",x:"A sum of independent random steps — the discrete-time ancestor of Brownian motion and the classic model of an unpredictable price.",ex:"Sₜ = Sₜ₋₁ ± 1 with equal odds: expected position stays 0, but the spread grows like √n after n steps."},
+      {t:"Martingales",x:"A 'fair game' process whose expected next value equals its current value given all past information: E[Xₜ₊₁ | Fₜ] = Xₜ.",ex:"In fair coin-toss betting, your expected future wealth equals your current wealth — no betting strategy changes that."},
+      {t:"Brownian motion (Wiener process)",x:"The continuous-time limit of a random walk: continuous paths with independent, normally-distributed increments, W(t) ~ N(0, t).",ex:"Over 1 year a standard Brownian motion ends up N(0,1); over 4 years its standard deviation is √4 = 2."},
+      {t:"Itô's lemma",x:"The chain rule for functions of a stochastic process, with an extra second-order term because (dW)² behaves like dt.",ex:"For f(W) = W², df = 2W dW + dt — the '+dt' is the Itô correction an ordinary chain rule would miss."},
+      {t:"Stochastic differential equations",x:"Differential equations driven by Brownian motion, dX = μ(X,t)dt + σ(X,t)dW, splitting a drift term from a random term.",ex:"The Ornstein–Uhlenbeck SDE dX = θ(μ − X)dt + σ dW models a mean-reverting interest rate."},
+      {t:"Geometric Brownian motion",x:"The standard stock-price model dS = μS dt + σS dW, so returns are normal and the price stays positive and log-normal.",ex:"Black–Scholes assumes prices follow GBM; simulating it gives the bell-shaped log-normal price distribution at expiry."},
+      {t:"Poisson & jump processes",x:"Counting processes for rare discrete events arriving at rate λ; added to GBM to capture sudden price jumps and fat tails.",ex:"A jump-diffusion model adds occasional crashes (say λ = 2/year) to smooth GBM, fattening the return tails."},
+    ],
+    videos:[
+      {t:"MIT 18.S096 — Mathematics in Finance",c:"MIT OpenCourseWare",u:"https://www.youtube.com/playlist?list=PLUl4u3cNGP63ctJIEC1UnZ0btsphnnoHR"},
+      {t:"Brownian motion & Itô's lemma",c:"QuantPy",u:"https://www.youtube.com/results?search_query=itos+lemma+quantpy"},
+      {t:"Markov chains explained",c:"Search · YouTube",u:"https://www.youtube.com/results?search_query=markov+chains+explained"},
+    ],
+    res:[{t:"Shreve — Stochastic Calculus for Finance I & II",u:"https://www.google.com/search?q=Shreve+Stochastic+Calculus+for+Finance"},
+         {t:"MIT OCW 18.S096 materials",u:"https://ocw.mit.edu/courses/18-s096-topics-in-mathematics-with-applications-in-finance-fall-2013/"}],
+    quiz:[
+      {q:"Itô's lemma is the stochastic-calculus analogue of:",
+       o:["The chain rule","Integration by parts only","L'Hôpital's rule","The fundamental theorem of algebra"],a:0,
+       e:"Itô's lemma extends the chain rule to functions of a stochastic process, adding the crucial ½·(∂²f/∂x²)·(dX)² second-order term."},
+      {q:"For standard Brownian motion W(t), the variance of W(t) equals:",
+       o:["t","t²","√t","1"],a:0,
+       e:"Brownian motion has independent increments with W(t) ~ N(0, t); variance grows linearly in time."},
+      {q:"A martingale is a process whose expected future value, given today's info, equals:",
+       o:["Zero","Its current value","Its long-run mean","The risk-free rate"],a:1,
+       e:"E[X(t+s) | F(t)] = X(t): the best forecast of a martingale is simply where it is now — a 'fair game'."},
+      {q:"Under geometric Brownian motion, the asset price S(t) is always:",
+       o:["Normally distributed","Negative half the time","Positive (log-normally distributed)","Constant"],a:2,
+       e:"GBM models the log of the price as Brownian motion, so S(t) is log-normal and stays positive — a key reason it's used for stocks."},
+    ]},
+
+  ECON513:{code:"ECON 513",title:"Financial Economics",cr:3,
+    desc:"The theory linking risk, return and equilibrium: utility, arbitrage, asset pricing models and market efficiency.",
+    topics:[
+      {t:"Utility theory & risk aversion",x:"Investors rank uncertain outcomes by expected utility, not expected wealth; concave utility means they dislike risk and demand compensation for it.",ex:"A risk-averse investor prefers a sure $50 to a 50/50 gamble on $0 or $100, though both average $50."},
+      {t:"Mean-variance portfolio selection",x:"Markowitz's framework: choose portfolios by trading off expected return (good) against variance (bad).",ex:"Among all portfolios returning 8%, pick the one with the lowest standard deviation — it is mean-variance efficient."},
+      {t:"CAPM & the security market line",x:"In equilibrium only systematic risk (beta) is rewarded: E[R] = Rf + β(E[Rm] − Rf). The SML plots this relationship.",ex:"With Rf = 3% and a 6% market premium, a stock with β = 1.5 should return 3% + 1.5×6% = 12%."},
+      {t:"Arbitrage Pricing Theory (APT)",x:"A multi-factor alternative to CAPM: expected return is a linear function of several systematic risk factors, not just the market.",ex:"Returns might load on market, inflation and oil-price factors, each carrying its own risk premium."},
+      {t:"No-arbitrage & the law of one price",x:"Identical payoffs must have identical prices, otherwise a riskless profit exists. This single idea prices most derivatives.",ex:"If a portfolio replicating an option costs $4 but the option trades at $5, sell the option, buy the replica, pocket $1 risk-free."},
+      {t:"State prices & risk-neutral pricing",x:"Assets can be priced as the expected payoff under 'risk-neutral' probabilities, discounted at the risk-free rate.",ex:"A bet paying $1 if a stock rises is priced using the risk-neutral probability of a rise, not the real-world one."},
+      {t:"Market efficiency (EMH)",x:"Prices reflect available information. Weak form = past prices, semi-strong = all public info, strong = all info including private.",ex:"Under semi-strong efficiency you can't beat the market by trading on a public earnings report — it's already priced in."},
+      {t:"Consumption-based asset pricing",x:"An asset is risky if it pays off poorly when consumption is already low; its price reflects how well it smooths consumption.",ex:"An asset that crashes during recessions (when you most need cash) must offer a high return for anyone to hold it."},
+      {t:"Behavioural critiques",x:"Evidence that investors are not fully rational — overconfidence, herding, loss aversion — challenging strict market efficiency.",ex:"Loss aversion: investors hold losing stocks too long to avoid 'realising' the loss, contrary to rational rebalancing."},
+    ],
+    videos:[
+      {t:"Financial Markets — Robert Shiller (Yale)",c:"YaleCourses",u:"https://www.youtube.com/playlist?list=PL8FB14A2200B87185"},
+      {t:"CAPM explained",c:"Search · YouTube",u:"https://www.youtube.com/results?search_query=CAPM+capital+asset+pricing+model+explained"},
+      {t:"Efficient Market Hypothesis",c:"Patrick Boyle",u:"https://www.youtube.com/results?search_query=efficient+market+hypothesis+patrick+boyle"},
+    ],
+    res:[{t:"Yale ECON 252 — Financial Markets (free)",u:"https://oyc.yale.edu/economics/econ-252-11"},
+         {t:"Cochrane — Asset Pricing (text)",u:"https://www.google.com/search?q=Cochrane+Asset+Pricing"}],
+    quiz:[
+      {q:"In the CAPM, an asset's expected return depends only on its:",
+       o:["Total variance","Beta (systematic risk)","Idiosyncratic risk","Dividend yield"],a:1,
+       e:"CAPM says only non-diversifiable (systematic) risk, measured by beta, is priced: E[R] = Rf + β(E[Rm] − Rf)."},
+      {q:"A stock with beta = 0 should, in CAPM, have an expected return equal to:",
+       o:["The market return","Zero","The risk-free rate","Negative"],a:2,
+       e:"With β = 0 the risk premium term vanishes, leaving E[R] = Rf — it carries no systematic risk."},
+      {q:"The 'law of one price' states that:",
+       o:["All stocks cost the same","Identical cash-flow streams must have the same price","Prices never change","Risk-free rate equals zero"],a:1,
+       e:"If two assets deliver identical payoffs they must trade at the same price, else a riskless arbitrage exists — the backbone of no-arbitrage pricing."},
+      {q:"Semi-strong-form market efficiency implies you cannot consistently beat the market using:",
+       o:["Insider information","Publicly available information","A coin flip","Past prices only"],a:1,
+       e:"Semi-strong form says all public information is already in prices; only private (inside) information could give an edge — which strong form rules out too."},
+    ]},
+
+  FIN545:{code:"FIN 545",title:"Financial Econometrics & Inference",cr:3,
+    desc:"Estimating and testing financial models on real data: regression, time series, volatility modelling and inference.",
+    topics:[
+      {t:"OLS regression & Gauss–Markov",x:"Ordinary least squares fits a line minimising squared errors; under the Gauss–Markov assumptions it is the Best Linear Unbiased Estimator (BLUE).",ex:"Regressing a stock's returns on the market gives its alpha (intercept) and beta (slope)."},
+      {t:"Hypothesis testing & p-values",x:"Testing whether a coefficient differs from zero; the p-value is the chance of seeing the estimate if the true value were zero.",ex:"A beta of 1.2 with p-value 0.001 is strong evidence the stock genuinely moves with the market."},
+      {t:"Multiple regression & multicollinearity",x:"Using several predictors at once; multicollinearity (highly correlated predictors) inflates standard errors and blurs interpretation.",ex:"Including both 'size' and 'log assets' — nearly the same variable — makes each coefficient unstable."},
+      {t:"Heteroskedasticity",x:"When error variance isn't constant, OLS stays unbiased but its standard errors are wrong; fix with robust (White) errors.",ex:"Volatility clusters in returns, so residuals are larger in turbulent periods — classic heteroskedasticity."},
+      {t:"Autocorrelation",x:"When residuals are correlated over time, violating independence; common in time series, detected with Durbin–Watson.",ex:"If today's regression error predicts tomorrow's, t-stats are overstated — use Newey–West standard errors."},
+      {t:"Stationarity & unit-root tests",x:"Stationary series have constant mean/variance; non-stationary (unit-root) series like prices must be differenced first. Tested with the ADF test.",ex:"Stock prices are non-stationary (they wander), but their returns are stationary — so we model returns."},
+      {t:"ARIMA time-series models",x:"Combine AutoRegressive, Integrated (differencing) and Moving-Average terms to model and forecast a series.",ex:"An ARIMA(1,1,0) on log prices says today's return depends on yesterday's return plus noise."},
+      {t:"ARCH/GARCH volatility modelling",x:"Models where today's variance depends on past shocks and past variances, capturing volatility clustering.",ex:"A GARCH(1,1) forecasts higher volatility tomorrow right after a big market move today."},
+      {t:"Cointegration & pairs trading",x:"Two non-stationary series can share a stationary long-run relationship; their spread mean-reverts, the basis of pairs trading.",ex:"Coke and Pepsi prices both wander, but their difference is stable — trade the spread when it diverges."},
+      {t:"Factor models (Fama–French)",x:"Explain returns with several priced factors — market, size (SMB), value (HML) and more — beyond CAPM's single beta.",ex:"A small-cap value fund's returns are largely explained by positive loadings on SMB and HML."},
+    ],
+    videos:[
+      {t:"Econometrics full playlist",c:"Ben Lambert",u:"https://www.youtube.com/playlist?list=PLwJRxp3blEvZyQBTTOMFRP_TDaSdly3gU"},
+      {t:"GARCH models explained",c:"Search · YouTube",u:"https://www.youtube.com/results?search_query=GARCH+model+explained"},
+      {t:"Stationarity & unit root tests",c:"Search · YouTube",u:"https://www.youtube.com/results?search_query=stationarity+unit+root+ADF+test"},
+    ],
+    res:[{t:"Tsay — Analysis of Financial Time Series",u:"https://www.google.com/search?q=Tsay+Analysis+of+Financial+Time+Series"},
+         {t:"statsmodels — Python econometrics docs",u:"https://www.statsmodels.org/"}],
+    quiz:[
+      {q:"GARCH models are specifically designed to capture which feature of returns?",
+       o:["Trend","Volatility clustering","Seasonality","Linear cointegration"],a:1,
+       e:"GARCH captures volatility clustering — calm and turbulent periods bunch together — by letting today's variance depend on past shocks and variances."},
+      {q:"A time series is (weakly) stationary if its mean and variance are:",
+       o:["Always increasing","Constant over time","Zero","Normally distributed"],a:1,
+       e:"Weak stationarity requires a constant mean, constant variance and a covariance that depends only on the lag — a prerequisite for many models."},
+      {q:"Under the Gauss–Markov assumptions, OLS is the best ____ estimator:",
+       o:["Biased","Linear unbiased (BLUE)","Nonlinear","Maximum-likelihood only"],a:1,
+       e:"Gauss–Markov: OLS is BLUE — the Best (minimum-variance) Linear Unbiased Estimator — when its assumptions hold."},
+      {q:"A very small p-value (e.g. 0.001) on a coefficient suggests:",
+       o:["The coefficient is economically large","Strong evidence against the null of zero effect","The model is overfit","The data are stationary"],a:1,
+       e:"A small p-value means it's unlikely you'd see this estimate if the true coefficient were zero — statistical significance (not the same as economic importance)."},
+    ]},
+
+  FIN524:{code:"FIN 524",title:"Financial Derivatives & Risk Management",cr:3,
+    desc:"Forwards, futures, options and swaps — how they're priced, how they're used to hedge, and how risk is measured.",
+    topics:[
+      {t:"Forwards & futures",x:"Contracts to buy or sell an asset at a set price on a future date; futures are exchange-traded and marked-to-market daily.",ex:"Locking in oil at $80/barrel for December delivery protects a refiner from price rises."},
+      {t:"Cost-of-carry pricing",x:"The fair forward price compounds the spot at the financing cost minus any income: F = S·e^((r−q)T).",ex:"A non-dividend stock at $100 with r = 5% has a 1-year forward of 100·e^0.05 = $105.13."},
+      {t:"Hedging with futures",x:"Offsetting price risk by taking an opposite futures position; the hedge ratio sizes how many contracts you need.",ex:"A fund manager shorts index futures to neutralise market risk ahead of an expected downturn."},
+      {t:"Option payoffs & strategies",x:"Calls/puts give the right (not obligation) to buy/sell; combined into spreads, straddles and collars for tailored payoffs.",ex:"A protective put = own the stock + buy a put, capping the downside like insurance with a deductible."},
+      {t:"Put–call parity",x:"A no-arbitrage link between a European call, put, the stock and a bond: C − P = S − K·e^(−rT).",ex:"Call $6, put $3, stock $50, K·e^(−rT) = $47: 6 − 3 = 3 must equal 50 − 47 = 3 ✓ — no arbitrage."},
+      {t:"Binomial option pricing",x:"Model the underlying as moving up or down each step, then price the option by no-arbitrage replication / risk-neutral expectation.",ex:"A one-step tree (up = 110, down = 90, K = 100) prices a call using risk-neutral probabilities, not real ones."},
+      {t:"Black–Scholes–Merton model",x:"A closed-form European option price assuming the underlying follows GBM; inputs are S, K, T, r and volatility σ.",ex:"S = 100, K = 100, σ = 20%, r = 5%, T = 1 gives a Black–Scholes call value of about $10.45."},
+      {t:"The Greeks & delta hedging",x:"Sensitivities of option value: delta (price), gamma (delta), vega (volatility), theta (time), rho (rates).",ex:"A call with delta 0.6 is hedged by shorting 60 shares per 100 options, rebalancing as delta drifts (gamma)."},
+      {t:"Swaps",x:"Agreements to exchange cash-flow streams — most commonly fixed-for-floating interest, or one currency for another.",ex:"A firm with floating-rate debt enters a swap to pay fixed and receive floating, locking in its interest cost."},
+      {t:"Value at Risk (VaR)",x:"A risk measure: the loss that will not be exceeded with a given confidence over a set horizon.",ex:"A 1-day 99% VaR of $1m means only a 1% chance of losing more than $1m tomorrow."},
+    ],
+    videos:[
+      {t:"Options, futures & derivatives",c:"Patrick Boyle",u:"https://www.youtube.com/results?search_query=derivatives+patrick+boyle"},
+      {t:"Black–Scholes explained",c:"Search · YouTube",u:"https://www.youtube.com/results?search_query=black+scholes+explained"},
+      {t:"Binomial option pricing model",c:"Search · YouTube",u:"https://www.youtube.com/results?search_query=binomial+option+pricing+model"},
+    ],
+    res:[{t:"Hull — Options, Futures & Other Derivatives",u:"https://www.google.com/search?q=Hull+Options+Futures+and+Other+Derivatives"},
+         {t:"QuantPy — option pricing in Python",u:"https://www.youtube.com/@QuantPy"}],
+    quiz:[
+      {q:"Put–call parity relates the prices of a European call and put with the same strike and expiry. It states C − P =",
+       o:["S − K·e^(−rT)","K − S","S + K","0 always"],a:0,
+       e:"C − P = S₀ − K·e^(−rT). It's an arbitrage relationship — violate it and you can lock in a riskless profit."},
+      {q:"In Black–Scholes, increasing volatility (σ) raises the value of:",
+       o:["Only calls","Only puts","Both calls and puts","Neither"],a:2,
+       e:"Higher volatility increases the chance of large favourable moves while losses are capped at the premium, so both calls and puts gain value (positive vega)."},
+      {q:"Delta of a call option measures the change in option price per $1 change in:",
+       o:["Volatility","The underlying asset price","Time","Interest rate"],a:1,
+       e:"Delta = ∂C/∂S. Delta hedging means holding −Δ units of the underlying to neutralise small price moves."},
+      {q:"The fair forward price of a non-dividend stock is:",
+       o:["S₀","S₀·e^(rT)","S₀·e^(−rT)","K"],a:1,
+       e:"Cost-of-carry: F₀ = S₀·e^(rT). You could borrow to buy the stock today, so the forward must compensate for the financing cost."},
+    ]},
+
+  FIN540:{code:"FIN 540",title:"Financial Markets & Investment Theory",cr:3,
+    desc:"How markets are organised and how investors build, evaluate and manage portfolios across asset classes.",
+    topics:[
+      {t:"Market structure & order types",x:"How exchanges organise trading — order books, market makers — and the order types investors use (market, limit, stop).",ex:"A limit buy at $50 only fills at $50 or below; a market order fills immediately at the best available price."},
+      {t:"Modern Portfolio Theory",x:"Combining assets to maximise expected return for a given level of risk; the optimal portfolios form the efficient frontier.",ex:"Mixing a 10%/20%σ stock fund with a 4%/5%σ bond fund yields better risk/return combos than either alone."},
+      {t:"Diversification & correlation",x:"Combining imperfectly-correlated assets cancels idiosyncratic risk; the benefit grows as correlation falls.",ex:"Two assets each with σ = 20% but correlation 0 combine to a portfolio σ of about 14%, not 20%."},
+      {t:"Capital Market Line & CAPM",x:"Adding a risk-free asset to the efficient frontier creates the CML; the best risky portfolio is the market, which leads to CAPM.",ex:"Holding 50% T-bills + 50% market portfolio places you halfway along the Capital Market Line."},
+      {t:"Performance measures",x:"Risk-adjusted return metrics: Sharpe (per total risk), Treynor (per beta), Jensen's alpha (return vs CAPM prediction).",ex:"A fund returning 12% with σ = 15% and Rf = 2% has a Sharpe ratio of (12 − 2)/15 = 0.67."},
+      {t:"Asset allocation & rebalancing",x:"Splitting capital across asset classes to match goals and risk, then periodically restoring the target weights.",ex:"A 60/40 stock/bond mix that drifts to 70/30 after a rally is rebalanced by selling stocks back to 60%."},
+      {t:"Index funds & passive investing",x:"Because consistently beating the market is hard, many investors simply buy the whole market cheaply via index funds.",ex:"An S&P 500 index fund delivers market returns at ~0.03% fees vs ~1% for the average active fund."},
+      {t:"Behavioural finance",x:"Psychological biases — overconfidence, anchoring, herding — that push investors and prices away from rationality.",ex:"Herding into a hot IPO can drive its price far above fundamental value, then crash."},
+      {t:"Market anomalies",x:"Patterns that appear to beat the market and challenge efficiency — momentum, value, small-cap, the January effect.",ex:"Momentum: stocks that rose over the past 12 months tend to keep outperforming in the short term."},
+    ],
+    videos:[
+      {t:"Modern Portfolio Theory",c:"Search · YouTube",u:"https://www.youtube.com/results?search_query=modern+portfolio+theory+efficient+frontier"},
+      {t:"Sharpe ratio & performance",c:"Search · YouTube",u:"https://www.youtube.com/results?search_query=sharpe+ratio+explained"},
+      {t:"Financial Markets — Shiller (Yale)",c:"YaleCourses",u:"https://www.youtube.com/playlist?list=PL8FB14A2200B87185"},
+    ],
+    res:[{t:"Bodie, Kane & Marcus — Investments",u:"https://www.google.com/search?q=Bodie+Kane+Marcus+Investments"},
+         {t:"Portfolio Visualizer — backtest portfolios",u:"https://www.portfoliovisualizer.com/"}],
+    quiz:[
+      {q:"Diversification reduces portfolio risk most when assets have:",
+       o:["High positive correlation","Low or negative correlation","Identical returns","Zero variance"],a:1,
+       e:"Combining assets that don't move together cancels out idiosyncratic swings — the lower the correlation, the bigger the risk reduction."},
+      {q:"The Sharpe ratio measures excess return per unit of:",
+       o:["Beta","Total risk (standard deviation)","Systematic risk only","Tracking error"],a:1,
+       e:"Sharpe = (Rp − Rf)/σp. It rewards return relative to total volatility; Treynor uses beta instead."},
+      {q:"On the efficient frontier, every portfolio offers:",
+       o:["The highest return for its level of risk","Zero risk","The same return","Maximum diversification regardless of return"],a:0,
+       e:"The efficient frontier is the set of portfolios with the maximum expected return for each level of risk (or minimum risk for each return)."},
+      {q:"A positive Jensen's alpha indicates a portfolio:",
+       o:["Took no risk","Outperformed its CAPM-predicted return","Has beta of 1","Underperformed the market"],a:1,
+       e:"Alpha is the return above what CAPM predicts for the portfolio's beta — a measure of manager skill (or luck)."},
+    ]},
+
+  FIN527:{code:"FIN 527",title:"Fixed Income Securities",cr:3,
+    desc:"Bonds and the term structure: pricing, yield, interest-rate risk, and the instruments built on them.",
+    topics:[
+      {t:"Bond pricing & yield to maturity",x:"A bond's price is the present value of its coupons plus face value; the YTM is the discount rate that reproduces that price.",ex:"A 5% coupon, $1,000, 3-year bond priced at $975 has a YTM slightly above 5%."},
+      {t:"The yield curve & term structure",x:"The relationship between yield and maturity; its shape (upward, flat, inverted) signals rate expectations and the economy.",ex:"An inverted curve — short rates above long rates — has historically preceded recessions."},
+      {t:"Spot rates, forward rates & bootstrapping",x:"Spot rates discount single future cash flows; forward rates are implied future rates; bootstrapping extracts them from bond prices.",ex:"If the 1-yr spot is 4% and 2-yr is 5%, the implied 1-year forward starting in a year is about 6%."},
+      {t:"Duration",x:"The weighted-average time to a bond's cash flows and a measure of price sensitivity to yield (≈ % price change per 1% yield move).",ex:"A bond with modified duration 7 falls about 7% in price if yields rise by 1%."},
+      {t:"Convexity",x:"The curvature of the price–yield relationship; a second-order correction that makes duration estimates accurate for large moves.",ex:"For a 2% yield jump, duration alone overstates the loss — adding convexity corrects it upward."},
+      {t:"Immunization & interest-rate risk",x:"Structuring a portfolio so its duration matches the investment horizon, locking in a return despite rate changes.",ex:"A pension owing money in 10 years buys bonds with duration 10 to immunise against rate moves."},
+      {t:"Credit risk & ratings",x:"The risk an issuer defaults; agencies rate bonds (AAA…D) and lower ratings demand higher yields (the credit spread).",ex:"A BB 'junk' bond yields several percent more than a AAA bond to compensate for default risk."},
+      {t:"Callable & putable bonds",x:"Embedded options: a callable bond lets the issuer redeem early (bad for holders); a putable lets the holder sell it back.",ex:"Issuers call high-coupon bonds when rates fall to refinance cheaply — so callables offer higher yields."},
+      {t:"Mortgage-backed securities",x:"Bonds backed by pools of mortgages; their cash flows depend on homeowner prepayment, creating prepayment risk.",ex:"When rates fall, homeowners refinance, prepaying the MBS early and returning cash just when reinvestment yields are low."},
+      {t:"Interest-rate derivatives",x:"Swaps, caps, floors and swaptions used to manage and hedge interest-rate exposure.",ex:"A borrower buys an interest-rate cap so their floating payment can never exceed, say, 6%."},
+    ],
+    videos:[
+      {t:"Bond pricing & yield",c:"Search · YouTube",u:"https://www.youtube.com/results?search_query=bond+pricing+yield+to+maturity+explained"},
+      {t:"Duration & convexity",c:"Search · YouTube",u:"https://www.youtube.com/results?search_query=bond+duration+convexity+explained"},
+      {t:"The yield curve explained",c:"Search · YouTube",u:"https://www.youtube.com/results?search_query=yield+curve+term+structure+explained"},
+    ],
+    res:[{t:"Fabozzi — Bond Markets, Analysis & Strategies",u:"https://www.google.com/search?q=Fabozzi+Bond+Markets+Analysis+and+Strategies"},
+         {t:"U.S. Treasury yield curve data",u:"https://home.treasury.gov/resource-center/data-chart-center/interest-rates"}],
+    quiz:[
+      {q:"When market interest rates rise, the price of an existing fixed-coupon bond:",
+       o:["Rises","Falls","Stays the same","Doubles"],a:1,
+       e:"Bond prices move inversely to yields: a new higher-yielding bond makes the old lower coupon less attractive, so its price falls."},
+      {q:"Duration measures a bond's price sensitivity to:",
+       o:["Credit downgrades","Small changes in yield","Inflation only","Liquidity"],a:1,
+       e:"Modified duration ≈ percentage price change for a 1% change in yield. Longer maturity / lower coupon → higher duration."},
+      {q:"Convexity is important because duration alone:",
+       o:["Overstates risk always","Is a linear approximation that errs for large yield moves","Ignores coupons","Equals maturity"],a:1,
+       e:"Duration is a first-order (linear) estimate; convexity is the second-order correction that captures the curvature of the price–yield relationship."},
+      {q:"A bond trading below its face (par) value is said to trade at a:",
+       o:["Premium","Discount","Par","Default"],a:1,
+       e:"Price < par = discount; it happens when the coupon rate is below the market yield. Price > par = premium."},
+    ]},
+
+  MIS517:{code:"MIS 517",title:"Artificial Intelligence for Business",cr:3,
+    desc:"Applying machine learning and AI to financial and business problems — from prediction to deployment and ethics.",
+    topics:[
+      {t:"Supervised vs unsupervised learning",x:"Supervised learning predicts a known target from labelled data; unsupervised finds structure with no labels.",ex:"Predicting loan default = supervised; grouping customers into segments = unsupervised."},
+      {t:"Linear & logistic regression",x:"Linear regression predicts a number; logistic regression predicts a probability/class via the sigmoid function.",ex:"Logistic regression outputs an 0.85 probability a transaction is fraud, then thresholds it to 'flag'."},
+      {t:"Decision trees",x:"Models that split data with yes/no questions into branches — easy to interpret but prone to overfitting on their own.",ex:"'Income > $50k? → Debt < $10k? → approve' is a simple credit-decision tree."},
+      {t:"Random forests & boosting",x:"Ensembles of many trees — forests average them (bagging); boosting builds them sequentially, each fixing the last's errors.",ex:"XGBoost (a boosting method) often wins financial-prediction competitions by stacking weak trees."},
+      {t:"Neural networks & deep learning",x:"Layers of weighted nodes that learn complex non-linear patterns; 'deep' just means many layers.",ex:"A neural net reading thousands of news headlines to predict next-day stock direction."},
+      {t:"Clustering (k-means)",x:"Unsupervised grouping that partitions data into k clusters by nearness to cluster centres.",ex:"k-means groups stocks into clusters with similar risk/return profiles to aid diversification."},
+      {t:"Model evaluation",x:"Split data into train/test (or cross-validate) and score with accuracy, precision, recall and ROC-AUC via a confusion matrix.",ex:"A fraud model with 99% accuracy can be useless if it never catches the rare fraud — check recall."},
+      {t:"Overfitting & regularization",x:"Overfitting is memorising noise so the model fails on new data; regularization (L1/L2, dropout) penalises complexity.",ex:"Adding an L2 penalty shrinks coefficients, trading a little training fit for much better test performance."},
+      {t:"NLP basics",x:"Turning text into features (bag-of-words, embeddings) so models can read filings, news and sentiment.",ex:"Scoring earnings-call transcripts for tone to predict post-announcement returns."},
+      {t:"AI ethics & finance applications",x:"Using AI responsibly — fairness, bias, transparency — across fraud detection, credit scoring, robo-advice and trading.",ex:"A credit model must not proxy for race via zip code; explainability is often a regulatory requirement."},
+    ],
+    videos:[
+      {t:"Machine Learning — full course",c:"freeCodeCamp",u:"https://www.youtube.com/results?search_query=machine+learning+full+course+freecodecamp"},
+      {t:"Neural networks, visually",c:"3Blue1Brown",u:"https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi"},
+      {t:"ML for finance / trading",c:"Search · YouTube",u:"https://www.youtube.com/results?search_query=machine+learning+for+finance"},
+    ],
+    res:[{t:"scikit-learn — user guide",u:"https://scikit-learn.org/stable/user_guide.html"},
+         {t:"Google ML Crash Course",u:"https://developers.google.com/machine-learning/crash-course"}],
+    quiz:[
+      {q:"Predicting whether a loan will default (yes/no) is an example of:",
+       o:["Clustering","Classification","Dimensionality reduction","Reinforcement learning"],a:1,
+       e:"A discrete yes/no target is a classification problem (supervised). Predicting a continuous number would be regression."},
+      {q:"A model that fits the training data almost perfectly but performs poorly on new data is:",
+       o:["Underfitting","Overfitting","Unbiased","Well-regularised"],a:1,
+       e:"Overfitting means the model memorised noise. Cross-validation, regularisation and more data help control it."},
+      {q:"Clustering customers into segments without labelled outcomes is:",
+       o:["Supervised learning","Unsupervised learning","Classification","Regression"],a:1,
+       e:"No target labels are provided, so the algorithm finds structure on its own — unsupervised learning (e.g. k-means)."},
+      {q:"In a confusion matrix, precision answers the question:",
+       o:["Of all actual positives, how many did we catch?","Of all predicted positives, how many were right?","What is the total accuracy?","How fast is the model?"],a:1,
+       e:"Precision = TP / (TP + FP): of the cases flagged positive, how many truly were. Recall covers the 'how many did we catch' side."},
+    ]},
+
+  FIN619:{code:"FIN 619",title:"Project (Capstone)",cr:6,
+    desc:"A 6-credit applied project: pose a real quantitative-finance question, gather data, build and validate a model, and present results.",
+    topics:[
+      {t:"Choosing a research question",x:"Pick a focused, answerable question where data exists and a quantitative method applies — narrow beats broad.",ex:"'Does the momentum anomaly work on the Saudi Tadawul market, 2010–2025?' is specific and testable."},
+      {t:"Literature review",x:"Survey what's already known to frame your contribution and choose methods. Sources: SSRN, journals, Google Scholar.",ex:"Citing Jegadeesh & Titman (1993) grounds a momentum study and hands you the standard methodology."},
+      {t:"Data sourcing & cleaning",x:"Gather reliable data and fix gaps, errors, splits and outliers before modelling — most project time goes here.",ex:"Pulling prices via yfinance, then adjusting for splits/dividends and dropping days with missing data."},
+      {t:"Methodology design",x:"Choose the estimation or test that matches your question — regression, portfolio sorts, GARCH — and define success in advance.",ex:"To test momentum, sort stocks into winner/loser portfolios and compare their next-period returns."},
+      {t:"Model building & backtesting",x:"Implement the strategy or model and simulate it on historical data, including realistic transaction costs.",ex:"Backtest a momentum portfolio rebalanced monthly, subtracting 0.1% per trade for costs."},
+      {t:"Avoiding biases",x:"Guard against look-ahead bias, survivorship bias, data snooping and overfitting, all of which inflate results.",ex:"Using only currently-listed firms ignores delisted failures (survivorship bias), flattering returns."},
+      {t:"Interpreting results & robustness",x:"Report effect sizes and significance, and re-test out-of-sample and across sub-periods to show the result is real.",ex:"A strategy that works 2010–2018 should be re-tested on 2019–2025 before you trust it."},
+      {t:"Writing & presenting",x:"Communicate clearly — motivation, data, method, results, limitations — with clean charts and honest discussion.",ex:"A results table with t-stats plus an equity-curve chart conveys more than paragraphs of prose."},
+    ],
+    videos:[
+      {t:"How to do a finance research project",c:"Search · YouTube",u:"https://www.youtube.com/results?search_query=quantitative+finance+research+project"},
+      {t:"Backtesting a trading strategy in Python",c:"QuantPy",u:"https://www.youtube.com/@QuantPy"},
+      {t:"Writing a quantitative thesis",c:"Search · YouTube",u:"https://www.youtube.com/results?search_query=how+to+write+quantitative+finance+thesis"},
+    ],
+    res:[{t:"SSRN — finance working papers for ideas",u:"https://www.ssrn.com/index.cfm/en/fin/"},
+         {t:"Yahoo Finance / yfinance — free market data",u:"https://pypi.org/project/yfinance/"},
+         {t:"Kaggle — datasets & notebooks",u:"https://www.kaggle.com/datasets"}],
+    quiz:[
+      {q:"The single best way to keep a capstone project feasible is to:",
+       o:["Pick the most ambitious topic possible","Ensure you can actually access the data you need","Avoid any literature review","Use only one data point"],a:1,
+       e:"Data availability makes or breaks an empirical project — confirm you can get clean, sufficient data before committing to a question."},
+      {q:"'Look-ahead bias' in a backtest means:",
+       o:["Using too little data","Using information that wouldn't have been available at the time","Testing on the training set","Ignoring transaction costs"],a:1,
+       e:"Look-ahead bias uses future/unreleased data in a historical simulation, inflating results. Always restrict the model to point-in-time information."},
+      {q:"A robust empirical study reports results on:",
+       o:["The training sample only","An out-of-sample / hold-out period too","No data","A single lucky run"],a:1,
+       e:"Out-of-sample testing shows the model generalises rather than fitting noise — essential for credible quant-finance work."},
+    ]},
+};
+
+/* ============================================================
+   DEEP-DIVE CONTENT — per-topic lesson (HTML) + mini quiz.
+   Keyed by "COURSEID_topicIndex".
+   ============================================================ */
+const DEEP={};
+Object.assign(DEEP,{
+ "FIN511_0":{examples:[`<b>Q — what is $1,000 received in 3 years worth today at 8%?</b><ol><li>Formula: <code>PV = C ÷ (1 + r)ⁿ</code></li><li>Put in the numbers: <code>PV = 1000 ÷ (1.08)³</code></li><li>Work out the bottom: <code>1.08 × 1.08 × 1.08 ≈ 1.260</code></li><li>Divide: <code>1000 ÷ 1.260 ≈ 794</code></li></ol><b>Answer ≈ $794 today.</b> Waiting 3 years "costs" you about $206 of today's value.`],
+  d:`<p>Money has a time value: a dollar today can be invested to become more than a dollar tomorrow, so future cash flows must be <b>discounted</b> back to today before they can be compared.</p>
+<p>The present value of a cash flow C received in <code>n</code> periods at rate <code>r</code> is <code>PV = C / (1+r)^n</code>. A whole stream is valued by discounting each cash flow and summing — that sum is the heart of <b>discounted cash flow (DCF)</b> valuation, used for projects, bonds and entire companies.</p>
+<p>Two levers cut value: a <b>higher discount rate</b> or a <b>longer wait</b>. The rate reflects risk — riskier cash flows get a higher rate and a lower value.</p>`,
+  quiz:[
+   {q:"The present value of $1,000 received in 5 years at a 10% discount rate is about:",o:["$621","$1,610","$1,000","$500"],a:0,e:"1000 / 1.10^5 = 1000 / 1.611 ≈ $621."},
+   {q:"All else equal, raising the discount rate makes present value:",o:["Higher","Lower","Unchanged","Negative"],a:1,e:"Discounting divides by (1+r)^n, so a larger r shrinks the present value."}]},
+ "FIN511_1":{examples:[`<b>Q — accept this project? It costs $1,000 today and pays $1,300 in 2 years; rate 10%.</b><ol><li>Discount the inflow: <code>PV = 1300 ÷ (1.10)²</code></li><li>Bottom: <code>1.10² = 1.21</code>, so <code>1300 ÷ 1.21 ≈ 1,074</code></li><li>Subtract the cost: <code>NPV = 1,074 − 1,000 = +74</code></li></ol><b>NPV ≈ +$74 → accept</b> (positive NPV means it adds value).`],
+  d:`<p>Capital budgeting decides which long-term projects to fund. The theoretically best rule is <b>Net Present Value (NPV)</b> = discounted inflows − initial outlay; <b>accept if NPV &gt; 0</b>.</p>
+<ul>
+<li><b>IRR</b> — the rate making NPV = 0; accept if IRR &gt; cost of capital. Can mislead for mutually-exclusive or unconventional cash flows.</li>
+<li><b>Payback</b> — years to recover the outlay; simple but ignores the time value of money and later cash flows.</li>
+<li><b>Profitability Index</b> — PV of inflows ÷ outlay; handy under capital rationing.</li>
+</ul>
+<p>When the rules disagree on mutually-exclusive projects, <b>trust NPV</b>.</p>`,
+  quiz:[
+   {q:"Which rule is preferred in theory because it directly measures value added?",o:["Payback","NPV","Accounting rate of return","IRR only"],a:1,e:"NPV handles scale and timing correctly and states value created in dollars."},
+   {q:"The internal rate of return (IRR) is the discount rate at which:",o:["NPV is maximised","NPV equals zero","Payback is shortest","Cash flow is largest"],a:1,e:"IRR solves NPV = 0; you then compare it to the cost of capital."}]},
+ "FIN511_2":{examples:[`<b>Q — WACC for a firm that's 50% equity (cost 14%) and 50% debt (cost 8%), tax rate 25%?</b><ol><li>Equity piece: <code>0.50 × 14% = 7.0%</code></li><li>Make debt after-tax: <code>8% × (1 − 0.25) = 6.0%</code></li><li>Debt piece: <code>0.50 × 6.0% = 3.0%</code></li><li>Add the pieces: <code>7.0% + 3.0% = 10.0%</code></li></ol><b>WACC = 10%.</b> This is the firm's hurdle rate for new projects.`],
+  d:`<p>The <b>weighted average cost of capital (WACC)</b> is the blended return a firm must earn to satisfy all its investors — the standard discount rate for average-risk projects.</p>
+<p><code>WACC = (E/V)·Re + (D/V)·Rd·(1 − Tc)</code>, where E and D are market values of equity and debt, V = E + D, Re and Rd their required returns, and Tc the tax rate. The <code>(1 − Tc)</code> term captures the <b>tax-deductibility of interest</b>, which makes debt cheaper after tax.</p>
+<p>Re is usually estimated with CAPM; Rd is the yield on the firm's debt.</p>`,
+  quiz:[
+   {q:"A firm is 50% equity (cost 14%) and 50% debt (cost 8%), tax rate 25%. Its WACC is:",o:["10.0%","11.0%","9.0%","12.0%"],a:0,e:"0.5×14% + 0.5×8%×(1−0.25) = 7% + 3% = 10%."},
+   {q:"The after-tax cost of debt is lower than the pre-tax cost because:",o:["Debt is risk-free","Interest is tax-deductible","Dividends are taxed","Equity is cheaper"],a:1,e:"Interest reduces taxable income, creating a tax shield."}]},
+ "FIN511_3":{examples:[`<b>Q — value of the tax shield on $1,000,000 of permanent debt at a 25% tax rate?</b><ol><li>Formula: <code>Tax shield = tax rate × debt</code></li><li>Put in the numbers: <code>0.25 × 1,000,000</code></li></ol><b>Answer = $250,000</b> of extra firm value — created purely because interest is tax-deductible.`],
+  d:`<p><b>Modigliani–Miller (MM)</b> is the benchmark for capital structure.</p>
+<ul>
+<li><b>Proposition I (no taxes):</b> firm value is independent of the debt/equity mix — value comes from the assets, not the financing.</li>
+<li><b>Proposition II:</b> the cost of equity rises with leverage just enough to keep WACC constant.</li>
+<li><b>With corporate taxes:</b> debt adds value via the interest <b>tax shield</b> (= Tc × Debt)…</li>
+<li>…until <b>financial-distress and bankruptcy costs</b> offset it, giving the <b>trade-off theory</b> optimum.</li>
+</ul>`,
+  quiz:[
+   {q:"Under MM with no taxes, firm value is:",o:["Maximised at 100% debt","Independent of capital structure","Maximised at 100% equity","Zero"],a:1,e:"Proposition I: with no taxes or frictions the financing mix is irrelevant."},
+   {q:"The value of the interest tax shield on permanent debt D at tax rate Tc is:",o:["D","Tc × D","D ÷ Tc","Tc"],a:1,e:"For perpetual debt the shield is worth Tc × D in present value."}]},
+ "FIN511_4":{d:`<p>Payout policy is how a firm returns cash to shareholders — <b>dividends</b> or <b>share buybacks</b>.</p>
+<p>In perfect markets (MM again) payout is <b>irrelevant</b>: a cash dividend simply lowers the share price by the same amount. In reality it matters because of <b>taxes</b> (dividends vs capital gains), <b>signalling</b> (raising a dividend signals confidence), and <b>clientele effects</b> (investors differ in what they want).</p>
+<p>Buybacks are more flexible, are taxed as capital gains, and lift EPS by cutting the share count.</p>`,
+  quiz:[
+   {q:"In perfect markets, paying a cash dividend:",o:["Raises firm value","Lowers the share price by the dividend amount","Has no effect on the share price","Doubles EPS"],a:1,e:"Value is unchanged; the price drops by the dividend (MM payout irrelevance)."},
+   {q:"Compared with dividends, share buybacks are generally:",o:["Less flexible","More flexible and often tax-efficient","Always taxed higher","Mandatory"],a:1,e:"Buybacks can be timed and sized freely and defer tax to capital gains."}]},
+ "FIN511_5":{examples:[`<b>Q — cash conversion cycle if inventory = 60 days, receivables = 30 days, payables = 40 days?</b><ol><li>Formula: <code>CCC = DIO + DSO − DPO</code></li><li>Put in the numbers: <code>60 + 30 − 40</code></li></ol><b>CCC = 50 days</b> — cash is tied up for 50 days between paying suppliers and collecting from customers. A shorter cycle frees cash.`],
+  d:`<p><b>Working capital = current assets − current liabilities.</b> Managing it keeps enough cash, inventory and receivables to operate — without tying up more cash than necessary.</p>
+<p>The <b>cash conversion cycle (CCC)</b> shows how long cash is locked up: <code>CCC = DIO + DSO − DPO</code> (days inventory + days receivables − days payables). A shorter CCC frees cash and lifts returns.</p>
+<p>Trade-off: too little working capital risks stockouts and lost sales; too much wastes financing on idle assets.</p>`,
+  quiz:[
+   {q:"The cash conversion cycle equals:",o:["DIO + DSO + DPO","DIO + DSO − DPO","DPO − DSO","Inventory days only"],a:1,e:"Days inventory + days receivable − days payable."},
+   {q:"Shortening the cash conversion cycle generally:",o:["Ties up more cash","Frees up cash","Raises bankruptcy risk","Has no effect"],a:1,e:"Collecting faster or paying slower releases cash sooner."}]},
+ "FIN511_6":{examples:[`<b>Q — Firm A ($100m) buys Firm B ($40m). Together they're worth $160m, and A pays a $10m premium.</b><ol><li>Synergy: <code>160 − 100 − 40 = $20m</code></li><li>Value A keeps: <code>synergy − premium = 20 − 10 = $10m</code></li></ol><b>+$10m for A's shareholders</b> — the deal works because the premium ($10m) is below the synergy ($20m). Overpay past $20m and A destroys value.`],
+  d:`<p>In a merger or acquisition, value is created only if the combination is worth more than the firms apart: <code>Synergy = V(AB) − V(A) − V(B)</code>.</p>
+<p>The acquirer should pay a premium <b>smaller than the synergies</b>, or it simply transfers value to the target's shareholders. Synergies come from cost savings, revenue gains, taxes or better management — yet many deals overpay and destroy value (the <b>winner's curse</b>).</p>
+<p>Payment can be cash, stock, or a mix, which shifts risk between buyer and seller.</p>`,
+  quiz:[
+   {q:"Synergy in an acquisition is:",o:["The premium paid","Combined value minus the two standalone values","The target's revenue","Always positive"],a:1,e:"Synergy = V(AB) − V(A) − V(B); it must exceed the premium to help the acquirer."},
+   {q:"An acquirer creates value for its OWN shareholders only if:",o:["It pays the highest price","The premium is less than the synergies","It uses all cash","The target is larger"],a:1,e:"Overpaying beyond synergies hands the value to the target's holders."}]},
+ "FIN511_7":{d:`<p>A <b>real option</b> is managerial flexibility built into a real investment, valued with option logic. Plain DCF assumes a fixed plan and so <b>understates</b> value when managers can adapt.</p>
+<ul>
+<li><b>Option to expand</b> — scale up if things go well (like a call).</li>
+<li><b>Option to abandon</b> — exit and recover salvage if things go badly (like a put).</li>
+<li><b>Option to delay</b> — wait for more information before committing.</li>
+</ul>
+<p>Real-option value rises with <b>uncertainty</b>: the more volatile the outcome, the more flexibility is worth.</p>`,
+  quiz:[
+   {q:"Relative to standard DCF, the option to abandon a project:",o:["Lowers its value","Adds value (acts like a put)","Has no effect","Only matters if NPV>0"],a:1,e:"The right to exit and recover salvage caps the downside, adding value DCF ignores."},
+   {q:"Real-option value is generally higher when:",o:["Uncertainty is greater","Cash flows are certain","Rates are zero","The project is short"],a:0,e:"Like financial options, more volatility makes flexibility more valuable."}]},
+ "FIN511_8":{d:`<p><b>Agency theory</b> studies conflicts between <b>principals</b> (shareholders) and <b>agents</b> (managers) who may pursue their own interests — empire-building, perks, excessive caution.</p>
+<p><b>Agency costs</b> are the value lost to these conflicts plus the cost of controlling them. Aligning mechanisms include:</p>
+<ul>
+<li><b>Incentive pay</b> — stock and options tie managers' wealth to shareholders'.</li>
+<li><b>Boards & monitoring</b> — independent directors oversee management.</li>
+<li><b>Debt</b> — required interest disciplines free cash flow.</li>
+<li><b>Market for corporate control</b> — weak managers risk takeover.</li>
+</ul>`,
+  quiz:[
+   {q:"The classic agency conflict in a public firm is between:",o:["Customers and suppliers","Shareholders (principals) and managers (agents)","Two competitors","Governments and firms"],a:1,e:"Managers may act in their own interest rather than shareholders'."},
+   {q:"Which mechanism helps align managers with shareholders?",o:["Removing the board","Granting equity-based incentives","Eliminating all debt","Hiding financials"],a:1,e:"Equity/option pay ties managerial payoff to share-price performance."}]},
+});
+Object.assign(DEEP,{
+ "STAT516_0":{examples:[`<b>Q — mean and variance of one fair die roll.</b><ol><li>Mean E[X]: <code>(1+2+3+4+5+6) ÷ 6 = 21 ÷ 6 = 3.5</code></li><li>E[X²]: <code>(1+4+9+16+25+36) ÷ 6 = 91 ÷ 6 ≈ 15.17</code></li><li>Variance: <code>E[X²] − (E[X])² = 15.17 − 3.5²</code></li><li>Finish: <code>15.17 − 12.25 = 2.92</code></li></ol><b>Mean = 3.5, Variance ≈ 2.92.</b>`],
+  d:`<p>A <b>random variable</b> maps uncertain outcomes to numbers. Its <b>expectation</b> E[X] is the probability-weighted average (the long-run mean), and its <b>variance</b> Var(X) = E[X²] − (E[X])² measures spread.</p>
+<p>The <b>moment-generating function</b> M(t) = E[e^{tX}] is a compact fingerprint: differentiating it at 0 produces every moment, and if two variables share an MGF they share a distribution — handy for proving sums of normals are normal.</p>`,
+  quiz:[
+   {q:"For a single fair die roll, E[X] equals:",o:["3.0","3.5","6.0","1.0"],a:1,e:"(1+2+3+4+5+6)/6 = 21/6 = 3.5."},
+   {q:"Variance is defined as:",o:["E[X]","E[X²] − (E[X])²","E[X²]","√E[X]"],a:1,e:"Var(X) = E[X²] − (E[X])², the mean squared deviation from the mean."}]},
+ "STAT516_1":{d:`<p><b>Conditional probability</b> P(A|B) updates the odds of A once B is known: <code>P(A|B) = P(A∩B) / P(B)</code>. <b>Conditional expectation</b> E[X|Y] is the best forecast of X given the information in Y.</p>
+<p>Two workhorse results: <b>Bayes' theorem</b> reverses the conditioning, and the <b>tower property (law of iterated expectations)</b> says <code>E[X] = E[ E[X|Y] ]</code> — averaging the conditional forecasts recovers the overall mean. These underpin filtering, pricing and risk updating.</p>`,
+  quiz:[
+   {q:"The law of iterated expectations states that E[X] equals:",o:["E[X|Y]","E[ E[X|Y] ]","Var(X)","P(X|Y)"],a:1,e:"Averaging the conditional expectation over Y gives the unconditional mean."},
+   {q:"P(A|B) is defined as:",o:["P(A)·P(B)","P(A∩B) / P(B)","P(A) + P(B)","P(B|A)"],a:1,e:"Conditional probability normalises the joint probability by P(B)."}]},
+ "STAT516_2":{d:`<p>A <b>Markov chain</b> moves between states where the next state depends <b>only on the current state</b>, not the full history — the 'memoryless' property.</p>
+<p>It is summarised by a <b>transition matrix</b> P, whose entry P[i][j] is the probability of going from state i to state j (each row sums to 1). Multi-step probabilities come from powers of P, and many chains settle to a <b>stationary distribution</b>. In finance, credit-rating migrations are modelled this way.</p>`,
+  quiz:[
+   {q:"The defining (Markov) property is that the next state depends on:",o:["The entire path so far","Only the current state","The starting state only","Nothing"],a:1,e:"Memorylessness: given the present, the past is irrelevant to the future."},
+   {q:"In a transition matrix, each row must:",o:["Sum to 1","Sum to 0","Be identical","Be diagonal"],a:0,e:"Each row is a probability distribution over next states, so it sums to 1."}]},
+ "STAT516_3":{examples:[`<b>Q — how spread out is a ±1 random walk after 100 steps?</b><ol><li>Variance grows with the number of steps: <code>Var = n = 100</code></li><li>Standard deviation: <code>σ = √100 = 10</code></li></ol><b>Spread ≈ 10.</b> Note: take 4× the steps (400) and the spread only doubles — <code>√400 = 20</code>. It grows like √n, not n.`],
+  d:`<p>A <b>random walk</b> adds independent random steps: <code>Sₙ = S₀ + X₁ + … + Xₙ</code>. It is the discrete-time ancestor of Brownian motion and the classic model of an unpredictable price.</p>
+<p>For symmetric ±1 steps, the expected position stays at the start, but the <b>standard deviation grows like √n</b> — uncertainty widens with the square root of time, not linearly. A random walk with no drift is also a martingale.</p>`,
+  quiz:[
+   {q:"After n steps of a symmetric ±1 random walk, the spread (standard deviation) grows like:",o:["n","√n","n²","constant"],a:1,e:"Variance grows linearly in n, so standard deviation grows like √n."},
+   {q:"The expected position of a zero-drift symmetric random walk after many steps is:",o:["Far positive","The starting point","Far negative","Infinite"],a:1,e:"With symmetric steps the mean stays at the origin; only the spread grows."}]},
+ "STAT516_4":{d:`<p>A <b>martingale</b> is a 'fair game': given everything known today, the expected next value equals the current value — <code>E[Xₜ₊₁ | Fₜ] = Xₜ</code>.</p>
+<p>It captures the idea that you cannot predict future changes from past information, so no betting strategy improves your expected wealth. Martingales are central to modern pricing: under the <b>risk-neutral measure</b>, discounted asset prices are martingales, which is what makes no-arbitrage pricing work.</p>`,
+  quiz:[
+   {q:"For a martingale X, the best forecast of next period's value given today's information is:",o:["Zero","Today's value Xₜ","The long-run mean","The risk-free rate"],a:1,e:"E[Xₜ₊₁ | Fₜ] = Xₜ — a fair game."},
+   {q:"Under the risk-neutral measure, what is a martingale?",o:["Raw stock prices","Discounted asset prices","Trading volume","Volatility"],a:1,e:"Discounted prices are martingales under the risk-neutral measure — the basis of no-arbitrage pricing."}]},
+ "STAT516_5":{examples:[`<b>Q — distribution of Brownian motion W(t) at t = 4?</b><ol><li>Rule: <code>W(t) ~ Normal(0, t)</code> — the variance equals the time t.</li><li>Here variance = 4, so <code>σ = √4 = 2</code></li></ol><b>W(4) ~ Normal(mean 0, sd 2).</b> About 95% of outcomes fall within ±4 (two standard deviations).`],
+  d:`<p><b>Brownian motion (the Wiener process)</b> W(t) is the continuous-time limit of a random walk. Its defining features: it starts at 0, has <b>continuous paths</b>, and <b>independent, normally-distributed increments</b> with <code>W(t) ~ N(0, t)</code>.</p>
+<p>So variance grows linearly in time and standard deviation like √t. Its paths are continuous everywhere but differentiable nowhere — which is exactly why we need a special calculus (Itô) to work with it.</p>`,
+  quiz:[
+   {q:"For standard Brownian motion, the variance of W(t) is:",o:["t","t²","√t","1"],a:0,e:"W(t) ~ N(0, t), so Var(W(t)) = t."},
+   {q:"Brownian motion paths are:",o:["Smooth and differentiable","Continuous but nowhere differentiable","Discontinuous jumps","Constant"],a:1,e:"Continuous everywhere yet differentiable nowhere — hence Itô calculus."}]},
+ "STAT516_6":{examples:[`<b>Q — apply Itô's lemma to f(W) = W².</b><ol><li>Ordinary derivatives: <code>f′ = 2W</code> and <code>f″ = 2</code></li><li>Itô formula: <code>df = f′ dW + ½ f″ (dW)²</code></li><li>Use the key rule <code>(dW)² = dt</code>: <code>df = 2W dW + ½(2)dt</code></li></ol><b>df = 2W dW + dt.</b> The extra "+ dt" is the Itô correction ordinary calculus would miss.`],
+  d:`<p><b>Itô's lemma</b> is the chain rule for functions of a stochastic process. For f(X) where dX = μ dt + σ dW:</p>
+<p><code>df = (∂f/∂x)dX + ½(∂²f/∂x²)(dX)²</code>, and crucially <code>(dW)² = dt</code>, which adds a second-order 'Itô correction' term an ordinary chain rule would miss.</p>
+<p>It is the tool that turns the stock-price SDE into the Black–Scholes PDE.</p>`,
+  quiz:[
+   {q:"Itô's lemma is the stochastic version of:",o:["The chain rule","L'Hôpital's rule","Integration by parts only","The quotient rule"],a:0,e:"It extends the chain rule, adding a ½·f''·(dX)² term."},
+   {q:"In Itô calculus, (dW)² is replaced by:",o:["0","dt","dW","∞"],a:1,e:"(dW)² = dt is the key rule generating the extra second-order term."}]},
+ "STAT516_7":{d:`<p>A <b>stochastic differential equation (SDE)</b> describes how a process evolves under randomness: <code>dX = μ(X,t)dt + σ(X,t)dW</code>. The first term is the <b>drift</b> (deterministic trend), the second the <b>diffusion</b> (random shock scaled by volatility).</p>
+<p>Different choices of μ and σ give different models — e.g. <b>Ornstein–Uhlenbeck</b>, <code>dX = θ(μ − X)dt + σ dW</code>, mean-reverts toward μ and is used for interest rates and spreads.</p>`,
+  quiz:[
+   {q:"In the SDE dX = μ dt + σ dW, the σ dW term represents the:",o:["Drift","Random (diffusion) part","Interest rate","Mean"],a:1,e:"σ dW is the diffusion — the random shock; μ dt is the deterministic drift."},
+   {q:"The Ornstein–Uhlenbeck process is used in finance because it is:",o:["Always increasing","Mean-reverting","Discontinuous","Risk-free"],a:1,e:"It pulls back toward a long-run mean, suiting rates and spreads."}]},
+ "STAT516_8":{d:`<p><b>Geometric Brownian motion (GBM)</b> is the standard stock-price model: <code>dS = μS dt + σS dW</code>. Because the drift and volatility scale with S, the <b>log</b> of the price follows Brownian motion, so the price stays <b>positive</b> and is <b>log-normally</b> distributed.</p>
+<p>Returns are normally distributed with mean (μ − ½σ²)t and variance σ²t. GBM is the engine behind Black–Scholes and most Monte-Carlo option pricing.</p>`,
+  quiz:[
+   {q:"Under geometric Brownian motion, the asset price S(t) is:",o:["Normally distributed","Negative half the time","Positive and log-normally distributed","Constant"],a:2,e:"Modelling the log as Brownian motion keeps S positive and log-normal."},
+   {q:"GBM is the price assumption underlying which model?",o:["CAPM","Black–Scholes","Durbin–Watson","ARIMA"],a:1,e:"Black–Scholes assumes the underlying follows GBM."}]},
+ "STAT516_9":{d:`<p>A <b>Poisson process</b> counts rare discrete events arriving independently at a constant average rate λ; the number in time t is Poisson(λt) and the waiting time between events is exponential.</p>
+<p>Adding Poisson <b>jumps</b> to GBM gives a <b>jump-diffusion</b> model (Merton): smooth diffusion most of the time, punctuated by sudden jumps. This fattens the tails and captures crashes that pure GBM cannot.</p>`,
+  quiz:[
+   {q:"A Poisson process models:",o:["Continuous smooth drift","The count of rare events at rate λ","Mean reversion","Volatility clustering"],a:1,e:"It counts independent events arriving at average rate λ."},
+   {q:"Adding jumps to geometric Brownian motion mainly:",o:["Removes volatility","Fattens the tails / captures crashes","Makes prices negative","Eliminates drift"],a:1,e:"Jump-diffusion adds sudden moves, producing fatter tails than GBM."}]},
+});
+Object.assign(DEEP,{
+ "ECON513_0":{d:`<p>Investors choose among gambles by maximising <b>expected utility</b>, not expected wealth. A <b>concave</b> utility function (each extra dollar worth a little less) describes <b>risk aversion</b>: such an investor prefers a sure amount to a risky bet with the same mean.</p>
+<p>The gap between the expected value and the lower 'certainty equivalent' the investor will accept is the <b>risk premium</b> — the compensation demanded for bearing risk, and the reason risky assets must offer higher expected returns.</p>`,
+  quiz:[
+   {q:"A risk-averse investor's utility function is:",o:["Convex","Concave","Linear","Flat"],a:1,e:"Diminishing marginal utility (concavity) makes them dislike risk."},
+   {q:"A risk-averse investor offered a 50/50 bet on $0 or $100 versus a sure $50 will:",o:["Prefer the bet","Prefer the sure $50","Be unable to choose","Always pick the bet"],a:1,e:"They accept a lower certain amount, demanding a premium to take the risk."}]},
+ "ECON513_1":{examples:[`<b>Q — risk of a 50/50 portfolio of two assets, each σ = 20%, correlation = 0.</b><ol><li>Formula: <code>σp² = w₁²σ₁² + w₂²σ₂² + 2w₁w₂·ρ·σ₁σ₂</code></li><li>ρ = 0 kills the last term: <code>σp² = 0.5²(0.20²) + 0.5²(0.20²)</code></li><li>Compute: <code>0.01 + 0.01 = 0.02</code></li><li>Square root: <code>σp = √0.02 ≈ 0.141</code></li></ol><b>Portfolio risk ≈ 14.1%</b> — below each asset's 20%. That gap is diversification.`],
+  d:`<p><b>Mean-variance analysis</b> (Markowitz) ranks portfolios by two numbers: expected return (more is better) and variance/standard deviation (less is better). For a given return, the lowest-variance portfolio is <b>efficient</b>; the set of all such portfolios is the <b>efficient frontier</b>.</p>
+<p>Crucially, a portfolio's risk depends on <b>covariances</b> between assets, not just their individual variances — which is why diversification works and why correlation is the key input.</p>`,
+  quiz:[
+   {q:"Mean-variance investors trade off expected return against:",o:["Liquidity","Variance (risk)","Dividend yield","Beta only"],a:1,e:"They like return and dislike variance, choosing efficient combinations."},
+   {q:"A portfolio's total risk depends importantly on the assets':",o:["Names","Covariances with each other","Ticker symbols","Past prices only"],a:1,e:"Covariance drives portfolio variance — the basis of diversification."}]},
+ "ECON513_2":{examples:[`<b>Q — required return on a stock with β = 1.5, risk-free rate 3%, market premium 6%.</b><ol><li>Formula: <code>E[R] = Rf + β × (market premium)</code></li><li>Put in the numbers: <code>3% + 1.5 × 6%</code></li><li>Compute: <code>3% + 9%</code></li></ol><b>E[R] = 12%.</b> Double the beta to 3.0 and the required return jumps to <code>3% + 18% = 21%</code>.`],
+  d:`<p>The <b>Capital Asset Pricing Model (CAPM)</b> says that in equilibrium only <b>systematic (non-diversifiable) risk</b> is rewarded. An asset's expected return is:</p>
+<p><code>E[R] = Rf + β·(E[Rm] − Rf)</code>, where β measures how much the asset moves with the market. Plotting this gives the <b>Security Market Line (SML)</b>.</p>
+<p>Idiosyncratic risk earns no premium because it can be diversified away. Assets above the SML are underpriced; below it, overpriced.</p>`,
+  quiz:[
+   {q:"In CAPM, expected return depends only on:",o:["Total variance","Beta (systematic risk)","Idiosyncratic risk","Dividend yield"],a:1,e:"Only non-diversifiable risk, measured by beta, is priced."},
+   {q:"With Rf = 3% and market premium 6%, a stock with β = 1.5 has expected return:",o:["9%","12%","6%","15%"],a:1,e:"3% + 1.5×6% = 12%."}]},
+ "ECON513_3":{d:`<p><b>Arbitrage Pricing Theory (APT)</b> generalises CAPM. Instead of a single market beta, expected return is a linear function of <b>several systematic factors</b>, each with its own risk premium:</p>
+<p><code>E[R] = Rf + β₁λ₁ + β₂λ₂ + …</code></p>
+<p>Factors might include the market, inflation, interest rates, or oil. APT rests only on <b>no-arbitrage</b> (mispriced factor exposures would be arbitraged away), making it more flexible but silent on what the factors actually are.</p>`,
+  quiz:[
+   {q:"APT differs from CAPM mainly because it:",o:["Uses one factor","Allows multiple systematic factors","Ignores risk","Requires utility functions"],a:1,e:"APT prices several factor exposures, not just the market beta."},
+   {q:"APT is built on the assumption of:",o:["No arbitrage","Perfect forecasting","Risk neutrality","Zero interest rates"],a:0,e:"Mispriced factor risk would be arbitraged away — the model's foundation."}]},
+ "ECON513_4":{d:`<p>The <b>law of one price</b> says two assets with identical future payoffs must have the same price today. If not, a trader can buy the cheap one, sell the dear one, and lock in a <b>riskless arbitrage</b> profit.</p>
+<p>The <b>no-arbitrage principle</b> — that such free lunches don't persist — is the single most powerful idea in pricing. By building a portfolio that <b>replicates</b> a derivative's payoff, we can price the derivative as the cost of the replica, no probabilities of returns needed.</p>`,
+  quiz:[
+   {q:"The law of one price states that:",o:["All stocks cost the same","Identical payoff streams must have the same price","Prices never change","Arbitrage always exists"],a:1,e:"Otherwise a riskless arbitrage profit would be available."},
+   {q:"Replication lets us price a derivative as:",o:["The cost of a portfolio that reproduces its payoff","Its expected real-world return","Its historical average","Zero"],a:0,e:"If a portfolio matches the payoff, no-arbitrage forces equal prices."}]},
+ "ECON513_5":{d:`<p>Any payoff can be valued using <b>state prices</b> — the value today of $1 paid in one specific future state. Summing payoff × state price across states gives the price.</p>
+<p>Rescaling state prices produces <b>risk-neutral probabilities</b>: under this artificial measure, every asset is expected to earn the risk-free rate, so prices equal the <b>discounted expected payoff</b>. This is why option pricing uses risk-neutral, not real-world, probabilities — the risk adjustment is already baked into the measure.</p>`,
+  quiz:[
+   {q:"Under risk-neutral pricing, an asset's price equals:",o:["Its expected payoff discounted at the risk-free rate","Its real-world expected return","Its book value","Its dividend"],a:0,e:"Risk-neutral probabilities let us discount the expected payoff at Rf."},
+   {q:"Risk-neutral probabilities differ from real-world ones because they:",o:["Are always equal","Embed the market's risk adjustment","Ignore payoffs","Sum to more than 1"],a:1,e:"The risk premium is absorbed into the measure, so we discount at Rf."}]},
+ "ECON513_6":{d:`<p>The <b>Efficient Market Hypothesis (EMH)</b> claims prices already reflect available information, so you can't systematically beat the market on a risk-adjusted basis. Three forms:</p>
+<ul>
+<li><b>Weak</b> — prices reflect all <b>past prices</b>; technical analysis can't beat the market.</li>
+<li><b>Semi-strong</b> — prices reflect all <b>public</b> information; fundamental analysis of public data won't help.</li>
+<li><b>Strong</b> — prices reflect <b>all</b> information, even private; not even insiders can profit.</li>
+</ul>`,
+  quiz:[
+   {q:"Semi-strong efficiency implies you cannot beat the market using:",o:["Inside information","Publicly available information","A coin flip","Past prices only"],a:1,e:"All public info is already in prices; only private info could give an edge."},
+   {q:"Weak-form efficiency specifically rules out profiting from:",o:["Earnings reports","Past price patterns","Insider tips","Analyst forecasts"],a:1,e:"Weak form says past prices are fully reflected — technical analysis fails."}]},
+ "ECON513_7":{d:`<p><b>Consumption-based asset pricing</b> asks not just how volatile an asset is, but <b>when</b> it pays off. An asset is truly risky if it does badly precisely when your <b>consumption is already low</b> (recessions) — it fails you when you most need money.</p>
+<p>Such assets must offer high expected returns to be held. Assets that pay off in bad times (insurance-like) can command low or negative premiums. The model links the risk premium to the covariance of returns with consumption growth.</p>`,
+  quiz:[
+   {q:"In consumption-based pricing, the riskiest assets are those that pay off poorly when:",o:["Consumption is high","Consumption is already low","Markets are closed","Rates are high"],a:1,e:"Doing badly in bad times is what investors most dislike, so they demand a premium."},
+   {q:"An asset that pays off in recessions (insurance-like) tends to have:",o:["A very high premium","A low or negative risk premium","No price","Infinite risk"],a:1,e:"It hedges bad times, so investors accept low or negative expected returns."}]},
+ "ECON513_8":{d:`<p><b>Behavioural finance</b> documents systematic ways investors depart from full rationality, challenging strict EMH:</p>
+<ul>
+<li><b>Loss aversion</b> — losses hurt about twice as much as equal gains feel good.</li>
+<li><b>Overconfidence</b> — overtrading and underestimating risk.</li>
+<li><b>Herding</b> — following the crowd, fuelling bubbles.</li>
+<li><b>Anchoring & framing</b> — decisions swayed by irrelevant reference points.</li>
+</ul>
+<p>These biases can push prices away from fundamentals, though arbitrage limits and risk mean they are hard to exploit reliably.</p>`,
+  quiz:[
+   {q:"Loss aversion describes the tendency to:",o:["Feel losses more strongly than equivalent gains","Ignore losses entirely","Always sell winners","Be perfectly rational"],a:0,e:"Losses loom roughly twice as large as equal-sized gains."},
+   {q:"Herding behaviour can contribute to:",o:["Perfect pricing","Asset bubbles","Zero volatility","Risk-free profit"],a:1,e:"Crowds chasing the same assets push prices above fundamental value."}]},
+});
+Object.assign(DEEP,{
+ "FIN545_0":{d:`<p><b>Ordinary least squares (OLS)</b> fits a line by minimising the sum of squared residuals. The slope tells you how the dependent variable responds to each predictor.</p>
+<p>Under the <b>Gauss–Markov assumptions</b> (linearity, no perfect collinearity, exogenous errors with zero mean, constant variance, no autocorrelation), OLS is <b>BLUE</b> — the Best (minimum-variance) Linear Unbiased Estimator. Break the assumptions and OLS may stay unbiased but lose efficiency or give wrong standard errors.</p>`,
+  quiz:[
+   {q:"Under the Gauss–Markov assumptions, OLS is the best ____ estimator:",o:["Biased","Linear unbiased (BLUE)","Nonlinear","Maximum-likelihood only"],a:1,e:"OLS is BLUE: minimum variance among linear unbiased estimators."},
+   {q:"OLS chooses the line that minimises the sum of:",o:["Absolute errors","Squared residuals","Predicted values","Slopes"],a:1,e:"Least squares minimises the sum of squared residuals."}]},
+ "FIN545_1":{examples:[`<b>Q — is a coefficient of 0.8 with a standard error of 0.2 statistically significant?</b><ol><li>t-statistic: <code>t = estimate ÷ standard error</code></li><li>Put in the numbers: <code>t = 0.8 ÷ 0.2 = 4.0</code></li><li>Rule of thumb: <code>|t| &gt; 2</code> ⇒ significant at the 5% level.</li></ol><b>t = 4 → yes, highly significant</b> — the estimate sits 4 standard errors away from zero.`],
+  d:`<p>A <b>hypothesis test</b> asks whether a coefficient differs from some value (usually zero). The <b>t-statistic</b> = estimate ÷ standard error; a large |t| means the estimate is many standard errors from zero.</p>
+<p>The <b>p-value</b> is the probability of seeing an estimate this extreme if the null (true coefficient = 0) were correct. Small p (e.g. &lt; 0.05) ⇒ reject the null ⇒ 'statistically significant'. Note: significance is <b>not</b> the same as economic importance, and large samples make tiny effects significant.</p>`,
+  quiz:[
+   {q:"A very small p-value (e.g. 0.001) on a coefficient indicates:",o:["The effect is economically large","Strong evidence against the null of zero effect","The model is overfit","The data are stationary"],a:1,e:"It's unlikely you'd see this estimate if the true coefficient were zero."},
+   {q:"Statistical significance is:",o:["The same as economic importance","Not the same as economic importance","Impossible in finance","Only about R²"],a:1,e:"A significant coefficient can still be economically tiny — judge magnitude too."}]},
+ "FIN545_2":{d:`<p><b>Multiple regression</b> includes several predictors so each coefficient is a <b>partial effect</b> — the impact of one variable holding the others fixed.</p>
+<p><b>Multicollinearity</b> arises when predictors are highly correlated. OLS stays unbiased, but standard errors balloon, t-stats shrink, and coefficients become unstable and hard to interpret. Detect it with the <b>Variance Inflation Factor (VIF)</b>; fix by dropping or combining redundant variables.</p>`,
+  quiz:[
+   {q:"Severe multicollinearity primarily causes:",o:["Biased coefficients","Inflated standard errors and unstable coefficients","Lower R²","Heteroskedasticity"],a:1,e:"Estimates stay unbiased but become imprecise and unstable."},
+   {q:"A common diagnostic for multicollinearity is the:",o:["Durbin–Watson statistic","Variance Inflation Factor (VIF)","ADF test","Sharpe ratio"],a:1,e:"High VIF flags predictors that are strongly correlated with others."}]},
+ "FIN545_3":{d:`<p><b>Heteroskedasticity</b> means the error variance is not constant across observations — common in finance, where volatility clusters and bigger firms have bigger residuals.</p>
+<p>OLS coefficients stay <b>unbiased</b>, but the usual standard errors are <b>wrong</b>, so t-tests mislead. Fixes: use <b>heteroskedasticity-robust (White) standard errors</b>, or model the variance directly (e.g. GARCH). Test with Breusch–Pagan or White tests.</p>`,
+  quiz:[
+   {q:"Under heteroskedasticity, OLS coefficients are:",o:["Biased, and standard errors wrong","Unbiased, but standard errors wrong","Both correct","Both wrong"],a:1,e:"Estimates remain unbiased; only the standard errors (and tests) are invalid."},
+   {q:"A standard remedy for heteroskedasticity is to use:",o:["Robust (White) standard errors","Larger coefficients","Fewer observations","A higher R²"],a:0,e:"White/robust standard errors give valid inference without changing the estimates."}]},
+ "FIN545_4":{d:`<p><b>Autocorrelation</b> (serial correlation) means residuals are correlated across time — today's error predicts tomorrow's. It violates the independence assumption and is pervasive in time-series data.</p>
+<p>Like heteroskedasticity, it leaves OLS unbiased but makes standard errors wrong (usually too small, overstating significance). Detect with the <b>Durbin–Watson</b> statistic (≈2 means none) or the Breusch–Godfrey test; fix with <b>Newey–West (HAC) standard errors</b>.</p>`,
+  quiz:[
+   {q:"The Durbin–Watson statistic tests for:",o:["Heteroskedasticity","Autocorrelation of residuals","Multicollinearity","Non-normality"],a:1,e:"DW near 2 suggests no first-order autocorrelation."},
+   {q:"Autocorrelation typically makes ordinary standard errors:",o:["Too large","Too small (overstating significance)","Exactly right","Negative"],a:1,e:"Understated standard errors inflate t-stats — use Newey–West (HAC) errors."}]},
+ "FIN545_5":{d:`<p>A series is <b>stationary</b> if its mean, variance and autocovariances don't change over time. Many financial <b>levels</b> (prices, indices) are <b>non-stationary</b> — they wander and have a <b>unit root</b> — while their <b>returns</b> are stationary.</p>
+<p>Regressing one non-stationary series on another risks a <b>spurious regression</b> (high R², meaningless relationship). Test for a unit root with the <b>Augmented Dickey–Fuller (ADF)</b> test; if present, difference the series before modelling.</p>`,
+  quiz:[
+   {q:"Stock prices are usually non-stationary, but their returns are usually:",o:["Also non-stationary","Stationary","Constant","Undefined"],a:1,e:"Differencing prices into returns typically yields a stationary series."},
+   {q:"The Augmented Dickey–Fuller test checks for:",o:["A unit root (non-stationarity)","Heteroskedasticity","Normality","Autocorrelation only"],a:0,e:"ADF tests whether a series has a unit root and must be differenced."}]},
+ "FIN545_6":{d:`<p><b>ARIMA(p,d,q)</b> models a single time series with three ingredients: <b>AR(p)</b> — dependence on its own past values; <b>I(d)</b> — differencing d times to achieve stationarity; <b>MA(q)</b> — dependence on past shocks.</p>
+<p>You identify p and q from the ACF/PACF, estimate by maximum likelihood, and check residuals look like white noise. ARIMA is a baseline for forecasting prices, returns and macro series.</p>`,
+  quiz:[
+   {q:"The 'I' in ARIMA refers to:",o:["Interest","Integration (differencing)","Inflation","Independence"],a:1,e:"I(d) is the number of times the series is differenced to be stationary."},
+   {q:"After fitting a good ARIMA model, the residuals should resemble:",o:["A trend","White noise","A random walk","Seasonality"],a:1,e:"Well-specified residuals are unpredictable white noise."}]},
+ "FIN545_7":{d:`<p><b>ARCH/GARCH</b> models the <b>variance</b> of returns rather than the mean, capturing <b>volatility clustering</b> — calm and turbulent periods bunch together.</p>
+<p>A <b>GARCH(1,1)</b> sets today's variance as a weighted mix of a long-run average, yesterday's squared shock (ARCH term), and yesterday's variance (GARCH term). It is the workhorse for risk management, VaR and option-vol forecasting.</p>`,
+  quiz:[
+   {q:"GARCH models are designed to capture which feature of returns?",o:["Trend","Volatility clustering","Seasonality","Cointegration"],a:1,e:"Today's variance depends on past shocks and variances, clustering volatility."},
+   {q:"A GARCH(1,1) forecast of tomorrow's variance rises most after:",o:["A flat day","A large market move today","A holiday","Low volume"],a:1,e:"A big squared shock today feeds into a higher variance forecast."}]},
+ "FIN545_8":{d:`<p>Two series are <b>cointegrated</b> if each is non-stationary (wanders) yet a <b>linear combination of them is stationary</b> — they share a long-run equilibrium and their spread mean-reverts.</p>
+<p>This is the statistical basis of <b>pairs trading</b>: when the spread strays from its mean, bet on it reverting. Test with Engle–Granger or Johansen; model the dynamics with a <b>Vector Error Correction Model (VECM)</b>.</p>`,
+  quiz:[
+   {q:"Two cointegrated price series have a spread that is:",o:["Non-stationary","Stationary (mean-reverting)","Always zero","Random walk"],a:1,e:"A stationary linear combination is exactly what cointegration means."},
+   {q:"Cointegration is the statistical foundation of:",o:["Index investing","Pairs trading","Buy-and-hold","Dividend capture"],a:1,e:"Pairs trading bets on a mean-reverting spread between cointegrated assets."}]},
+ "FIN545_9":{d:`<p><b>Factor models</b> explain returns with several priced risk factors instead of CAPM's single market beta. The <b>Fama–French 3-factor</b> model adds:</p>
+<ul>
+<li><b>SMB</b> (Small Minus Big) — a size premium;</li>
+<li><b>HML</b> (High Minus Low) — a value premium.</li>
+</ul>
+<p>Carhart adds <b>momentum</b>, and the 5-factor model adds profitability and investment. A fund's loadings (betas) on these factors explain most of its returns, separating true <b>alpha</b> from factor exposure.</p>`,
+  quiz:[
+   {q:"In the Fama–French model, HML captures the premium for:",o:["Large stocks","Value stocks (high book-to-market)","Momentum","Low volatility"],a:1,e:"HML = High minus Low book-to-market, the value premium."},
+   {q:"Factor models help distinguish a manager's true alpha from:",o:["Luck only","Exposure to known risk factors","Trading volume","Dividend yield"],a:1,e:"Returns explained by factor loadings aren't alpha — only the unexplained part is."}]},
+});
+Object.assign(DEEP,{
+ "FIN524_0":{d:`<p>A <b>forward</b> is a private agreement to buy/sell an asset at a fixed price on a future date; a <b>future</b> is the standardised, exchange-traded version, <b>marked-to-market daily</b> through a margin account (which removes counterparty risk).</p>
+<p>Both lock in a price today, so they hedge price risk but give up upside. The payoff at expiry is linear: <code>Sₜ − K</code> for a long position.</p>`,
+  quiz:[
+   {q:"The main difference between a future and a forward is that a future is:",o:["Cheaper always","Exchange-traded and marked-to-market daily","Riskier","Only for commodities"],a:1,e:"Daily marking-to-market and a clearinghouse cut counterparty risk."},
+   {q:"The expiry payoff to a long forward at price K when the spot is Sₜ is:",o:["K − Sₜ","Sₜ − K","max(Sₜ−K,0)","K"],a:1,e:"A long forward gains linearly as the spot rises above K."}]},
+ "FIN524_1":{examples:[`<b>Q — 1-year forward price of a $100 stock (no dividends), interest rate 5%.</b><ol><li>Formula: <code>F = S × e^(rT)</code></li><li>Put in the numbers: <code>100 × e^(0.05 × 1)</code></li><li>Since <code>e^0.05 ≈ 1.0513</code>: <code>100 × 1.0513</code></li></ol><b>Forward ≈ $105.13.</b> The extra $5.13 is the cost of financing the stock for a year.`],
+  d:`<p>The fair forward price comes from <b>no-arbitrage</b>: buying the asset now with borrowed money must cost the same as agreeing to buy it forward. This gives the <b>cost-of-carry</b> formula:</p>
+<p><code>F₀ = S₀·e^((r − q)T)</code>, where r is the financing rate and q any income (dividend/convenience yield). If F deviates, <b>cash-and-carry arbitrage</b> restores it.</p>`,
+  quiz:[
+   {q:"The fair forward price of a non-dividend stock is:",o:["S₀","S₀·e^(rT)","S₀·e^(−rT)","K"],a:1,e:"Cost-of-carry: F₀ = S₀·e^(rT) reflects the financing cost."},
+   {q:"A higher dividend yield q on the asset makes the forward price:",o:["Higher","Lower","Unchanged","Negative"],a:1,e:"Income offsets carry: F = S·e^((r−q)T), so larger q lowers F."}]},
+ "FIN524_2":{d:`<p><b>Hedging with futures</b> offsets price risk by taking the opposite position in a closely related future. The number of contracts comes from the <b>hedge ratio</b> — for a portfolio, h* = β × (portfolio value ÷ futures contract value).</p>
+<p>A perfect hedge removes risk but also removes gains; <b>basis risk</b> remains when the hedge instrument isn't identical to the exposure. Producers short futures; consumers go long.</p>`,
+  quiz:[
+   {q:"To hedge a long equity portfolio against a market fall, you would:",o:["Buy index futures","Short index futures","Buy more stock","Do nothing"],a:1,e:"A short futures position gains when the market drops, offsetting the loss."},
+   {q:"Risk that remains because the hedging instrument differs from the exposure is called:",o:["Basis risk","Credit risk","Liquidity risk","Model risk"],a:0,e:"Imperfect matching of hedge and exposure leaves basis risk."}]},
+ "FIN524_3":{examples:[`<b>Q — you buy a call, strike $100, premium $5. What's your profit if the stock ends at $120? At $90?</b><ol><li>Payoff = <code>max(S − K, 0)</code>. At $120: <code>max(120 − 100, 0) = 20</code></li><li>Profit = payoff − premium = <code>20 − 5 = +15</code></li><li>At $90: <code>max(90 − 100, 0) = 0</code>, so profit = <code>0 − 5 = −5</code></li></ol><b>+$15 if it rises to $120; −$5 (just the premium) if it falls.</b> Your loss is capped at the $5 you paid.`],
+  d:`<p>Options give the <b>right, not the obligation</b>, to trade at the strike K. A <b>call</b> profits if S rises (payoff max(S−K,0)); a <b>put</b> profits if S falls (payoff max(K−S,0)). Buyers pay a premium; their loss is capped at it, while sellers face large risk for a small premium.</p>
+<p>Combining options builds tailored payoffs: <b>protective put</b> (insurance), <b>covered call</b> (income), <b>straddle</b> (bet on big moves), <b>bull/bear spreads</b> (capped directional bets).</p>`,
+  quiz:[
+   {q:"The payoff of a long call at expiry is:",o:["max(K − S, 0)","max(S − K, 0)","S − K always","K"],a:1,e:"A call pays off only when S exceeds the strike K."},
+   {q:"A protective put (own stock + buy put) acts like:",o:["A leveraged bet","Insurance with a deductible","A short sale","A dividend"],a:1,e:"The put floors the downside while you keep the upside — like insurance."}]},
+ "FIN524_4":{examples:[`<b>Q — check put–call parity: call $6, put $3, stock $50, and K·e^(−rT) = $47.</b><ol><li>Left side: <code>C − P = 6 − 3 = 3</code></li><li>Right side: <code>S − K·e^(−rT) = 50 − 47 = 3</code></li></ol><b>3 = 3 ✓ — no arbitrage.</b> If the two sides differed (say left = 4, right = 3), you'd sell the rich side and buy the cheap one to lock in $1 risk-free.`],
+  d:`<p><b>Put–call parity</b> is a no-arbitrage identity linking a European call and put with the same strike and expiry:</p>
+<p><code>C − P = S₀ − K·e^(−rT)</code></p>
+<p>Intuitively, a call minus a put replicates a forward on the stock. If the relationship breaks, you can construct a riskless arbitrage. It also lets you derive a put's price from the call's (and vice versa) and reveals how the two move together.</p>`,
+  quiz:[
+   {q:"Put–call parity states that C − P equals:",o:["S − K·e^(−rT)","K − S","S + K","0 always"],a:0,e:"C − P = S₀ − K·e^(−rT); violating it allows arbitrage."},
+   {q:"If put–call parity is violated in the market, a trader can:",o:["Lock in a riskless arbitrage profit","Only lose money","Do nothing","Pay more tax"],a:0,e:"Mispricing relative to parity creates an arbitrage opportunity."}]},
+ "FIN524_5":{examples:[`<b>Q — risk-neutral probability of an up-move. Up factor u = 1.1, down d = 0.9, rate 5% (one period).</b><ol><li>Formula: <code>p = (e^(rΔt) − d) ÷ (u − d)</code></li><li>Top: <code>e^0.05 − 0.9 ≈ 1.0513 − 0.9 = 0.1513</code></li><li>Bottom: <code>1.1 − 0.9 = 0.2</code></li><li>Divide: <code>0.1513 ÷ 0.2 ≈ 0.76</code></li></ol><b>p ≈ 0.76.</b> Use this (not the real-world probability) to price the option as a discounted expected payoff.`],
+  d:`<p>The <b>binomial model</b> prices options by assuming the underlying moves up (factor u) or down (factor d) each step. You replicate the option with stock + a bond, and no-arbitrage forces a unique price.</p>
+<p>Equivalently, price as the discounted expected payoff under <b>risk-neutral probabilities</b> <code>p = (e^{rΔt} − d)/(u − d)</code> — note real-world probabilities never appear. Adding more steps converges to Black–Scholes and handles American (early-exercise) options easily.</p>`,
+  quiz:[
+   {q:"The binomial model prices an option using:",o:["Real-world probabilities","Risk-neutral probabilities","The dividend yield only","Past returns"],a:1,e:"Replication implies risk-neutral valuation; real-world probabilities drop out."},
+   {q:"As the number of binomial steps increases, the price converges to:",o:["Zero","The Black–Scholes price","The strike","Infinity"],a:1,e:"The binomial tree approaches Black–Scholes in the continuous limit."}]},
+ "FIN524_6":{d:`<p>The <b>Black–Scholes–Merton</b> formula gives a closed-form price for a European option, assuming the underlying follows geometric Brownian motion with constant volatility.</p>
+<p><code>C = S₀N(d₁) − K·e^(−rT)N(d₂)</code>. Inputs: spot S, strike K, time T, risk-free rate r, and <b>volatility σ</b> — the only input not directly observed. Higher σ or T raises both calls and puts. Inverting the formula on market prices yields <b>implied volatility</b>.</p>`,
+  quiz:[
+   {q:"In Black–Scholes, increasing volatility (σ) raises the value of:",o:["Only calls","Only puts","Both calls and puts","Neither"],a:2,e:"More volatility means bigger possible favourable moves with capped losses — both gain (positive vega)."},
+   {q:"Which Black–Scholes input is NOT directly observable in the market?",o:["Spot price","Strike","Volatility","Time to expiry"],a:2,e:"Volatility must be estimated or backed out as implied volatility."}]},
+ "FIN524_7":{examples:[`<b>Q — you're short 100 call options, each with delta 0.6. How do you delta-hedge?</b><ol><li>Total delta of the position: <code>100 × 0.6 = 60</code> (and you're short, so −60).</li><li>Offset it by buying shares: <code>+60 shares</code> brings net delta to ≈ 0.</li></ol><b>Hold 60 shares.</b> As the price moves, delta changes (that's gamma), so you re-adjust the share count to stay hedged.`],
+  d:`<p>The <b>Greeks</b> measure an option's sensitivity to each input:</p>
+<ul>
+<li><b>Delta (Δ)</b> — change in option value per $1 move in the underlying.</li>
+<li><b>Gamma (Γ)</b> — how fast delta itself changes.</li>
+<li><b>Vega</b> — sensitivity to volatility.</li>
+<li><b>Theta (Θ)</b> — time decay.</li>
+<li><b>Rho (ρ)</b> — sensitivity to interest rates.</li>
+</ul>
+<p><b>Delta hedging</b> holds −Δ units of the underlying to neutralise small moves; because gamma changes delta, the hedge must be rebalanced.</p>`,
+  quiz:[
+   {q:"Delta measures the change in option price per $1 change in:",o:["Volatility","The underlying asset price","Time","Interest rate"],a:1,e:"Delta = ∂C/∂S; it sizes the delta hedge."},
+   {q:"A delta-hedged position must be rebalanced because of:",o:["Theta","Gamma (delta keeps changing)","Rho","Dividends only"],a:1,e:"Gamma means delta drifts as the underlying moves, requiring rehedging."}]},
+ "FIN524_8":{d:`<p>A <b>swap</b> exchanges two streams of cash flows. The most common is the <b>plain-vanilla interest-rate swap</b>: one party pays <b>fixed</b>, the other pays <b>floating</b> (e.g. SOFR), on a notional principal that itself is never exchanged.</p>
+<p>Firms use swaps to convert floating-rate debt to fixed (or vice versa), hedging interest-rate risk. A swap's value at inception is zero and equals the difference between the fixed and floating bond legs thereafter. Currency swaps exchange principal and interest in two currencies.</p>`,
+  quiz:[
+   {q:"In a plain-vanilla interest-rate swap, the counterparties exchange:",o:["The principal upfront","Fixed-for-floating interest payments","Shares","Commodities"],a:1,e:"They swap fixed vs floating interest on a notional; principal isn't exchanged."},
+   {q:"A firm with floating-rate debt that fears rising rates can:",o:["Pay fixed / receive floating in a swap","Receive fixed / pay floating","Buy more floating debt","Do nothing"],a:0,e:"Paying fixed locks in its cost regardless of rate moves."}]},
+ "FIN524_9":{d:`<p><b>Value at Risk (VaR)</b> summarises downside risk in one number: the loss that will <b>not be exceeded</b> over a horizon at a confidence level. A 1-day 99% VaR of $1m means a 1% chance of losing more than $1m tomorrow.</p>
+<p>Methods: <b>parametric</b> (assume normal returns), <b>historical simulation</b>, and <b>Monte Carlo</b>. VaR's weakness is that it says nothing about <b>how bad</b> losses beyond it are — <b>Expected Shortfall (CVaR)</b>, the average loss in the tail, fixes that.</p>`,
+  quiz:[
+   {q:"A 1-day 99% VaR of $1m means:",o:["You will lose $1m","At most 1% chance of losing more than $1m in a day","You always lose less than $1m","Expected loss is $1m"],a:1,e:"VaR is the loss threshold not exceeded with the stated confidence."},
+   {q:"A key limitation of VaR, addressed by Expected Shortfall, is that it:",o:["Is too small","Ignores how large losses beyond the threshold are","Can't be computed","Uses no data"],a:1,e:"VaR ignores tail severity; Expected Shortfall averages the losses beyond VaR."}]},
+});
+Object.assign(DEEP,{
+ "FIN540_0":{d:`<p>Markets match buyers and sellers through an <b>order book</b> of bids and asks, often supported by <b>market makers</b> who quote both sides and earn the spread. Order types control execution:</p>
+<ul>
+<li><b>Market order</b> — fills immediately at the best available price (certain execution, uncertain price).</li>
+<li><b>Limit order</b> — fills only at your price or better (certain price, uncertain execution).</li>
+<li><b>Stop order</b> — becomes a market order once a trigger price is hit.</li>
+</ul>
+<p>The <b>bid–ask spread</b> and liquidity are real trading costs.</p>`,
+  quiz:[
+   {q:"A limit buy order at $50:",o:["Fills immediately at any price","Fills only at $50 or lower","Always fills at $50 exactly","Cannot be cancelled"],a:1,e:"A limit order guarantees price (≤$50) but not execution."},
+   {q:"A market order prioritises:",o:["Best price","Immediate execution","No cost","Anonymity"],a:1,e:"It fills now at the best available price, accepting price uncertainty."}]},
+ "FIN540_1":{d:`<p><b>Modern Portfolio Theory (MPT)</b> shows that combining assets can improve the risk–return trade-off because portfolio risk depends on <b>covariances</b>, not just individual volatilities.</p>
+<p>Plotting every achievable portfolio, the upper-left boundary is the <b>efficient frontier</b>: each point offers the highest expected return for its risk (or the least risk for its return). Rational investors hold only frontier portfolios; the exact one depends on risk tolerance.</p>`,
+  quiz:[
+   {q:"On the efficient frontier, every portfolio offers:",o:["The highest return for its level of risk","Zero risk","The same return","Maximum diversification regardless of return"],a:0,e:"The frontier maximises return per unit of risk (and minimises risk per return)."},
+   {q:"Portfolio risk depends crucially on the assets':",o:["Names","Covariances","Prices alone","Sectors only"],a:1,e:"Covariance between holdings drives total portfolio variance."}]},
+ "FIN540_2":{examples:[`<b>Q — risk of a 50/50 mix of two assets, each σ = 20%, correlation 0.</b><ol><li>Formula: <code>σp² = w₁²σ₁² + w₂²σ₂² + 2w₁w₂·ρ·σ₁σ₂</code></li><li>ρ = 0 removes the last term: <code>σp² = 0.5²(0.04) + 0.5²(0.04)</code></li><li>Compute: <code>0.01 + 0.01 = 0.02</code>, then <code>σp = √0.02 ≈ 0.141</code></li></ol><b>≈ 14.1% risk</b> vs 20% for either asset alone. If correlation were +1, you'd get exactly 20% — no benefit.`],
+  d:`<p><b>Diversification</b> reduces risk by spreading money across assets whose returns don't move in lockstep. The benefit depends on <b>correlation</b>: the lower (or more negative) it is, the more idiosyncratic risk cancels out.</p>
+<p>Two assets each with σ = 20% and correlation 0 combine (equal weights) to a portfolio σ of about 14%. What cannot be diversified away is <b>systematic (market) risk</b> — the part CAPM says is rewarded.</p>`,
+  quiz:[
+   {q:"Diversification reduces portfolio risk most when assets have:",o:["High positive correlation","Low or negative correlation","Identical returns","Zero variance"],a:1,e:"Lower correlation means more idiosyncratic risk cancels out."},
+   {q:"The risk that diversification cannot eliminate is:",o:["Idiosyncratic risk","Systematic (market) risk","Company-specific risk","Sector risk"],a:1,e:"Only systematic risk remains in a well-diversified portfolio — and it's what earns a premium."}]},
+ "FIN540_3":{d:`<p>Adding a <b>risk-free asset</b> to the efficient frontier creates the <b>Capital Market Line (CML)</b>: a straight line from Rf through the <b>tangency portfolio</b>. Every investor optimally holds a mix of the risk-free asset and that same tangency portfolio (the <b>two-fund separation</b> theorem).</p>
+<p>In equilibrium the tangency portfolio is the <b>market portfolio</b>, which leads directly to CAPM and the idea that only systematic risk (beta) is priced.</p>`,
+  quiz:[
+   {q:"The Capital Market Line combines the risk-free asset with:",o:["A single stock","The tangency (market) portfolio","Bonds only","The minimum-variance portfolio"],a:1,e:"All investors hold Rf plus the same tangency portfolio (two-fund separation)."},
+   {q:"In equilibrium, the tangency portfolio is:",o:["The market portfolio","A bond fund","Cash","The riskiest stock"],a:0,e:"It equals the market portfolio, giving rise to CAPM."}]},
+ "FIN540_4":{examples:[`<b>Q — Sharpe ratio of a fund returning 12%, with σ = 15%, when the risk-free rate is 2%.</b><ol><li>Formula: <code>Sharpe = (Rp − Rf) ÷ σp</code></li><li>Excess return: <code>12% − 2% = 10%</code></li><li>Divide by risk: <code>10 ÷ 15 ≈ 0.67</code></li></ol><b>Sharpe ≈ 0.67</b> — about 0.67% of excess return for each 1% of volatility. Higher is better.`],
+  d:`<p>Risk-adjusted performance measures compare return to risk taken:</p>
+<ul>
+<li><b>Sharpe ratio</b> = (Rp − Rf) ÷ σp — excess return per unit of <b>total</b> risk.</li>
+<li><b>Treynor ratio</b> = (Rp − Rf) ÷ β — excess return per unit of <b>systematic</b> risk.</li>
+<li><b>Jensen's alpha</b> = actual return − CAPM-predicted return — value added beyond beta.</li>
+</ul>
+<p>Use Sharpe for a whole portfolio, Treynor/alpha when it's one part of a diversified holding.</p>`,
+  quiz:[
+   {q:"The Sharpe ratio measures excess return per unit of:",o:["Beta","Total risk (standard deviation)","Systematic risk only","Tracking error"],a:1,e:"Sharpe = (Rp − Rf)/σp; Treynor uses beta instead."},
+   {q:"A fund returns 12% with σ = 15% and Rf = 2%. Its Sharpe ratio is:",o:["0.67","0.80","1.20","0.10"],a:0,e:"(12 − 2)/15 = 10/15 ≈ 0.67."}]},
+ "FIN540_5":{d:`<p><b>Asset allocation</b> — the split across stocks, bonds, cash and alternatives — drives the bulk of a portfolio's risk and long-run return, far more than individual security picks.</p>
+<p>Over time, winners grow and the mix drifts from target. <b>Rebalancing</b> periodically sells what's grown and buys what's lagged, restoring the target weights. This enforces 'buy low, sell high' discipline and controls risk, at the cost of some trading and taxes.</p>`,
+  quiz:[
+   {q:"Most of a diversified portfolio's long-run risk and return is driven by:",o:["Individual stock picks","The asset allocation","Trading frequency","Broker choice"],a:1,e:"The high-level mix of asset classes dominates outcomes."},
+   {q:"Rebalancing a 60/40 portfolio that has drifted to 70/30 means:",o:["Buying more stocks","Selling stocks back toward 60%","Holding cash only","Doing nothing"],a:1,e:"You trim the overweight (stocks) and top up the underweight (bonds)."}]},
+ "FIN540_6":{d:`<p>Because consistently beating the market after costs is hard (a lesson from the EMH), many investors choose <b>passive index funds</b> that simply track a broad benchmark like the S&P 500.</p>
+<p>Advantages: very low fees (often ~0.03% vs ~1% active), broad diversification, tax efficiency and no manager risk. The trade-off: you accept market returns and can't outperform. Decades of evidence show most active funds <b>underperform</b> their index after fees.</p>`,
+  quiz:[
+   {q:"The main appeal of index funds is:",o:["Guaranteed outperformance","Low fees and broad diversification","No risk","Beating the market"],a:1,e:"They deliver market returns cheaply; they don't aim to beat it."},
+   {q:"Evidence on active management shows that, after fees, most active funds:",o:["Beat their index","Underperform their index","Match it exactly","Avoid all risk"],a:1,e:"High fees and efficiency mean the majority trail their benchmark."}]},
+ "FIN540_7":{d:`<p><b>Behavioural finance</b> studies how psychology moves investors and prices away from the rational ideal:</p>
+<ul>
+<li><b>Overconfidence</b> → overtrading and concentration.</li>
+<li><b>Loss aversion / disposition effect</b> → selling winners too soon, holding losers too long.</li>
+<li><b>Herding</b> → chasing trends and bubbles.</li>
+<li><b>Mental accounting & anchoring</b> → inconsistent, reference-dependent choices.</li>
+</ul>
+<p>Awareness of these biases helps investors build rules (rebalancing, automation) that counteract them.</p>`,
+  quiz:[
+   {q:"The disposition effect is the tendency to:",o:["Sell winners too early and hold losers too long","Sell losers quickly","Never trade","Buy only winners"],a:0,e:"Investors realise gains too soon and avoid realising losses."},
+   {q:"Which is a behavioural bias rather than a rational strategy?",o:["Diversification","Rebalancing","Herding into a hot stock","Hedging"],a:2,e:"Herding follows the crowd rather than fundamentals."}]},
+ "FIN540_8":{d:`<p><b>Market anomalies</b> are persistent patterns that appear to beat the market, challenging strict efficiency:</p>
+<ul>
+<li><b>Momentum</b> — past 3–12 month winners keep winning short-term.</li>
+<li><b>Value</b> — cheap (high book-to-market) stocks outperform.</li>
+<li><b>Size</b> — small caps have historically out-returned large caps.</li>
+<li><b>Calendar effects</b> — e.g. the January effect.</li>
+</ul>
+<p>Debate continues whether these are mispricings or simply compensation for risk factors — and many shrink once widely known and traded.</p>`,
+  quiz:[
+   {q:"The momentum anomaly says that recent winners tend to:",o:["Reverse immediately","Keep outperforming in the short term","Pay higher dividends","Have low beta"],a:1,e:"Stocks that rose over the past 3–12 months tend to continue."},
+   {q:"Many documented anomalies tend to:",o:["Grow stronger forever","Weaken after they become widely known","Never exist","Apply only to bonds"],a:1,e:"Crowded trading often arbitrages an anomaly's profits away."}]},
+});
+Object.assign(DEEP,{
+ "FIN527_0":{examples:[`<b>Q — price a 3-year bond, $1,000 face, 5% annual coupon ($50/yr), when the market yield is 6%.</b><ol><li>Discount each cash flow at 6%: <code>50 ÷ 1.06 = 47.2</code></li><li><code>50 ÷ 1.06² = 44.5</code></li><li>Final year (coupon + face): <code>1,050 ÷ 1.06³ = 881.6</code></li><li>Add them up: <code>47.2 + 44.5 + 881.6 ≈ 973</code></li></ol><b>Price ≈ $973</b> — below $1,000 (a "discount") because the 5% coupon is less than the 6% yield.`],
+  d:`<p>A bond's price is the <b>present value of its future cash flows</b> — periodic coupons plus the face value at maturity — discounted at the market yield.</p>
+<p>The <b>yield to maturity (YTM)</b> is the single discount rate that makes that present value equal the bond's price; it's the bond's internal rate of return if held to maturity and reinvested at the same rate. Price and yield move <b>inversely</b>: when one rises, the other falls.</p>`,
+  quiz:[
+   {q:"When market interest rates rise, the price of an existing fixed-coupon bond:",o:["Rises","Falls","Stays the same","Doubles"],a:1,e:"Price and yield move inversely; new higher-yield bonds make the old one less attractive."},
+   {q:"A bond's yield to maturity is the discount rate that makes:",o:["The coupon zero","The present value of cash flows equal the price","Duration equal maturity","Convexity zero"],a:1,e:"YTM equates discounted cash flows to the market price."}]},
+ "FIN527_1":{d:`<p>The <b>yield curve</b> plots yield against maturity for similar-credit bonds (e.g. Treasuries). Its shape reflects expectations and risk premia:</p>
+<ul>
+<li><b>Upward (normal)</b> — long rates above short; typical in expansions.</li>
+<li><b>Flat</b> — transition / uncertainty.</li>
+<li><b>Inverted</b> — short above long; has historically preceded recessions.</li>
+</ul>
+<p>Theories: <b>expectations</b> (long rates = average expected short rates), <b>liquidity preference</b> (term premium for length), and <b>market segmentation</b>.</p>`,
+  quiz:[
+   {q:"An inverted yield curve (short rates above long) is often viewed as a signal of:",o:["A coming boom","A possible recession","Zero inflation","Rising stock prices"],a:1,e:"Inversions have historically preceded recessions."},
+   {q:"The expectations theory says long-term rates reflect:",o:["Only today's short rate","The average of expected future short rates","Dividend yields","Credit spreads"],a:1,e:"Long yields ≈ the average of expected future short rates."}]},
+ "FIN527_2":{examples:[`<b>Q — the 1-year rate, one year from now, if the 1-yr spot is 4% and the 2-yr spot is 5%.</b><ol><li>Formula: <code>(1 + f) = (1 + s₂)² ÷ (1 + s₁)</code></li><li>Numbers: <code>1.05² ÷ 1.04 = 1.1025 ÷ 1.04 ≈ 1.0601</code></li><li>Subtract 1: <code>1.0601 − 1 = 0.0601</code></li></ol><b>Implied forward ≈ 6.0%.</b> Locking in 5% for two years should equal getting 4% now, then 6% next year.`],
+  d:`<p><b>Spot rates</b> are the yields for a single payment at one future date (zero-coupon yields); a coupon bond is really a bundle of cash flows, each discounted at its own spot rate.</p>
+<p><b>Forward rates</b> are future rates implied by today's spot curve — e.g. the 1-year rate one year from now. <b>Bootstrapping</b> extracts the spot curve step-by-step from observed bond prices, starting at the shortest maturity and working out.</p>`,
+  quiz:[
+   {q:"If the 1-year spot rate is 4% and the 2-year spot rate is 5%, the implied 1-year forward rate one year out is about:",o:["3%","6%","4.5%","9%"],a:1,e:"(1.05²/1.04) − 1 ≈ 6.0%."},
+   {q:"Bootstrapping is used to derive:",o:["The spot (zero-coupon) curve from bond prices","Stock betas","Option deltas","Credit ratings"],a:0,e:"It backs out successive spot rates from observed coupon-bond prices."}]},
+ "FIN527_3":{examples:[`<b>Q — a bond has modified duration 7. What happens if yields rise by 1%?</b><ol><li>Formula: <code>%price change ≈ − duration × yield change</code></li><li>Numbers: <code>−7 × 1% = −7%</code></li><li>On a $1,000 bond: <code>−7% × 1,000 = −$70</code></li></ol><b>Price falls about 7% → from $1,000 to ~$930.</b> (Convexity makes the true drop a touch smaller.)`],
+  d:`<p><b>Duration</b> is both the weighted-average time to a bond's cash flows and its <b>price sensitivity to yield</b>. <b>Modified duration</b> approximates the percentage price change for a 1% change in yield:</p>
+<p><code>%ΔPrice ≈ −ModDuration × Δyield</code></p>
+<p>Duration is higher for <b>longer maturity</b>, <b>lower coupons</b>, and <b>lower yields</b>. It's the primary tool for measuring and managing interest-rate risk.</p>`,
+  quiz:[
+   {q:"A bond with modified duration 7 will fall in price by about how much if yields rise 1%?",o:["0.7%","7%","17%","70%"],a:1,e:"%ΔPrice ≈ −7 × 1% = −7%."},
+   {q:"Holding maturity fixed, a bond with a LOWER coupon has:",o:["Lower duration","Higher duration","Zero duration","Negative duration"],a:1,e:"Less cash arrives early, pushing the weighted average time (duration) up."}]},
+ "FIN527_4":{d:`<p>Duration is a <b>straight-line</b> approximation, but the true price–yield relationship <b>curves</b> (convex). <b>Convexity</b> is the second-order correction that captures this curvature.</p>
+<p>Because of positive convexity, a bond <b>gains more</b> when yields fall than it loses when yields rise by the same amount — duration alone overstates losses and understates gains for large moves. Full estimate: <code>%ΔP ≈ −D·Δy + ½·C·(Δy)²</code>.</p>`,
+  quiz:[
+   {q:"Convexity matters because duration alone is:",o:["Always exact","A linear approximation that errs for large yield moves","Only for stocks","Equal to maturity"],a:1,e:"Convexity corrects the curvature the linear duration estimate misses."},
+   {q:"For a bond with positive convexity, a large yield change produces a price gain that is:",o:["Smaller than duration predicts on the downside","Larger on the way down than the loss on the way up","Always negative","Exactly linear"],a:1,e:"Positive convexity helps the holder: more upside than downside for equal yield moves."}]},
+ "FIN527_5":{d:`<p><b>Interest-rate risk</b> is the danger that rate moves change a bond portfolio's value or reinvestment income. <b>Immunization</b> neutralises it by <b>matching the portfolio's duration to the investment horizon</b>.</p>
+<p>Then a rate rise cuts prices but boosts reinvestment income by an offsetting amount (and vice versa), locking in a target return regardless of rate moves. Pensions and insurers use it to match assets to known future liabilities; it must be re-balanced as time and yields change.</p>`,
+  quiz:[
+   {q:"Immunization protects a portfolio by matching its duration to:",o:["The coupon rate","The investment horizon","The face value","Maturity exactly"],a:1,e:"Setting duration = horizon offsets price and reinvestment risk."},
+   {q:"Immunization works because a rate rise's price loss is offset by:",o:["Higher reinvestment income","Lower taxes","Higher coupons","Default"],a:0,e:"Reinvesting coupons at higher rates compensates for the price drop."}]},
+ "FIN527_6":{d:`<p><b>Credit risk</b> is the chance an issuer fails to pay. Agencies (Moody's, S&P, Fitch) assign <b>ratings</b> from AAA down to D; <b>investment grade</b> is BBB−/Baa3 and above, below that is <b>high-yield ('junk')</b>.</p>
+<p>Lower ratings demand higher yields — the <b>credit spread</b> over a comparable risk-free bond compensates for expected default and its uncertainty. Spreads widen in stress and narrow in calm markets.</p>`,
+  quiz:[
+   {q:"A lower credit rating means the bond must offer:",o:["A lower yield","A higher yield (wider credit spread)","No coupon","A fixed price"],a:1,e:"Investors demand extra yield to bear higher default risk."},
+   {q:"The lowest rating still considered 'investment grade' is around:",o:["AAA","BBB− / Baa3","CCC","D"],a:1,e:"BBB−/Baa3 is the investment-grade floor; below it is high-yield/junk."}]},
+ "FIN527_7":{d:`<p>Some bonds carry <b>embedded options</b>:</p>
+<ul>
+<li><b>Callable</b> — the issuer may redeem early. They do so when rates fall (to refinance cheaply), which caps the bond's upside, so callables pay <b>higher</b> yields and have <b>negative convexity</b>.</li>
+<li><b>Putable</b> — the holder may sell it back early, valuable when rates rise; this protection means putables pay <b>lower</b> yields.</li>
+</ul>
+<p>Value: callable = straight bond − call option; putable = straight bond + put option.</p>`,
+  quiz:[
+   {q:"Compared with an otherwise identical straight bond, a callable bond offers:",o:["A lower yield","A higher yield","No yield","A guaranteed return"],a:1,e:"The holder is short a call (worse for them), so they're compensated with extra yield."},
+   {q:"Issuers typically call their bonds when interest rates:",o:["Rise","Fall","Stay flat","Go negative only"],a:1,e:"Falling rates let them refinance the debt more cheaply."}]},
+ "FIN527_8":{d:`<p><b>Mortgage-backed securities (MBS)</b> pool thousands of home loans and pass the principal and interest through to investors. The twist is <b>prepayment risk</b>: homeowners can repay early, especially when rates fall and they refinance.</p>
+<p>So when rates drop, an MBS holder gets cash back early — just when reinvestment yields are low — and the bond's price rises less than a normal bond's. This makes MBS exhibit <b>negative convexity</b>, complicating hedging.</p>`,
+  quiz:[
+   {q:"The distinctive risk in mortgage-backed securities is:",o:["Currency risk","Prepayment risk","Liquidity tax","Equity risk"],a:1,e:"Homeowners can prepay (refinance), changing the MBS cash flows."},
+   {q:"MBS prepayments tend to accelerate when interest rates:",o:["Rise","Fall","Stay flat","Are negative only"],a:1,e:"Falling rates spur refinancing, returning principal early to investors."}]},
+ "FIN527_9":{d:`<p><b>Interest-rate derivatives</b> manage rate exposure without trading the underlying bonds:</p>
+<ul>
+<li><b>Interest-rate swaps</b> — exchange fixed for floating payments.</li>
+<li><b>Caps / floors</b> — set a maximum / minimum on a floating rate (a strip of options).</li>
+<li><b>Swaptions</b> — options to enter a swap.</li>
+<li><b>Bond futures & FRAs</b> — lock in future rates.</li>
+</ul>
+<p>A borrower buys a <b>cap</b> so a floating loan's rate can't exceed a ceiling, keeping upside if rates stay low.</p>`,
+  quiz:[
+   {q:"A borrower with a floating-rate loan who wants to cap their interest cost would buy:",o:["An interest-rate floor","An interest-rate cap","A bond future to sell","Nothing"],a:1,e:"A cap pays out when rates exceed the strike, limiting the borrower's cost."},
+   {q:"A swaption is an option to:",o:["Buy a stock","Enter into an interest-rate swap","Default on a bond","Issue equity"],a:1,e:"It gives the right, not obligation, to enter a swap on set terms."}]},
+});
+Object.assign(DEEP,{
+ "MIS517_0":{d:`<p>Machine learning splits into two big families:</p>
+<ul>
+<li><b>Supervised</b> — learn from <b>labelled</b> examples to predict a known target. Sub-types: <b>regression</b> (predict a number) and <b>classification</b> (predict a category).</li>
+<li><b>Unsupervised</b> — find structure in <b>unlabelled</b> data, e.g. clustering or dimensionality reduction.</li>
+</ul>
+<p>There's also <b>reinforcement learning</b>, where an agent learns by trial-and-error rewards. The first question on any project: do I have labels for what I'm trying to predict?</p>`,
+  quiz:[
+   {q:"Predicting whether a loan will default (yes/no) from labelled history is:",o:["Unsupervised","Supervised classification","Clustering","Reinforcement learning"],a:1,e:"A known yes/no label makes it supervised classification."},
+   {q:"Grouping customers into segments with no predefined labels is:",o:["Supervised learning","Unsupervised learning","Regression","Classification"],a:1,e:"No target labels means the algorithm finds structure itself — unsupervised."}]},
+ "MIS517_1":{d:`<p><b>Linear regression</b> predicts a continuous number as a weighted sum of features, fit by least squares. <b>Logistic regression</b> predicts a <b>probability</b> by passing that weighted sum through the <b>sigmoid</b> function, squashing it to 0–1, then thresholding to a class.</p>
+<p>Both are simple, fast and interpretable — the coefficients show each feature's effect — which is why they remain baselines for credit scoring and default prediction.</p>`,
+  quiz:[
+   {q:"Logistic regression is used to predict:",o:["A continuous price","A probability / class","A cluster","A time series trend"],a:1,e:"The sigmoid maps the linear score to a 0–1 probability for classification."},
+   {q:"A key practical advantage of linear/logistic regression is that they are:",o:["Black boxes","Interpretable (coefficients show effects)","Always most accurate","Unsupervised"],a:1,e:"Their coefficients make the model easy to explain — valued in finance/regulation."}]},
+ "MIS517_2":{d:`<p>A <b>decision tree</b> splits data with a sequence of yes/no questions, choosing at each node the split that best separates outcomes (by Gini impurity or information gain). The result is a flowchart that's easy to read.</p>
+<p>Strengths: interpretable, handle non-linearities and mixed data types. Weakness: a single deep tree <b>overfits</b> easily — which motivates ensembles (forests, boosting).</p>`,
+  quiz:[
+   {q:"The biggest weakness of a single deep decision tree is that it:",o:["Is too simple","Overfits the training data","Can't handle categories","Needs labels"],a:1,e:"Unpruned trees memorise noise; ensembles fix this."},
+   {q:"Decision trees are popular partly because they are:",o:["Completely unsupervised","Easy to interpret","Always linear","Free of any error"],a:1,e:"The flowchart of splits is human-readable."}]},
+ "MIS517_3":{d:`<p>Ensembles combine many trees to beat any single one:</p>
+<ul>
+<li><b>Random forest</b> — <b>bagging</b>: train many trees on bootstrap samples with random feature subsets, then <b>average</b> them. Reduces variance/overfitting.</li>
+<li><b>Boosting</b> (e.g. <b>XGBoost</b>, LightGBM) — build trees <b>sequentially</b>, each correcting the previous ones' errors. Often the most accurate on tabular financial data.</li>
+</ul>
+<p>Both trade some interpretability for accuracy; feature-importance and SHAP values help explain them.</p>`,
+  quiz:[
+   {q:"A random forest improves on a single tree mainly by:",o:["Using one big tree","Averaging many de-correlated trees (bagging)","Removing all features","Ignoring the data"],a:1,e:"Averaging diverse trees cuts variance and overfitting."},
+   {q:"Boosting builds its trees:",o:["All at once independently","Sequentially, each fixing prior errors","Randomly with no learning","Only once"],a:1,e:"Each new tree focuses on the residual errors of the ensemble so far."}]},
+ "MIS517_4":{d:`<p><b>Neural networks</b> stack layers of weighted nodes with non-linear activations, learning complex patterns by adjusting weights via <b>backpropagation</b> and gradient descent. <b>Deep learning</b> just means many layers.</p>
+<p>They excel at unstructured data — images, text, audio — and can capture subtle non-linearities, but need lots of data and compute, and are hard to interpret. In finance they're used for NLP on filings/news, fraud detection and alpha signals.</p>`,
+  quiz:[
+   {q:"Neural networks learn by adjusting their weights through:",o:["Random guessing","Backpropagation and gradient descent","Sorting","Clustering"],a:1,e:"Errors are propagated back to update weights step by step."},
+   {q:"'Deep' learning refers to networks with:",o:["Many layers","One neuron","No weights","Only linear functions"],a:0,e:"Depth = many hidden layers, enabling complex representations."}]},
+ "MIS517_5":{d:`<p><b>k-means clustering</b> is the classic unsupervised method: pick k, then iterate — assign each point to its nearest cluster centre, recompute centres, repeat until stable. It partitions data into k groups that minimise within-cluster distance.</p>
+<p>Choose k with the <b>elbow method</b> or silhouette score. In finance it groups stocks by risk/return profile, segments customers, or detects regimes. Limitation: assumes roughly round, similar-size clusters and needs k chosen up front.</p>`,
+  quiz:[
+   {q:"k-means is an example of:",o:["Supervised classification","Unsupervised clustering","Regression","Reinforcement learning"],a:1,e:"It groups unlabelled data — unsupervised learning."},
+   {q:"In k-means, the number of clusters k is:",o:["Learned automatically from labels","Chosen by the user (e.g. via the elbow method)","Always 2","Irrelevant"],a:1,e:"You must specify k; the elbow/silhouette helps pick it."}]},
+ "MIS517_6":{examples:[`<b>Q — a fraud model flags 100 cases: 80 are real fraud (TP), 20 are not (FP). It also misses 40 frauds (FN). Find precision &amp; recall.</b><ol><li>Precision = <code>TP ÷ (TP + FP) = 80 ÷ (80 + 20) = 0.80</code></li><li>Recall = <code>TP ÷ (TP + FN) = 80 ÷ (80 + 40) ≈ 0.67</code></li></ol><b>Precision 80%, recall 67%</b> — of those it flagged, 80% were right; of all real frauds, it caught 67%.`],
+  d:`<p>To know if a model truly works, evaluate it on data it hasn't seen — a <b>train/test split</b> or <b>cross-validation</b>. For classification, the <b>confusion matrix</b> (TP, FP, TN, FN) yields:</p>
+<ul>
+<li><b>Accuracy</b> — overall % correct (misleading on imbalanced data).</li>
+<li><b>Precision</b> = TP/(TP+FP) — of those flagged, how many were right.</li>
+<li><b>Recall</b> = TP/(TP+FN) — of the true positives, how many we caught.</li>
+<li><b>ROC-AUC</b> — ranking quality across thresholds.</li>
+</ul>`,
+  quiz:[
+   {q:"In a confusion matrix, precision answers:",o:["Of all actual positives, how many did we catch?","Of all predicted positives, how many were right?","What is total accuracy?","How fast is the model?"],a:1,e:"Precision = TP/(TP+FP); recall covers the 'how many did we catch' side."},
+   {q:"Why can 99% accuracy be misleading for rare fraud?",o:["Accuracy is always wrong","A model predicting 'no fraud' always scores high yet catches none","Recall is irrelevant","Fraud is common"],a:1,e:"With imbalance, check recall/precision, not just accuracy."}]},
+ "MIS517_7":{d:`<p><b>Overfitting</b> is when a model learns the training data's noise, scoring great in-sample but failing on new data (high variance). <b>Underfitting</b> is the opposite — too simple to capture the pattern (high bias). Good models balance this <b>bias–variance trade-off</b>.</p>
+<p>Tools against overfitting: more data, <b>cross-validation</b>, simpler models, early stopping, and <b>regularization</b> — L1 (lasso, also selects features), L2 (ridge), and dropout in neural nets — which penalise complexity.</p>`,
+  quiz:[
+   {q:"A model that fits training data almost perfectly but performs poorly on new data is:",o:["Underfitting","Overfitting","Unbiased","Well-regularised"],a:1,e:"It memorised noise — high variance, poor generalisation."},
+   {q:"L2 (ridge) regularization combats overfitting by:",o:["Adding more features","Penalising large coefficients","Removing the test set","Increasing the learning rate"],a:1,e:"Shrinking coefficients reduces variance at a little cost in bias."}]},
+ "MIS517_8":{d:`<p><b>Natural Language Processing (NLP)</b> turns text into numbers a model can use. Classic features: <b>bag-of-words / TF-IDF</b>; modern ones: <b>word/sentence embeddings</b> and transformer models that capture meaning and context.</p>
+<p>In finance, NLP scores <b>sentiment</b> in news, earnings calls and filings, extracts entities and events, and flags risk language — turning unstructured text into tradable or risk signals.</p>`,
+  quiz:[
+   {q:"NLP is needed in finance to:",o:["Price bonds exactly","Turn unstructured text (news, filings) into usable features","Replace accounting","Compute duration"],a:1,e:"It converts language into structured signals like sentiment."},
+   {q:"Which is a way to represent text numerically?",o:["TF-IDF / embeddings","Duration","Beta","Sharpe ratio"],a:0,e:"Bag-of-words/TF-IDF and embeddings encode text for models."}]},
+ "MIS517_9":{d:`<p>Deploying AI in finance raises <b>ethical and regulatory</b> issues: models can encode <b>bias</b> (e.g. a credit model proxying for protected attributes via zip code), lack <b>transparency</b> ('black box' decisions), and create <b>privacy</b> and accountability concerns.</p>
+<p>Responsible practice demands <b>fairness</b> testing, <b>explainability</b> (often a legal requirement for credit decisions), human oversight, and robustness checks. Common applications — fraud detection, credit scoring, algorithmic trading, robo-advice — all carry these duties.</p>`,
+  quiz:[
+   {q:"A credit-scoring model that uses zip code may be problematic because it can:",o:["Be too accurate","Proxy for protected attributes (bias)","Run too fast","Use too little data"],a:1,e:"It can indirectly discriminate, raising fairness and legal issues."},
+   {q:"For credit decisions, regulators increasingly require models to be:",o:["Completely secret","Explainable / transparent","As complex as possible","Unmonitored"],a:1,e:"Explainability and fairness are central to responsible AI in finance."}]},
+});
+Object.assign(DEEP,{
+ "FIN619_0":{d:`<p>A good capstone question is <b>specific, answerable, and backed by data</b>. Narrow beats broad: it's better to thoroughly test one effect on one market than to vaguely 'study volatility'.</p>
+<p>Use the <b>FINER</b> lens — Feasible, Interesting, Novel, Ethical, Relevant — and sanity-check feasibility first: can you actually get the data, and is there a method that answers it within your timeframe?</p>`,
+  examples:["<b>Vague:</b> 'Study the stock market.' <b>Strong:</b> 'Does a 12-month momentum strategy earn risk-adjusted profits on the Saudi Tadawul, 2010–2025, after transaction costs?' — specific market, period, method and success criterion."],
+  quiz:[
+   {q:"The single best way to keep a capstone feasible is to:",o:["Pick the most ambitious topic","Confirm you can actually access the data you need","Avoid a literature review","Use one data point"],a:1,e:"Data availability makes or breaks an empirical project."},
+   {q:"A strong research question is:",o:["Broad and open-ended","Specific, answerable and data-backed","Impossible to test","About everything at once"],a:1,e:"Narrow, testable questions produce credible results."}]},
+ "FIN619_1":{d:`<p>The <b>literature review</b> shows what's already known, positions your contribution, and hands you tested <b>methodologies</b> so you don't reinvent the wheel.</p>
+<p>Search SSRN, Google Scholar and top finance journals; read seminal papers plus recent ones; organise by theme, not paper-by-paper. Note the standard data, methods and findings — and the <b>gap</b> your project fills.</p>`,
+  examples:["For a momentum study, citing <b>Jegadeesh & Titman (1993)</b> establishes the effect and gives you the standard winner/loser portfolio methodology to replicate and extend to a new market."],
+  quiz:[
+   {q:"A literature review's main purposes are to position your contribution and to:",o:["Pad the page count","Borrow tested methodologies and find the research gap","Avoid citing anyone","Prove you read nothing"],a:1,e:"It frames the gap and supplies proven methods."},
+   {q:"A good way to organise a literature review is:",o:["By theme/topic","Strictly one paragraph per paper","Alphabetically by author only","Randomly"],a:0,e:"Thematic organisation synthesises findings rather than just listing them."}]},
+ "FIN619_2":{d:`<p>Most project time goes into <b>getting and cleaning data</b>. Source reliably (Bloomberg/Refinitiv on campus, yfinance, FRED, Kaggle), then handle <b>splits and dividends</b> (use adjusted prices), <b>missing values</b>, <b>outliers</b>, and align dates/frequencies.</p>
+<p>Document every cleaning choice — it affects results and must be reproducible. Garbage in, garbage out: a clean, well-understood dataset is worth more than a fancy model on bad data.</p>`,
+  examples:["Pulling daily prices via <code>yfinance</code>, switching to split/dividend-<b>adjusted</b> closes, dropping non-trading days, and winsorising extreme returns before computing the momentum signal."],
+  quiz:[
+   {q:"Why use split- and dividend-adjusted prices?",o:["They look nicer","Raw prices have artificial jumps that distort returns","Adjusted prices are random","It's required by law"],a:1,e:"Unadjusted prices show false jumps on split/dividend dates, corrupting returns."},
+   {q:"In a typical empirical project, the largest share of time is usually spent on:",o:["Data sourcing and cleaning","Writing the title","Choosing fonts","Picking a journal"],a:0,e:"Clean, well-aligned data is the foundation of valid results."}]},
+ "FIN619_3":{d:`<p><b>Methodology design</b> picks the test that actually answers your question and defines <b>success in advance</b> (to avoid fishing for results). Match method to question:</p>
+<ul>
+<li>Relationship between variables → <b>regression</b>.</li>
+<li>Does a signal predict returns → <b>portfolio sorts</b> / long-short.</li>
+<li>Volatility dynamics → <b>GARCH</b>; long-run links → <b>cointegration</b>.</li>
+</ul>
+<p>State your hypotheses, variables, sample, and the statistic you'll judge before running anything.</p>`,
+  examples:["To test momentum, <b>sort</b> stocks into deciles by past 12-month return, hold the top decile and short the bottom, and test whether the long-short return's mean is significantly positive (t-stat)."],
+  quiz:[
+   {q:"You should define what counts as 'success' (your hypothesis test):",o:["After seeing the results","Before running the analysis","Never","Only if results are weak"],a:1,e:"Pre-specifying guards against data-snooping and cherry-picking."},
+   {q:"To test whether a signal predicts returns, a common method is:",o:["Portfolio sorts (long-short)","Counting pages","A literature review only","Picking by intuition"],a:0,e:"Sorting into portfolios on the signal and comparing returns is standard."}]},
+ "FIN619_4":{d:`<p><b>Backtesting</b> simulates your strategy or model on historical data. Implement it carefully and make it <b>realistic</b>: include <b>transaction costs</b>, slippage, position limits and a sensible rebalancing frequency, or results will be wildly optimistic.</p>
+<p>Use <b>point-in-time</b> data (only what was known then), and keep a strict separation between the data you build the model on and the data you test it on.</p>`,
+  examples:["Backtest a monthly-rebalanced momentum portfolio over 2010–2020, subtracting <b>0.1% per trade</b>; the raw 9% return drops to 6% after costs — still positive, but honest."],
+  quiz:[
+   {q:"A realistic backtest must include:",o:["Zero costs","Transaction costs and slippage","Only the best year","Future prices"],a:1,e:"Ignoring trading frictions makes a strategy look far better than it is."},
+   {q:"Backtests should use point-in-time data, meaning:",o:["Only future data","Only information available at the time of each decision","All data at once","No data"],a:1,e:"Using only contemporaneously-available data avoids look-ahead bias."}]},
+ "FIN619_5":{d:`<p>Several <b>biases</b> can make results look great but fake:</p>
+<ul>
+<li><b>Look-ahead bias</b> — using data not yet available at decision time.</li>
+<li><b>Survivorship bias</b> — testing only firms that still exist, ignoring failures.</li>
+<li><b>Data snooping</b> — trying many strategies and reporting the lucky winner.</li>
+<li><b>Overfitting</b> — tuning to historical noise.</li>
+</ul>
+<p>Guard with point-in-time data, full (incl. delisted) samples, out-of-sample tests and multiple-testing awareness.</p>`,
+  examples:["Building a stock screen from <b>today's</b> S&P 500 members and backtesting it over 20 years ignores the firms that were dropped or went bankrupt — survivorship bias that flatters returns."],
+  quiz:[
+   {q:"'Look-ahead bias' means:",o:["Using too little data","Using information that wasn't available at the time","Testing on the training set","Ignoring costs"],a:1,e:"It leaks future/unreleased data into a historical simulation."},
+   {q:"Testing a strategy only on currently-listed firms introduces:",o:["Survivorship bias","Look-ahead bias","Heteroskedasticity","No bias"],a:0,e:"Excluding delisted failures overstates historical performance."}]},
+ "FIN619_6":{d:`<p>Report both <b>statistical significance</b> (t-stats, p-values) and <b>economic significance</b> (size of the effect after costs). A result isn't credible until it survives <b>robustness checks</b>.</p>
+<ul>
+<li><b>Out-of-sample</b> — does it hold on data you didn't build on?</li>
+<li><b>Sub-periods</b> — does it work across different regimes?</li>
+<li><b>Alternative specifications</b> — different parameters, controls, markets.</li>
+</ul>
+<p>Be honest about <b>limitations</b> — it strengthens, not weakens, the work.</p>`,
+  examples:["A strategy that's significant in 2010–2018 should be re-run on a held-out 2019–2025 period; if the edge vanishes out-of-sample, it was likely overfitting, not a real effect."],
+  quiz:[
+   {q:"A robust empirical finding should also be shown on:",o:["The training sample only","An out-of-sample / hold-out period","No data","A single lucky run"],a:1,e:"Out-of-sample success shows the result generalises rather than fits noise."},
+   {q:"Reporting your study's limitations:",o:["Weakens the work","Strengthens credibility and is expected","Should be hidden","Is unnecessary"],a:1,e:"Honest limitations are a hallmark of rigorous research."}]},
+ "FIN619_7":{d:`<p>Communicate clearly in a standard structure: <b>motivation → literature → data → methodology → results → limitations → conclusion</b>. Lead with the question and the answer; let tables and charts carry the evidence.</p>
+<p>Use clean <b>results tables</b> (coefficients with t-stats/standard errors) and a few well-labelled figures (e.g. an equity curve). Write plainly, define terms, and make every claim traceable to a number. Rehearse the defence presentation.</p>`,
+  examples:["A single results table with the long-short return, its t-statistic and Sharpe ratio, plus an <b>equity-curve chart</b>, communicates the finding faster and more convincingly than several paragraphs of prose."],
+  quiz:[
+   {q:"The conventional structure of a quantitative finance report is:",o:["Random order","Motivation → data → method → results → limitations","Results only","Conclusion first, no data"],a:1,e:"This standard flow lets readers follow and reproduce the work."},
+   {q:"Results are best conveyed primarily through:",o:["Long prose paragraphs","Clear tables (with t-stats) and figures","No numbers","The title alone"],a:1,e:"Tables and charts present evidence concisely and credibly."}]},
+});
+
+/* ============================================================
+   PROGRESS (localStorage)
+   ============================================================ */
+const LS_KEY="kfupm_qf_progress_v1";
+let progress = JSON.parse(localStorage.getItem(LS_KEY) || "{}");
+function save(){localStorage.setItem(LS_KEY, JSON.stringify(progress));}
+function totalTopics(){return Object.values(COURSES).reduce((n,c)=>n+c.topics.length,0);}
+function doneTopics(){return Object.keys(progress).filter(k=>progress[k]).length;}
+function updateRing(){
+  const total=totalTopics(), done=doneTopics();
+  const pct = total? Math.round(done/total*100):0;
+  document.getElementById("ring").style.setProperty("--p",pct);
+  document.getElementById("ringPct").textContent=pct+"%";
+  document.getElementById("progText").textContent =
+    done===0 ? "Check off topics as you learn them — your progress is saved automatically in this browser."
+    : `${done} of ${total} topics complete across all courses. Keep going! 💪`;
+}
+function resetAll(){
+  if(confirm("Reset all study progress?")){progress={};save();
+    document.querySelectorAll(".topic-row input").forEach(cb=>{cb.checked=false;cb.closest(".topic-row").classList.remove("done");});
+    updateRing();}
+}
+
+/* ============================================================
+   RENDER SEMESTERS & COURSES
+   ============================================================ */
+const tabs=document.getElementById("semTabs");
+const note=document.getElementById("semNote");
+const list=document.getElementById("courseList");
+let activeSem=1;
+
+SEMESTERS.forEach(s=>{
+  const b=document.createElement("button");
+  b.textContent=s.name; b.dataset.sem=s.id;
+  if(s.id===1)b.classList.add("active");
+  b.onclick=()=>{activeSem=s.id;
+    document.querySelectorAll(".sem-tabs button").forEach(x=>x.classList.toggle("active",+x.dataset.sem===s.id));
+    renderCourses();};
+  tabs.appendChild(b);
+});
+
+function renderCourses(){
+  const sem=SEMESTERS.find(s=>s.id===activeSem);
+  note.textContent=sem.note;
+  list.innerHTML="";
+  sem.courses.forEach(cid=>list.appendChild(courseCard(cid)));
+}
+
+function courseCard(cid){
+  const c=COURSES[cid];
+  const el=document.createElement("div");
+  el.className="course";
+  el.innerHTML=`
+    <div class="course-head">
+      <span class="course-code">${c.code}</span>
+      <h3>${c.title}</h3>
+      <span class="cr">${c.cr} cr</span>
+      <span class="chev">▶</span>
+    </div>
+    <div class="course-body">
+      <p class="desc">${c.desc}</p>
+      <div class="blocks">
+        <div class="block">
+          <h5>📋 Topics to master <span style="color:var(--mut);font-weight:400;text-transform:none;letter-spacing:0">· click a topic for an in-depth lesson + quiz</span></h5>
+          ${c.topics.map((t,i)=>{const key=cid+"_"+i;const done=progress[key]?"done":"";
+            return `<div class="topic-item">
+              <div class="topic-row ${done}" data-cid="${cid}" data-idx="${i}">
+                <input type="checkbox" data-key="${key}" ${progress[key]?"checked":""}>
+                <span class="ttitle">${t.t}</span>
+                <span class="topen">Learn ›</span>
+              </div>
+            </div>`;}).join("")}
+        </div>
+        <div class="block">
+          <h5>🎥 Watch &amp; learn</h5>
+          ${c.videos.map(v=>`<a class="vid" target="_blank" rel="noopener" href="${v.u}">
+            <span class="play">▶</span><span class="v-meta"><b>${v.t}</b><small>${v.c}</small></span></a>`).join("")}
+          <button class="btn quiz-btn" onclick="openQuiz('${cid}')">📝 Take the ${c.code} quiz</button>
+        </div>
+        <div class="block">
+          <h5>📚 Key resources</h5>
+          <div class="res">${c.res.map(r=>`<a target="_blank" rel="noopener" href="${r.u}">${r.t}</a>`).join("")}</div>
+        </div>
+      </div>
+    </div>`;
+  // toggle open
+  el.querySelector(".course-head").onclick=()=>el.classList.toggle("open");
+  // topic rows: checkbox toggles progress; clicking the row reveals the explanation
+  el.querySelectorAll(".topic-row").forEach(row=>{
+    const cb=row.querySelector("input");
+    cb.onclick=e=>e.stopPropagation();
+    cb.onchange=()=>{progress[cb.dataset.key]=cb.checked;save();
+      row.classList.toggle("done",cb.checked);updateRing();};
+    row.onclick=()=>openTopic(row.dataset.cid, +row.dataset.idx);
+  });
+  return el;
+}
+
+/* ============================================================
+   QUIZ ENGINE
+   ============================================================ */
+const modal=document.getElementById("modal");
+
+// Render a set of multiple-choice questions into a container, calling onDone(state) when all answered.
+function renderQuestions(body, questions, onDone){
+  const state={answered:0,correct:0,total:questions.length};
+  questions.forEach((item,qi)=>{
+    const q=document.createElement("div");q.className="q";
+    q.innerHTML=`<div class="qtext">${qi+1}. ${item.q}</div>`;
+    item.o.forEach((opt,oi)=>{
+      const o=document.createElement("div");o.className="opt";o.textContent=opt;
+      o.onclick=()=>{
+        if(q.dataset.locked)return; q.dataset.locked="1";
+        const correct=oi===item.a;
+        o.classList.add(correct?"correct":"wrong");
+        if(!correct)q.querySelectorAll(".opt")[item.a].classList.add("correct");
+        q.querySelector(".expl").classList.add("show");
+        state.answered++; if(correct)state.correct++;
+        if(state.answered===state.total && onDone)onDone(state);
+      };
+      q.appendChild(o);
+    });
+    const e=document.createElement("div");e.className="expl";e.innerHTML="💡 "+item.e;
+    q.appendChild(e);
+    body.appendChild(q);
+  });
+}
+
+function buildQuiz(title, questions){
+  document.getElementById("modalTitle").textContent=title;
+  const body=document.getElementById("modalBody");
+  body.innerHTML="";
+  renderQuestions(body, questions, state=>{
+    const s=document.createElement("div");s.className="quiz-score";
+    s.textContent=`Score: ${state.correct} / ${state.total}  ${state.correct===state.total?"🎉 Perfect!":state.correct>=state.total*0.7?"✅ Solid!":"📖 Review the topics above."}`;
+    body.appendChild(s);s.scrollIntoView({behavior:"smooth",block:"nearest"});
+  });
+  modal.classList.add("show");
+}
+function openQuiz(cid){const c=COURSES[cid];buildQuiz(c.code+" — "+c.title, c.quiz);}
+
+// Open a single topic as a lesson: summary + in-depth explanation + worked example(s) + mini quiz.
+function openTopic(cid,i){
+  const t=COURSES[cid].topics[i];
+  const extra=DEEP[cid+"_"+i]||{};
+  document.getElementById("modalTitle").textContent=COURSES[cid].code+" · "+t.t;
+  const body=document.getElementById("modalBody");
+  body.innerHTML="";
+  const examples = extra.examples && extra.examples.length ? extra.examples : [t.ex];
+  const wrap=document.createElement("div");wrap.className="topic-modal";
+  wrap.innerHTML=`
+    <p class="t-summary">${t.x}</p>
+    <h4>📘 In depth</h4>
+    <div class="t-depth">${extra.d || ("<p>"+t.x+"</p>")}</div>
+    <h4>📐 Worked example${examples.length>1?"s":""}</h4>
+    ${examples.map(e=>`<div class="t-ex">${e}</div>`).join("")}
+    <h4>📝 Check your understanding</h4>
+    <div class="t-quiz"></div>`;
+  body.appendChild(wrap);
+  const qc=wrap.querySelector(".t-quiz");
+  if(extra.quiz && extra.quiz.length){
+    renderQuestions(qc, extra.quiz, state=>{
+      const s=document.createElement("div");s.className="quiz-score";
+      s.textContent=`Score: ${state.correct} / ${state.total}  ${state.correct===state.total?"🎉 Nailed it!":"📖 Re-read the explanation above."}`;
+      qc.appendChild(s);
+    });
+  } else {
+    qc.innerHTML=`<p style="color:var(--mut);font-size:.9rem">Try the full ${COURSES[cid].code} quiz from the course card for questions on this topic.</p>`;
+  }
+  modal.classList.add("show");
+  body.parentElement.scrollTop=0;
+}
+function closeQuiz(){modal.classList.remove("show");}
+modal.onclick=e=>{if(e.target===modal)closeQuiz();};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeQuiz();});
+
+/* ============================================================
+   PRACTICE & EXAM CARDS
+   ============================================================ */
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
+function pool(ids){let p=[];ids.forEach(id=>COURSES[id].quiz.forEach(q=>p.push(q)));return p;}
+
+const PRACTICE=[
+  {t:"Quant core mix",d:"Stochastic processes, econometrics & financial economics.",ids:["STAT516","FIN545","ECON513"]},
+  {t:"Markets & instruments",d:"Derivatives, fixed income & investment theory.",ids:["FIN524","FIN527","FIN540"]},
+  {t:"Applied & corporate",d:"Corporate finance, AI for business & project skills.",ids:["FIN511","MIS517","FIN619"]},
+];
+const pg=document.getElementById("practiceGrid");
+PRACTICE.forEach(p=>{
+  const el=document.createElement("div");el.className="mini";
+  el.innerHTML=`<h4>🎯 ${p.t}</h4><p style="color:var(--mut);font-size:.9rem;margin:0 0 12px">${p.d}</p>`;
+  const b=document.createElement("button");b.className="btn";b.textContent="Start practice set →";
+  b.onclick=()=>buildQuiz(p.t+" — practice", shuffle(pool(p.ids)).slice(0,6));
+  el.appendChild(b);pg.appendChild(el);
+});
+
+const EXAMS=[
+  {t:"Semester 1 mock exam",d:"10 questions across Corporate Finance & Stochastic Processes — the kind of mix you'll face mid-program.",ids:["FIN511","STAT516"],n:10},
+  {t:"Semester 2 mock exam",d:"10 questions on Financial Economics & Econometrics, balancing theory and data inference.",ids:["ECON513","FIN545"],n:10},
+  {t:"Semester 3 mock exam",d:"10 questions on Derivatives & Investment Theory — pricing, hedging and portfolios.",ids:["FIN524","FIN540"],n:10},
+  {t:"Comprehensive final",d:"14 mixed questions spanning the entire MQF core. Treat it as a timed, closed-book run.",ids:["FIN511","STAT516","ECON513","FIN545","FIN524","FIN540","FIN527","MIS517"],n:14},
+];
+const eg=document.getElementById("examGrid");
+EXAMS.forEach(x=>{
+  const el=document.createElement("div");el.className="exam-card";
+  el.innerHTML=`<h4>📄 ${x.t}</h4><p>${x.d}</p>`;
+  const b=document.createElement("button");b.className="btn";b.textContent=`Begin · ${x.n} questions`;
+  b.onclick=()=>buildQuiz(x.t, shuffle(pool(x.ids)).slice(0,x.n));
+  el.appendChild(b);eg.appendChild(el);
+});
+
+/* init */
+renderCourses();
+updateRing();
+</script>
+</body>
+</html>
