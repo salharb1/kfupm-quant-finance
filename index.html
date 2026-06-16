@@ -1887,7 +1887,7 @@ window.setLang = setLang;
 function initLang(){
   const saved = localStorage.getItem("qf_lang");
   if(saved){ applyLang(saved); }
-  else { applyLang("en"); }
+  else { applyLang("en"); var o=document.getElementById("langOverlay"); if(o) o.classList.remove("hide"); }
 }
 
 /* ============================================================
